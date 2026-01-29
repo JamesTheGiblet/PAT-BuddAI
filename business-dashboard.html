@@ -11,6 +11,36 @@
             box-sizing: border-box;
         }
 
+        /* Quick Stats Footer Styles */
+        .quick-stats-footer {
+            margin-top: 20px;
+        }
+        .dashboard-section-center {
+            text-align: center;
+        }
+        .quick-stats-title {
+            color: #546E7A;
+            margin-bottom: 10px;
+        }
+        .quick-stats-main {
+            font-size: 1.2rem;
+            color: #1565C0;
+            font-weight: 600;
+        }
+        .quick-stats-main-alert {
+            color: #F44336;
+        }
+        .quick-stats-sub {
+            font-size: 0.9rem;
+            color: #78909C;
+            margin-top: 5px;
+        }
+
+        .contractor-desc {
+            color: #546E7A;
+            margin-bottom: 15px;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
@@ -527,6 +557,7 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(5);
             backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
@@ -922,7 +953,7 @@
                         <div class="contractor-name">SafeTest Ltd</div>
                         <div class="contractor-rating">★★★★☆ 4.2</div>
                     </div>
-                    <p style="color: #546E7A; margin-bottom: 15px;">Primary contractor for Southern region</p>
+                    <p class="contractor-desc">Primary contractor for Southern region</p>
                     <div class="contractor-stats">
                         <div class="contractor-stat">
                             <div class="stat-label">Active Sites</div>
@@ -942,8 +973,8 @@
                         </div>
                     </div>
                     <div class="contractor-actions">
-                        <button class="site-btn" onclick="viewContractor('safetest')">Details</button>
-                        <button class="site-btn" onclick="messageContractor('safetest')">Message</button>
+                        <button class="site-btn" type="button" onclick="viewContractor('safetest')">Details</button>
+                        <button class="site-btn" type="button" onclick="messageContractor('safetest')">Message</button>
                     </div>
                 </div>
 
@@ -952,7 +983,7 @@
                         <div class="contractor-name">PowerCheck Solutions</div>
                         <div class="contractor-rating">★★★★★ 4.8</div>
                     </div>
-                    <p style="color: #546E7A; margin-bottom: 15px;">Specialist for industrial equipment</p>
+                    <p class="contractor-desc">Specialist for industrial equipment</p>
                     <div class="contractor-stats">
                         <div class="contractor-stat">
                             <div class="stat-label">Active Sites</div>
@@ -972,8 +1003,8 @@
                         </div>
                     </div>
                     <div class="contractor-actions">
-                        <button class="site-btn" onclick="viewContractor('powercheck')">Details</button>
-                        <button class="site-btn" onclick="messageContractor('powercheck')">Message</button>
+                        <button class="site-btn" type="button" onclick="viewContractor('powercheck')">Details</button>
+                        <button class="site-btn" type="button" onclick="messageContractor('powercheck')">Message</button>
                     </div>
                 </div>
 
@@ -982,7 +1013,7 @@
                         <div class="contractor-name">ElectroSafe UK</div>
                         <div class="contractor-rating">★★★☆☆ 3.6</div>
                     </div>
-                    <p style="color: #546E7A; margin-bottom: 15px;">Northern region coverage</p>
+                    <p class="contractor-desc">Northern region coverage</p>
                     <div class="contractor-stats">
                         <div class="contractor-stat">
                             <div class="stat-label">Active Sites</div>
@@ -1002,31 +1033,31 @@
                         </div>
                     </div>
                     <div class="contractor-actions">
-                        <button class="site-btn" onclick="viewContractor('electrosafe')">Details</button>
-                        <button class="site-btn" onclick="messageContractor('electrosafe')">Review</button>
+                        <button class="site-btn" type="button" onclick="viewContractor('electrosafe')">Details</button>
+                        <button class="site-btn" type="button" onclick="messageContractor('electrosafe')">Review</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Quick Stats Footer -->
-        <div class="dashboard-grid" style="margin-top: 20px;">
-            <div class="dashboard-section" style="text-align: center;">
-                <h3 style="color: #546E7A; margin-bottom: 10px;">📅 Next Scheduled Tests</h3>
-                <div style="font-size: 1.2rem; color: #1565C0; font-weight: 600;">
+        <div class="dashboard-grid quick-stats-footer">
+            <div class="dashboard-section dashboard-section-center">
+                <h3 class="quick-stats-title">📅 Next Scheduled Tests</h3>
+                <div class="quick-stats-main">
                     Nov 5: Glasgow Office (156 items)
                 </div>
-                <div style="font-size: 0.9rem; color: #78909C; margin-top: 5px;">
+                <div class="quick-stats-sub">
                     Nov 8: Manchester Warehouse (212 items)
                 </div>
             </div>
             
-            <div class="dashboard-section" style="text-align: center;">
-                <h3 style="color: #546E7A; margin-bottom: 10px;">📋 Certificates Expiring Soon</h3>
-                <div style="font-size: 1.2rem; color: #F44336; font-weight: 600;">
+            <div class="dashboard-section dashboard-section-center">
+                <h3 class="quick-stats-title">📋 Certificates Expiring Soon</h3>
+                <div class="quick-stats-main quick-stats-main-alert">
                     42 certificates expire in November
                 </div>
-                <div style="font-size: 0.9rem; color: #78909C; margin-top: 5px;">
+                <div class="quick-stats-sub">
                     Next expiry: Nov 15 (Birmingham Warehouse)
                 </div>
             </div>

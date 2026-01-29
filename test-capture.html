@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Test Photos - PAT BuddAI 4U</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        .ai-ol {
+            margin-top: 10px;
+            padding-left: 20px;
         }
 
         body {
@@ -803,6 +808,11 @@
             max-width: 90%;
         }
 
+        /* Utility class to hide elements */
+        .hidden {
+            display: none !important;
+        }
+
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
@@ -841,7 +851,7 @@
         <!-- Job Selector -->
         <div class="job-selector">
             <label class="selector-label">Select Job to Upload Photos For:</label>
-            <select class="job-select" id="jobSelect" onchange="loadJobPhotos()">
+            <select class="job-select" id="jobSelect" onchange="loadJobPhotos()" title="Select job to upload photos for">
                 <option value="">-- Select a job --</option>
                 <option value="techcorp" selected>TechCorp Ltd - Main Office (Today)</option>
                 <option value="greenwood">Greenwood School - Science Block</option>
@@ -860,8 +870,8 @@
                     <div class="upload-icon">📷</div>
                     <div class="upload-text">Drag & drop photos here</div>
                     <div class="upload-subtext">or click to browse</div>
-                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
-                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" multiple accept="image/*" class="hidden-file-input" onchange="handleFileSelect(event)" title="Upload photos" placeholder="Select photos to upload">
+                    <button class="upload-btn" type="button" onclick="document.getElementById('fileInput').click()">
                         <span>📁</span> Choose Photos
                     </button>
                 </div>
@@ -877,7 +887,7 @@
             </div>
 
             <!-- Progress Bar -->
-            <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-container hidden" id="progressContainer">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
@@ -911,7 +921,7 @@
             
             <div class="ai-message">
                 <p><strong>AI Tip:</strong> For compliance, remember to photograph:</p>
-                <ol style="margin-top: 10px; padding-left: 20px;">
+                <ol class="ai-ol">
                     <li>Equipment labels with serial numbers</li>
                     <li>Visual inspection points (cables, plugs, casings)</li>
                     <li>Test results on PAT tester screen</li>
@@ -958,7 +968,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Test Result</label>
-                        <select class="form-input" id="photoTestResult">
+                        <select class="form-input" id="photoTestResult" title="Test Result">
                             <option value="">Select result</option>
                             <option value="pass">PASS</option>
                             <option value="fail">FAIL</option>
@@ -996,7 +1006,8 @@
     <!-- Camera Preview -->
     <div class="camera-preview" id="cameraPreview">
         <div class="camera-view">
-            <video class="camera-feed" id="cameraFeed" autoplay playsinline></video>
+            <!-- 'playsinline' is not supported by Firefox, so we use 'webkit-playsinline' for Safari/iOS compatibility -->
+            <video class="camera-feed" id="cameraFeed" autoplay webkit-playsinline></video>
         </div>
         <div class="camera-controls-bar">
             <button class="camera-control-btn" onclick="closeCamera()">✕</button>
@@ -1118,7 +1129,7 @@
                         if (uploaded === total) {
                             setTimeout(() => {
                                 hideLoading();
-                                document.getElementById('progressContainer').style.display = 'none';
+                                document.getElementById('progressContainer').classList.add('hidden');
                                 showToast(`✅ ${uploaded} photos uploaded successfully!`, 'success');
                             }, 500);
                         }
@@ -1127,7 +1138,7 @@
                 }, index * 500); // Stagger uploads
             });
 
-            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('progressContainer').classList.remove('hidden');
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('progressText').textContent = `Uploading 0/${total} photos`;
         }
@@ -1382,7 +1393,7 @@
                     clearInterval(interval);
                     setTimeout(() => {
                         hideLoading();
-                        document.getElementById('progressContainer').style.display = 'none';
+                        document.getElementById('progressContainer').classList.add('hidden');
                         showToast('✅ Photos uploaded to cloud successfully!', 'success');
                     }, 500);
                 }

@@ -2,13 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - PAT BuddAI 4U</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        .contact-note {
+            margin-top: 8px;
+        }
+
+        .highlight-box-margin {
+            margin-top: 30px;
+        }
+
+        .section-h3 {
+            color: #1565C0;
+            margin: 20px 0 10px;
         }
 
         body {
@@ -455,6 +468,13 @@
             transition: all 0.3s ease;
         }
 
+        /* Footer links style moved from inline */
+        .footer-links {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
         .back-to-top.show {
             display: flex;
         }
@@ -497,7 +517,6 @@
             .data-table {
                 display: block;
                 overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
             }
             
             .section-header {
@@ -718,7 +737,7 @@
                 <div class="section-content">
                     <p>We collect several types of information for various purposes to provide and improve our service to you.</p>
                     
-                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Personal Data</h3>
+                    <h3 class="section-h3">Personal Data</h3>
                     <p>While using our service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you:</p>
                     
                     <table class="data-table">
@@ -758,7 +777,7 @@
                         </tbody>
                     </table>
                     
-                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Usage Data</h3>
+                    <h3 class="section-h3">Usage Data</h3>
                     <p>We may also collect information on how the service is accessed and used:</p>
                     <ul>
                         <li>IP address and browser type</li>
@@ -824,7 +843,7 @@
                 <div class="section-content">
                     <p>The security of your data is important to us. We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage.</p>
                     
-                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Security Measures</h3>
+                    <h3 class="section-h3">Security Measures</h3>
                     <ul>
                         <li><strong>Encryption:</strong> All data is encrypted in transit (TLS 1.3) and at rest (AES-256)</li>
                         <li><strong>Access Controls:</strong> Role-based access control and multi-factor authentication</li>
@@ -860,13 +879,13 @@
                 <div class="section-content">
                     <p>We do not sell, trade, or rent your personal data to third parties. We may share your data in the following limited circumstances:</p>
                     
-                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Service Providers</h3>
+                    <h3 class="section-h3">Service Providers</h3>
                     <p>We may employ third-party companies and individuals to facilitate our service, provide the service on our behalf, or assist us in analyzing how our service is used. These third parties have access to your personal data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
                     
-                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Legal Requirements</h3>
+                    <h3 class="section-h3">Legal Requirements</h3>
                     <p>We may disclose your personal data if required to do so by law or in response to valid requests by public authorities (e.g., a court or a government agency).</p>
                     
-                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Business Transfers</h3>
+                    <h3 class="section-h3">Business Transfers</h3>
                     <p>In the event of a merger, acquisition, or asset sale, your personal data may be transferred. We will provide notice before your personal data is transferred and becomes subject to a different Privacy Policy.</p>
                     
                     <div class="highlight-box info">
@@ -962,7 +981,7 @@
                             <h3 class="contact-title">General Inquiries</h3>
                             <div class="contact-info">
                                 <a href="mailto:privacy@patbudai4u.com">privacy@patbudai4u.com</a>
-                                <p style="margin-top: 8px;">For general privacy questions</p>
+                                <p class="contact-note">For general privacy questions</p>
                             </div>
                         </div>
                         
@@ -971,7 +990,7 @@
                             <h3 class="contact-title">Data Protection Officer</h3>
                             <div class="contact-info">
                                 <a href="mailto:dpo@patbudai4u.com">dpo@patbudai4u.com</a>
-                                <p style="margin-top: 8px;">For data protection requests</p>
+                                <p class="contact-note">For data protection requests</p>
                             </div>
                         </div>
                         
@@ -980,7 +999,7 @@
                             <h3 class="contact-title">Telephone</h3>
                             <div class="contact-info">
                                 +44 (0)800 123 4567
-                                <p style="margin-top: 8px;">Mon-Fri 9am-5pm GMT</p>
+                                <p class="contact-note">Mon-Fri 9am-5pm GMT</p>
                             </div>
                         </div>
                         
@@ -997,14 +1016,14 @@
                         </div>
                     </div>
                     
-                    <div class="highlight-box info" style="margin-top: 30px;">
+                    <div class="highlight-box info highlight-box-margin">
                         <div class="highlight-title">
                             <span>⚖️</span>
                             Regulatory Authority
                         </div>
                         <p>You have the right to lodge a complaint with the Information Commissioner's Office (ICO), the UK supervisory authority for data protection issues. Contact details:</p>
                         <p><strong>ICO Helpline:</strong> 0303 123 1113</p>
-                        <p><strong>ICO Website:</strong> <a href="https://ico.org.uk" target="_blank">ico.org.uk</a></p>
+                        <p><strong>ICO Website:</strong> <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a></p>
                     </div>
                 </div>
             </div>
@@ -1028,7 +1047,7 @@
     <footer>
         <p>© 2024 PAT BuddAI 4U Ltd. All rights reserved.</p>
         <p>Registered in England & Wales: 12345678 | VAT: GB 123 4567 89</p>
-        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.8;">
+        <p class="footer-links">
             <a href="index.html">Home</a> | 
             <a href="terms-of-service.html">Terms of Service</a> | 
             <a href="cookie-policy.html">Cookie Policy</a> | 

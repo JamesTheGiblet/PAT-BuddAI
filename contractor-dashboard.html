@@ -11,6 +11,12 @@
             box-sizing: border-box;
         }
 
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
@@ -356,6 +362,14 @@
             color: #1976D2;
         }
 
+        .quick-actions-title {
+            margin-bottom: 20px;
+        }
+
+        .quick-action-icon {
+            font-size: 1.5rem;
+        }
+
         /* Navigation Menu */
         .nav-menu {
             display: flex;
@@ -482,7 +496,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="logo">
-            <a href="index.html" style="display: flex; align-items: center; gap: 10px;">
+            <a href="index.html" class="logo-link">
                 <span>🔧</span>
                 <span>PAT BuddAI 4U - Contractor Portal</span>
             </a>
@@ -654,22 +668,22 @@
 
         <!-- Quick Actions -->
         <div class="dashboard-section">
-            <h2 style="margin-bottom: 20px;">⚡ Quick Actions</h2>
+            <h2 class="quick-actions-title">⚡ Quick Actions</h2>
             <div class="quick-actions">
                 <a href="generate-certificate.html" class="quick-action-btn">
-                    <span style="font-size: 1.5rem;">📄</span>
+                    <span class="quick-action-icon">📄</span>
                     <span>Generate Certificate</span>
                 </a>
                 <a href="test-capture.html" class="quick-action-btn">
-                    <span style="font-size: 1.5rem;">📷</span>
+                    <span class="quick-action-icon">📷</span>
                     <span>Upload Test Photos</span>
                 </a>
                 <a href="weekly-schedule.html" class="quick-action-btn">
-                    <span style="font-size: 1.5rem;">📅</span>
+                    <span class="quick-action-icon">📅</span>
                     <span>View Weekly Schedule</span>
                 </a>
                 <a href="IET-conduct.html" class="quick-action-btn">
-                    <span style="font-size: 1.5rem;">📚</span>
+                    <span class="quick-action-icon">📚</span>
                     <span>IET Code Guide</span>
                 </a>
             </div>

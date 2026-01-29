@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Schedule - PAT BuddAI 4U</title>
     <style>
         * {
@@ -209,8 +209,8 @@
             overflow-x: auto;
             gap: 5px;
             padding-bottom: 5px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            /* -webkit-overflow-scrolling: touch; Removed for compatibility */
+            /* scrollbar-width: none; Removed for compatibility */
         }
 
         .week-tabs::-webkit-scrollbar {
@@ -487,7 +487,6 @@
             grid-template-columns: repeat(7, 1fr);
             gap: 10px;
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
             padding-bottom: 10px;
         }
 
@@ -844,6 +843,7 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(5);
             backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
@@ -1017,6 +1017,13 @@
             font-weight: 600;
             margin: 10px 0;
         }
+        .map-icon-large {
+            font-size: 3rem;
+        }
+        .map-placeholder-note {
+            font-size: 0.9rem;
+            color: #999;
+        }
     </style>
 </head>
 <body>
@@ -1029,8 +1036,8 @@
             </div>
             <div class="nav-actions">
                 <a href="contractor-dashboard.html" class="nav-btn">← Dashboard</a>
-                <button class="nav-btn active">This Week</button>
-                <button class="nav-btn" onclick="switchToNextWeek()">Next Week</button>
+                <button class="nav-btn active" type="button">This Week</button>
+                <button class="nav-btn" type="button" onclick="switchToNextWeek()">Next Week</button>
             </div>
         </div>
     </div>
@@ -1065,10 +1072,10 @@
         <!-- Date Navigation -->
         <div class="date-navigation">
             <div class="date-controls">
-                <button class="date-btn" onclick="previousWeek()">◀</button>
+                <button class="date-btn" type="button" onclick="previousWeek()">◀</button>
                 <div class="date-title" id="weekTitle">Week 43, 2024</div>
-                <button class="date-btn" onclick="nextWeek()">▶</button>
-                <button class="date-btn today" onclick="goToToday()">Today</button>
+                <button class="date-btn" type="button" onclick="nextWeek()">▶</button>
+                <button class="date-btn today" type="button" onclick="goToToday()">Today</button>
             </div>
 
             <div class="week-tabs" id="weekTabs">
@@ -1078,16 +1085,16 @@
 
         <!-- View Switcher -->
         <div class="view-switcher">
-            <button class="view-btn active" onclick="switchView('day')">
+            <button class="view-btn active" type="button" onclick="switchView('day')">
                 <span>📅</span> Day View
             </button>
-            <button class="view-btn" onclick="switchView('week')">
+            <button class="view-btn" type="button" onclick="switchView('week')">
                 <span>🗓️</span> Week View
             </button>
-            <button class="view-btn" onclick="switchView('list')">
+            <button class="view-btn" type="button" onclick="switchView('list')">
                 <span>📋</span> List View
             </button>
-            <button class="view-btn" onclick="switchView('map')">
+            <button class="view-btn" type="button" onclick="switchView('map')">
                 <span>🗺️</span> Map View
             </button>
         </div>
@@ -1116,10 +1123,10 @@
         <!-- Map View -->
         <div class="map-view" id="mapView">
             <div class="map-placeholder" id="mapPlaceholder">
-                <div style="font-size: 3rem;">🗺️</div>
+                <div class="map-icon-large">🗺️</div>
                 <h3>Location Map View</h3>
                 <p>This would show your job locations on an interactive map</p>
-                <p style="font-size: 0.9rem; color: #999;">(Map integration would show here in production)</p>
+                <p class="map-placeholder-note">(Map integration would show here in production)</p>
             </div>
             <!-- Map markers would be added here -->
         </div>
@@ -1173,7 +1180,7 @@
     </div>
 
     <!-- Floating Action Button -->
-    <button class="fab" id="fab" onclick="addNewJob()">
+    <button class="fab" id="fab" type="button" onclick="addNewJob()">
         ➕
     </button>
 

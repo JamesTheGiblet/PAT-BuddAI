@@ -11,6 +11,55 @@
             box-sizing: border-box;
         }
 
+        /* Slide 4 Impact Flex and Value List Margin */
+        .impact-flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .value-list-mt {
+            margin-top: 60px;
+        }
+
+        /* Added for Slide 3 inline style replacements */
+        .solution-flex {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .icon-large {
+            font-size: 3rem;
+        }
+        .h3-mt-20 {
+            margin-top: 20px;
+        }
+        .solution-list-left {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .solution-list-font {
+            font-size: 1rem;
+        }
+
+        .p-title {
+            font-size: 2rem;
+            color: #90CAF9;
+        }
+
+        .p-subtitle {
+            margin-top: 40px;
+        }
+
+        .p-meta {
+            font-size: 1.3rem;
+            margin-top: 40px;
+            color: rgba(255,255,255,0.8);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0D47A1 0%, #1976D2 100%);
@@ -96,6 +145,7 @@
 
         .stat-box {
             background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(10);
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
@@ -162,6 +212,7 @@
 
         .timeline-item {
             background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(10);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -216,6 +267,43 @@
                 right: 15px;
             }
         }
+
+        .problem-highlight {
+            margin-top: 50px;
+            font-size: 1.5rem;
+            color: #64B5F6;
+        }
+        /* Slide 5: Pilot Timeline Styles */
+        .pilot-location {
+            margin-bottom: 40px;
+        }
+        .pilot-timeline-desc {
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+        /* Slide 6 CTA Styles */
+        .cta-title {
+            font-size: 3.5rem;
+        }
+        .cta-subtitle {
+            font-size: 1.8rem;
+            margin-top: 40px;
+        }
+        .cta-platforms {
+            margin-top: 60px;
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .cta-platforms-highlight {
+            color: #64B5F6;
+        }
+        .cta-builtby {
+            margin-top: 40px;
+            font-size: 1.1rem;
+        }
+        .cta-builtby-meta {
+            color: rgba(255,255,255,0.6);
+        }
     </style>
 </head>
 <body>
@@ -223,9 +311,9 @@
     <div class="slide" id="slide1">
         <div class="slide-number">1/6</div>
         <h1>PAT BuddAI 4U</h1>
-        <p style="font-size: 2rem; color: #90CAF9;">Your Intelligent PAT Testing Companion</p>
-        <p style="margin-top: 40px;">Transforming Compliance from Burden to Automated Workflow</p>
-        <p style="font-size: 1.3rem; margin-top: 40px; color: rgba(255,255,255,0.8);">
+        <p class="p-title">Your Intelligent PAT Testing Companion</p>
+        <p class="p-subtitle">Transforming Compliance from Burden to Automated Workflow</p>
+        <p class="p-meta">
             Presentation for Oxford Pharmagenesis<br>
             James Budden | Giblets Creations
         </p>
@@ -243,7 +331,7 @@
             <li>No real-time visibility into testing status</li>
             <li>Multi-site coordination overhead</li>
         </ul>
-        <p style="margin-top: 50px; font-size: 1.5rem; color: #64B5F6;">
+        <p class="problem-highlight">
             Every facility faces this. We can solve it.
         </p>
     </div>
@@ -252,25 +340,25 @@
     <div class="slide" id="slide3">
         <div class="slide-number">3/6</div>
         <h2>The Solution: Two-Sided Marketplace</h2>
-        <div style="display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; margin-top: 50px;">
+        <div class="solution-flex">
             <div class="stat-box">
-                <span style="font-size: 3rem;">🏢</span>
-                <h3 style="margin-top: 20px;">Business Portal</h3>
-                <ul class="solution-list" style="text-align: left; margin-top: 20px;">
-                    <li style="font-size: 1rem;">Real-time dashboard</li>
-                    <li style="font-size: 1rem;">Asset tracking</li>
-                    <li style="font-size: 1rem;">Compliance alerts</li>
-                    <li style="font-size: 1rem;">Audit-ready reports</li>
+                <span class="icon-large">🏢</span>
+                <h3 class="h3-mt-20">Business Portal</h3>
+                <ul class="solution-list solution-list-left">
+                    <li class="solution-list-font">Real-time dashboard</li>
+                    <li class="solution-list-font">Asset tracking</li>
+                    <li class="solution-list-font">Compliance alerts</li>
+                    <li class="solution-list-font">Audit-ready reports</li>
                 </ul>
             </div>
             <div class="stat-box">
-                <span style="font-size: 3rem;">🔧</span>
-                <h3 style="margin-top: 20px;">Contractor Portal</h3>
-                <ul class="solution-list" style="text-align: left; margin-top: 20px;">
-                    <li style="font-size: 1rem;">AI-guided testing</li>
-                    <li style="font-size: 1rem;">Auto-certificates</li>
-                    <li style="font-size: 1rem;">Photo upload</li>
-                    <li style="font-size: 1rem;">Offline capable</li>
+                <span class="icon-large">🔧</span>
+                <h3 class="h3-mt-20">Contractor Portal</h3>
+                <ul class="solution-list solution-list-left">
+                    <li class="solution-list-font">AI-guided testing</li>
+                    <li class="solution-list-font">Auto-certificates</li>
+                    <li class="solution-list-font">Photo upload</li>
+                    <li class="solution-list-font">Offline capable</li>
                 </ul>
             </div>
         </div>
@@ -280,7 +368,7 @@
     <div class="slide" id="slide4">
         <div class="slide-number">4/6</div>
         <h2>The Impact</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px;">
+        <div class="impact-flex">
             <div class="stat-box">
                 <span class="stat-number">60%</span>
                 <span class="stat-label">Time Savings</span>
@@ -294,7 +382,7 @@
                 <span class="stat-label">Paperwork</span>
             </div>
         </div>
-        <ul class="value-list" style="margin-top: 60px;">
+        <ul class="value-list value-list-mt">
             <li>Instant certificate generation (was 2 days)</li>
             <li>Complete digital audit trail</li>
             <li>Real-time compliance visibility</li>
@@ -306,32 +394,32 @@
     <div class="slide" id="slide5">
         <div class="slide-number">5/6</div>
         <h2>Proposed 30-Day Pilot</h2>
-        <h3 style="margin-bottom: 40px;">Tubney Warren Barn</h3>
+        <h3 class="pilot-location">Tubney Warren Barn</h3>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="week-number">Week 1-2</div>
-                <p style="font-size: 1.1rem; margin-top: 15px;">
+                <p class="pilot-timeline-desc">
                     Equipment database setup<br>
                     Contractor onboarding
                 </p>
             </div>
             <div class="timeline-item">
                 <div class="week-number">Week 2-3</div>
-                <p style="font-size: 1.1rem; margin-top: 15px;">
+                <p class="pilot-timeline-desc">
                     Live testing begins<br>
                     AI assistant feedback
                 </p>
             </div>
             <div class="timeline-item">
                 <div class="week-number">Week 3-4</div>
-                <p style="font-size: 1.1rem; margin-top: 15px;">
+                <p class="pilot-timeline-desc">
                     Measure time savings<br>
                     Compliance reporting
                 </p>
             </div>
             <div class="timeline-item">
                 <div class="week-number">Week 4+</div>
-                <p style="font-size: 1.1rem; margin-top: 15px;">
+                <p class="pilot-timeline-desc">
                     Roll out decision<br>
                     Multi-site expansion
                 </p>
@@ -342,20 +430,20 @@
     <!-- Slide 6: Call to Action -->
     <div class="slide" id="slide6">
         <div class="slide-number">6/6</div>
-        <h1 style="font-size: 3.5rem;">Let's Transform PAT Testing</h1>
-        <p style="font-size: 1.8rem; margin-top: 40px;">
+        <h1 class="cta-title">Let's Transform PAT Testing</h1>
+        <p class="cta-subtitle">
             From compliance burden to competitive advantage
         </p>
-        <button class="cta-button" onclick="window.location.href='index.html'">
+        <button class="cta-button" type="button" onclick="window.location.href='index.html'">
             View Live Demo
         </button>
-        <p style="margin-top: 60px; font-size: 1.3rem; color: rgba(255,255,255,0.8);">
+        <p class="cta-platforms">
             This is the first of five "Buddy" platforms<br>
-            <span style="color: #64B5F6;">GardenBuddy • MaintenanceBuddy • PAT BuddAI • PoolBuddy • CleanBuddy</span>
+            <span class="cta-platforms-highlight">GardenBuddy • MaintenanceBuddy • PAT BuddAI • PoolBuddy • CleanBuddy</span>
         </p>
-        <p style="margin-top: 40px; font-size: 1.1rem;">
+        <p class="cta-builtby">
             Built by James Budden | Giblets Creations<br>
-            <span style="color: rgba(255,255,255,0.6);">Polymathic Total Freelancer</span>
+            <span class="cta-builtby-meta">Polymathic Total Freelancer</span>
         </p>
     </div>
 

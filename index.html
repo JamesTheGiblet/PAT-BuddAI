@@ -82,6 +82,7 @@
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 8px 32px rgba(21, 101, 192, 0.3);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 2px solid rgba(144, 202, 249, 0.5);
             flex: 1;
@@ -268,6 +269,7 @@
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 8px 32px rgba(21, 101, 192, 0.3);
+            -webkit-backdrop-filter: none;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(144, 202, 249, 0.5);
             max-width: 800px;
@@ -437,6 +439,7 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
 
@@ -524,6 +527,17 @@
         .login-links a:hover {
             text-decoration: underline;
         }
+        .demo-caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .footer-links {
+            font-size: 0.8rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -602,12 +616,12 @@
         <div class="demo-placeholder" onclick="playDemo()">
             <span>▶️ Demo Video</span>
         </div>
-        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Click to play demonstration</p>
+        <p class="demo-caption">Click to play demonstration</p>
     </div>
 
     <footer>
         <p>© 2026 PAT BuddAI 4U | Compliant with IET Code of Practice</p>
-        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.8;">
+        <p class="footer-links">
             <a href="#" onclick="showSupport()">Contact Support</a> • 
             <a href="privacy-policy.html">Privacy Policy</a> • 
             <a href="terms-of-service.html">Terms of Service</a>

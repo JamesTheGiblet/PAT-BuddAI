@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IET Code of Practice Guide - PAT BuddAI 4U</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        .section-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
         body {
@@ -149,8 +155,6 @@
             margin-top: 15px;
             overflow-x: auto;
             padding-bottom: 5px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
         }
 
         .quick-filters::-webkit-scrollbar {
@@ -724,7 +728,6 @@
             .compliance-table {
                 display: block;
                 overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
             }
             
             .fab {
@@ -952,9 +955,11 @@
                             🔧 Equipment Classes
                         </a>
                     </li>
-                    
-                    <div class="nav-section">
-                        <div class="nav-section-title">Testing Procedures</div>
+                </ul>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Procedures</div>
+                    <ul class="nav-menu">
                         <li class="nav-item">
                             <a href="#visual" class="nav-link" onclick="showSection('visual')">
                                 👁️ Visual Inspection
@@ -980,10 +985,12 @@
                                 🔌 Load & Flash Test
                             </a>
                         </li>
-                    </div>
-                    
-                    <div class="nav-section">
-                        <div class="nav-section-title">Compliance</div>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Compliance</div>
+                    <ul class="nav-menu">
                         <li class="nav-item">
                             <a href="#limits" class="nav-link" onclick="showSection('limits')">
                                 📊 Test Limits
@@ -1004,10 +1011,12 @@
                                 ❌ Failure Actions
                             </a>
                         </li>
-                    </div>
-                    
-                    <div class="nav-section">
-                        <div class="nav-section-title">Resources</div>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-menu">
                         <li class="nav-item">
                             <a href="#downloads" class="nav-link" onclick="showSection('downloads')">
                                 📥 Downloads
@@ -1018,8 +1027,8 @@
                                 🔄 Latest Updates
                             </a>
                         </li>
-                    </div>
-                </ul>
+                    </ul>
+                </div>
             </div>
 
             <!-- Main Content -->
@@ -1027,7 +1036,7 @@
                 <!-- Introduction Section -->
                 <div class="guide-section active" id="introduction">
                     <div class="section-header">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div class="section-header-flex">
                             <div>
                                 <h2 class="section-title">Introduction to IET Code of Practice</h2>
                                 <p class="section-subtitle">5th Edition - In-service Inspection and Testing of Electrical Equipment</p>
@@ -1082,7 +1091,7 @@
                 <!-- Legal Requirements Section -->
                 <div class="guide-section" id="legal">
                     <div class="section-header">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div class="section-header-flex">
                             <div>
                                 <h2 class="section-title">Legal Requirements & Regulations</h2>
                                 <p class="section-subtitle">UK Legal Framework for PAT Testing</p>
@@ -1155,7 +1164,7 @@
                 <!-- Equipment Classes Section -->
                 <div class="guide-section" id="equipment">
                     <div class="section-header">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div class="section-header-flex">
                             <div>
                                 <h2 class="section-title">Equipment Classes & Types</h2>
                                 <p class="section-subtitle">Understanding Different Equipment Categories</p>
@@ -1252,7 +1261,7 @@
                 <!-- Test Limits Section -->
                 <div class="guide-section" id="limits">
                     <div class="section-header">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div class="section-header-flex">
                             <div>
                                 <h2 class="section-title">Test Limits & Requirements</h2>
                                 <p class="section-subtitle">Pass/Fail Criteria for PAT Testing</p>

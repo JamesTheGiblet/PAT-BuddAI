@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,6 +13,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        .unit-large {
+            font-size: 1.5rem;
         }
 
         :root {
@@ -102,6 +106,7 @@
 
         .card {
             background: var(--glass-white);
+            -webkit-backdrop-filter: blur(20);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 35px;
@@ -180,6 +185,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-appearance: none;
             -moz-appearance: textfield;
+            appearance: none;
         }
 
         /* Remove spinner arrows on mobile */
@@ -213,7 +219,6 @@
             border-radius: 5px;
             background: linear-gradient(to right, #E2E8F0 0%, var(--electric-blue) 100%);
             outline: none;
-            -webkit-appearance: none;
             cursor: pointer;
             touch-action: none;
         }
@@ -281,6 +286,7 @@
 
         .result-item {
             background: rgba(255, 255, 255, 0.15);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             padding: 25px;
             border-radius: 15px;
@@ -316,6 +322,10 @@
             opacity: 0.85;
             font-weight: 500;
         }
+        .result-description-large {
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
 
         .savings-highlight {
             grid-column: 1 / -1;
@@ -335,12 +345,13 @@
         .breakdown-card {
             grid-column: 1 / -1;
             background: var(--glass-white);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
             padding: 40px;
         }
 
         .table-wrapper {
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
             margin: 0 -10px;
             padding: 0 10px;
         }
@@ -374,6 +385,9 @@
             text-transform: uppercase;
             font-size: 0.85rem;
             letter-spacing: 1px;
+        }
+        .th-right {
+            text-align: right;
         }
 
         .breakdown-table td {
@@ -430,6 +444,9 @@
             font-size: 0.85rem;
             color: var(--steel);
             font-style: italic;
+        }
+        .breakdown-card .assumption-note {
+            margin-top: 25px;
         }
 
         @media print {
@@ -605,6 +622,27 @@
                 text-align: center;
             }
         }
+        .td-right {
+            text-align: right;
+        }
+        .breakdown-total-row {
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+        .breakdown-total-label {
+            background: var(--deep-navy);
+            color: white;
+        }
+        .breakdown-total-value {
+            background: var(--deep-navy);
+            color: white;
+            text-align: right;
+        }
+        .breakdown-total-savings {
+            background: var(--success-green);
+            color: white;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -623,33 +661,33 @@
                 </div>
                 
                 <div class="input-group">
-                    <label class="input-label">Equipment Count</label>
+                    <label class="input-label" for="equipmentCount">Equipment Count</label>
                     <div class="input-wrapper">
-                        <input type="number" id="equipmentCount" value="150" min="1" max="10000">
+                        <input type="number" id="equipmentCount" value="150" min="1" max="10000" title="Enter the number of equipment items" placeholder="e.g. 150">
                         <span class="input-suffix">items</span>
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">Tests Per Year (Per Item)</label>
+                    <label class="input-label" for="testsPerYear">Tests Per Year (Per Item)</label>
                     <div class="input-wrapper">
-                        <input type="number" id="testsPerYear" value="2" min="1" max="12" step="1">
+                        <input type="number" id="testsPerYear" value="2" min="1" max="12" step="1" title="Enter the number of tests per year per item" placeholder="e.g. 2">
                         <span class="input-suffix">tests</span>
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">Contractor Rate</label>
+                    <label class="input-label" for="contractorRate">Contractor Rate</label>
                     <div class="input-wrapper">
-                        <input type="number" id="contractorRate" value="45" min="1" max="200" step="5">
+                        <input type="number" id="contractorRate" value="45" min="1" max="200" step="5" title="Enter the contractor hourly rate" placeholder="e.g. 45">
                         <span class="input-suffix">£/hr</span>
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">Time Per Test (Current)</label>
+                    <label class="input-label" for="timePerTest">Time Per Test (Current)</label>
                     <div class="input-wrapper">
-                        <input type="number" id="timePerTest" value="8" min="1" max="60" step="1">
+                        <input type="number" id="timePerTest" value="8" min="1" max="60" step="1" title="Enter the time per test in minutes" placeholder="e.g. 8">
                         <span class="input-suffix">min</span>
                     </div>
                 </div>
@@ -665,7 +703,7 @@
                 <div class="input-group">
                     <label class="input-label">Admin Hours (Certificate Processing)</label>
                     <div class="input-wrapper">
-                        <input type="number" id="adminHours" value="4" min="0" max="40" step="0.5">
+                        <input type="number" id="adminHours" value="4" min="0" max="40" step="0.5" title="Enter admin hours for certificate processing per month" placeholder="e.g. 4">
                         <span class="input-suffix">hrs/month</span>
                     </div>
                 </div>
@@ -673,7 +711,7 @@
                 <div class="input-group">
                     <label class="input-label">Admin Hourly Rate</label>
                     <div class="input-wrapper">
-                        <input type="number" id="adminRate" value="35" min="10" max="100" step="5">
+                        <input type="number" id="adminRate" value="35" min="10" max="100" step="5" title="Enter admin hourly rate" placeholder="e.g. 35">
                         <span class="input-suffix">£/hr</span>
                     </div>
                 </div>
@@ -681,7 +719,7 @@
                 <div class="input-group">
                     <label class="input-label">Compliance Audit Prep</label>
                     <div class="input-wrapper">
-                        <input type="number" id="auditPrepHours" value="8" min="0" max="100" step="1">
+                        <input type="number" id="auditPrepHours" value="8" min="0" max="100" step="1" title="Enter hours spent on compliance audit preparation per year" placeholder="e.g. 8">
                         <span class="input-suffix">hrs/year</span>
                     </div>
                 </div>
@@ -699,18 +737,18 @@
                 </div>
 
                 <div class="slider-container">
-                    <label class="input-label">Testing Time Reduction: <span id="timeReductionValue">40</span>%</label>
-                    <input type="range" class="slider" id="timeReduction" min="0" max="70" value="40" step="5">
+                    <label class="input-label" for="timeReduction">Testing Time Reduction: <span id="timeReductionValue">40</span>%</label>
+                    <input type="range" class="slider" id="timeReduction" min="0" max="70" value="40" step="5" title="Adjust testing time reduction percentage">
                 </div>
 
                 <div class="slider-container">
-                    <label class="input-label">Admin Time Reduction: <span id="adminReductionValue">60</span>%</label>
-                    <input type="range" class="slider" id="adminReduction" min="0" max="90" value="60" step="5">
+                    <label class="input-label" for="adminReduction">Admin Time Reduction: <span id="adminReductionValue">60</span>%</label>
+                    <input type="range" class="slider" id="adminReduction" min="0" max="90" value="60" step="5" title="Adjust admin time reduction percentage">
                 </div>
 
                 <div class="slider-container">
-                    <label class="input-label">Audit Prep Reduction: <span id="auditReductionValue">80</span>%</label>
-                    <input type="range" class="slider" id="auditReduction" min="0" max="95" value="80" step="5">
+                    <label class="input-label" for="auditReduction">Audit Prep Reduction: <span id="auditReductionValue">80</span>%</label>
+                    <input type="range" class="slider" id="auditReduction" min="0" max="95" value="80" step="5" title="Adjust audit prep reduction percentage">
                 </div>
 
                 <div class="assumption-note">
@@ -720,8 +758,8 @@
 
             <!-- Results Card -->
             <div class="card results-card">
-                <div class="card-header" style="color: white; margin-bottom: 35px;">
-                    <div class="card-icon" style="background: rgba(255,255,255,0.2);">💰</div>
+                <div class="card-header card-header-white card-header-mb">
+                    <div class="card-icon card-icon-bgwhite">💰</div>
                     Annual Cost Analysis
                 </div>
 
@@ -740,20 +778,20 @@
 
                     <div class="result-item">
                         <div class="result-label">Time Saved Annually</div>
-                        <div class="result-value"><span id="timeSaved">0</span><span style="font-size: 1.5rem;">hrs</span></div>
+                        <div class="result-value"><span id="timeSaved">0</span><span class="unit-large">hrs</span></div>
                         <div class="result-description">Contractor + admin time</div>
                     </div>
 
                     <div class="result-item">
                         <div class="result-label">Payback Period</div>
-                        <div class="result-value"><span id="paybackPeriod">0</span><span style="font-size: 1.5rem;">mo</span></div>
+                        <div class="result-value"><span id="paybackPeriod">0</span><span class="unit-large">mo</span></div>
                         <div class="result-description">Break-even timeline</div>
                     </div>
 
                     <div class="savings-highlight">
                         <div class="result-label">Total Annual Savings</div>
                         <div class="result-value">£<span id="totalSavings">0</span></div>
-                        <div class="result-description" style="font-size: 1.1rem; margin-top: 15px;">
+                        <div class="result-description result-description-large">
                             <strong><span id="roi">0</span>% ROI</strong> • Efficiency gains + reduced overhead
                         </div>
                     </div>
@@ -772,41 +810,41 @@
                         <thead>
                             <tr>
                                 <th>Category</th>
-                                <th style="text-align: right;">Current System</th>
-                                <th style="text-align: right;">With PAT BuddAI</th>
-                                <th style="text-align: right;">Savings</th>
+                                <th class="th-right">Current System</th>
+                                <th class="th-right">With PAT BuddAI</th>
+                                <th class="th-right">Savings</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Contractor Testing Costs</td>
-                                <td style="text-align: right;">£<span id="currentContractor">0</span></td>
-                                <td style="text-align: right;">£<span id="buddaiContractor">0</span></td>
+                                <td class="td-right">£<span id="currentContractor">0</span></td>
+                                <td class="td-right">£<span id="buddaiContractor">0</span></td>
                                 <td class="savings-row">£<span id="savingsContractor">0</span></td>
                             </tr>
                             <tr>
                                 <td>Admin & Processing Time</td>
-                                <td style="text-align: right;">£<span id="currentAdmin">0</span></td>
-                                <td style="text-align: right;">£<span id="buddaiAdmin">0</span></td>
+                                <td class="td-right">£<span id="currentAdmin">0</span></td>
+                                <td class="td-right">£<span id="buddaiAdmin">0</span></td>
                                 <td class="savings-row">£<span id="savingsAdmin">0</span></td>
                             </tr>
                             <tr>
                                 <td>Compliance Audit Prep</td>
-                                <td style="text-align: right;">£<span id="currentAudit">0</span></td>
-                                <td style="text-align: right;">£<span id="buddaiAudit">0</span></td>
+                                <td class="td-right">£<span id="currentAudit">0</span></td>
+                                <td class="td-right">£<span id="buddaiAudit">0</span></td>
                                 <td class="savings-row">£<span id="savingsAudit">0</span></td>
                             </tr>
-                            <tr style="font-weight: 800; font-size: 1.1rem;">
-                                <td style="background: var(--deep-navy); color: white;">TOTAL ANNUAL</td>
-                                <td style="background: var(--deep-navy); color: white; text-align: right;">£<span id="totalCurrent">0</span></td>
-                                <td style="background: var(--deep-navy); color: white; text-align: right;">£<span id="totalBuddAI">0</span></td>
-                                <td style="background: var(--success-green); color: white; text-align: right;">£<span id="totalSavingsBreakdown">0</span></td>
+                            <tr class="breakdown-total-row">
+                                <td class="breakdown-total-label">TOTAL ANNUAL</td>
+                                <td class="breakdown-total-value">£<span id="totalCurrent">0</span></td>
+                                <td class="breakdown-total-value">£<span id="totalBuddAI">0</span></td>
+                                <td class="breakdown-total-savings">£<span id="totalSavingsBreakdown">0</span></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="assumption-note" style="margin-top: 25px;">
+                <div class="assumption-note">
                     💡 <strong>Additional Benefits Not Quantified:</strong> Reduced compliance risk, improved contractor satisfaction, real-time visibility, scalability across multiple sites, complete digital audit trail, potential to license platform to other organizations
                 </div>
             </div>
