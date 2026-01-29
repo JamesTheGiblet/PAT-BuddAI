@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAT BuddAI 4U - Pitch Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0D47A1 0%, #1976D2 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .slide:nth-child(even) {
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 30px;
+            font-weight: 800;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 40px;
+            color: #64B5F6;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 25px;
+            color: #90CAF9;
+        }
+
+        p {
+            font-size: clamp(1.1rem, 3vw, 1.8rem);
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .problem-list, .solution-list, .value-list {
+            text-align: left;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .problem-list li, .solution-list li, .value-list li {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            margin: 20px 0;
+            padding-left: 40px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .problem-list li:before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        .solution-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        .value-list li:before {
+            content: "💎";
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .stat-number {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 800;
+            color: #64B5F6;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            margin-top: 15px;
+            display: block;
+        }
+
+        .demo-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .demo-preview img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #64B5F6 0%, #90CAF9 100%);
+            color: #0D47A1;
+            border: none;
+            padding: 25px 60px;
+            border-radius: 50px;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(100, 181, 246, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(100, 181, 246, 0.6);
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 40px auto;
+            gap: 30px;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .week-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #64B5F6;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.5);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .timeline {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide" id="slide1">
+        <div class="slide-number">1/6</div>
+        <h1>PAT BuddAI 4U</h1>
+        <p style="font-size: 2rem; color: #90CAF9;">Your Intelligent PAT Testing Companion</p>
+        <p style="margin-top: 40px;">Transforming Compliance from Burden to Automated Workflow</p>
+        <p style="font-size: 1.3rem; margin-top: 40px; color: rgba(255,255,255,0.8);">
+            Presentation for Oxford Pharmagenesis<br>
+            James Budden | Giblets Creations
+        </p>
+    </div>
+
+    <!-- Slide 2: The Problem -->
+    <div class="slide" id="slide2">
+        <div class="slide-number">2/6</div>
+        <h2>The Current Reality</h2>
+        <ul class="problem-list">
+            <li>Manual certificate generation and data entry</li>
+            <li>Chasing contractors for documentation</li>
+            <li>Tracking which equipment needs testing across sites</li>
+            <li>Time-consuming compliance audit preparation</li>
+            <li>No real-time visibility into testing status</li>
+            <li>Multi-site coordination overhead</li>
+        </ul>
+        <p style="margin-top: 50px; font-size: 1.5rem; color: #64B5F6;">
+            Every facility faces this. We can solve it.
+        </p>
+    </div>
+
+    <!-- Slide 3: The Solution -->
+    <div class="slide" id="slide3">
+        <div class="slide-number">3/6</div>
+        <h2>The Solution: Two-Sided Marketplace</h2>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; margin-top: 50px;">
+            <div class="stat-box">
+                <span style="font-size: 3rem;">🏢</span>
+                <h3 style="margin-top: 20px;">Business Portal</h3>
+                <ul class="solution-list" style="text-align: left; margin-top: 20px;">
+                    <li style="font-size: 1rem;">Real-time dashboard</li>
+                    <li style="font-size: 1rem;">Asset tracking</li>
+                    <li style="font-size: 1rem;">Compliance alerts</li>
+                    <li style="font-size: 1rem;">Audit-ready reports</li>
+                </ul>
+            </div>
+            <div class="stat-box">
+                <span style="font-size: 3rem;">🔧</span>
+                <h3 style="margin-top: 20px;">Contractor Portal</h3>
+                <ul class="solution-list" style="text-align: left; margin-top: 20px;">
+                    <li style="font-size: 1rem;">AI-guided testing</li>
+                    <li style="font-size: 1rem;">Auto-certificates</li>
+                    <li style="font-size: 1rem;">Photo upload</li>
+                    <li style="font-size: 1rem;">Offline capable</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Value Proposition -->
+    <div class="slide" id="slide4">
+        <div class="slide-number">4/6</div>
+        <h2>The Impact</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px;">
+            <div class="stat-box">
+                <span class="stat-number">60%</span>
+                <span class="stat-label">Time Savings</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Audit Ready</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">0</span>
+                <span class="stat-label">Paperwork</span>
+            </div>
+        </div>
+        <ul class="value-list" style="margin-top: 60px;">
+            <li>Instant certificate generation (was 2 days)</li>
+            <li>Complete digital audit trail</li>
+            <li>Real-time compliance visibility</li>
+            <li>Scalable across all OP sites</li>
+        </ul>
+    </div>
+
+    <!-- Slide 5: 30-Day Pilot -->
+    <div class="slide" id="slide5">
+        <div class="slide-number">5/6</div>
+        <h2>Proposed 30-Day Pilot</h2>
+        <h3 style="margin-bottom: 40px;">Tubney Warren Barn</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="week-number">Week 1-2</div>
+                <p style="font-size: 1.1rem; margin-top: 15px;">
+                    Equipment database setup<br>
+                    Contractor onboarding
+                </p>
+            </div>
+            <div class="timeline-item">
+                <div class="week-number">Week 2-3</div>
+                <p style="font-size: 1.1rem; margin-top: 15px;">
+                    Live testing begins<br>
+                    AI assistant feedback
+                </p>
+            </div>
+            <div class="timeline-item">
+                <div class="week-number">Week 3-4</div>
+                <p style="font-size: 1.1rem; margin-top: 15px;">
+                    Measure time savings<br>
+                    Compliance reporting
+                </p>
+            </div>
+            <div class="timeline-item">
+                <div class="week-number">Week 4+</div>
+                <p style="font-size: 1.1rem; margin-top: 15px;">
+                    Roll out decision<br>
+                    Multi-site expansion
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Call to Action -->
+    <div class="slide" id="slide6">
+        <div class="slide-number">6/6</div>
+        <h1 style="font-size: 3.5rem;">Let's Transform PAT Testing</h1>
+        <p style="font-size: 1.8rem; margin-top: 40px;">
+            From compliance burden to competitive advantage
+        </p>
+        <button class="cta-button" onclick="window.location.href='index.html'">
+            View Live Demo
+        </button>
+        <p style="margin-top: 60px; font-size: 1.3rem; color: rgba(255,255,255,0.8);">
+            This is the first of five "Buddy" platforms<br>
+            <span style="color: #64B5F6;">GardenBuddy • MaintenanceBuddy • PAT BuddAI • PoolBuddy • CleanBuddy</span>
+        </p>
+        <p style="margin-top: 40px; font-size: 1.1rem;">
+            Built by James Budden | Giblets Creations<br>
+            <span style="color: rgba(255,255,255,0.6);">Polymathic Total Freelancer</span>
+        </p>
+    </div>
+
+    <!-- Navigation Dots -->
+    <div class="navigation">
+        <div class="nav-dot active" onclick="scrollToSlide(1)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(2)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(3)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(4)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(5)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(6)"></div>
+    </div>
+
+    <script>
+        function scrollToSlide(slideNum) {
+            const slide = document.getElementById('slide' + slideNum);
+            slide.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update active dot
+            document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideNum - 1);
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const slides = document.querySelectorAll('.slide');
+            const currentSlide = Array.from(slides).findIndex(slide => {
+                const rect = slide.getBoundingClientRect();
+                return rect.top >= 0 && rect.top < window.innerHeight / 2;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                if (currentSlide < slides.length - 1) {
+                    scrollToSlide(currentSlide + 2);
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    scrollToSlide(currentSlide);
+                }
+            }
+        });
+
+        // Update active dot on scroll
+        window.addEventListener('scroll', () => {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, index) => {
+                const rect = slide.getBoundingClientRect();
+                if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+                    document.querySelectorAll('.nav-dot').forEach((dot, dotIndex) => {
+                        dot.classList.toggle('active', dotIndex === index);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

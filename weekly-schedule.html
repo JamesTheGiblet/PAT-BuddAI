@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Weekly Schedule - PAT BuddAI 4U</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(33, 150, 243, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: #1565C0;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Stats Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1976D2;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .stat-card.highlight {
+            background: linear-gradient(135deg, #1976D2, #2196F3);
+            color: white;
+        }
+
+        .stat-card.highlight .stat-number {
+            color: white;
+        }
+
+        .stat-card.highlight .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Date Navigation */
+        .date-navigation {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 70px;
+            z-index: 900;
+        }
+
+        .date-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .date-title {
+            font-size: 1.3rem;
+            color: #1565C0;
+            font-weight: 700;
+            flex: 1;
+            text-align: center;
+        }
+
+        .date-btn {
+            background: #E3F2FD;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #1976D2;
+            transition: all 0.3s ease;
+        }
+
+        .date-btn:hover {
+            background: #1976D2;
+            color: white;
+        }
+
+        .date-btn.today {
+            background: #1976D2;
+            color: white;
+            font-size: 0.9rem;
+            padding: 0 20px;
+            width: auto;
+            border-radius: 20px;
+        }
+
+        /* Week View Tabs */
+        .week-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 5px;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .week-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .day-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 15px 10px;
+            border: none;
+            background: #f8f9fa;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #666;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .day-tab.active {
+            background: #1976D2;
+            color: white;
+            font-weight: 600;
+        }
+
+        .day-name {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .day-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .day-tab.today .day-number {
+            background: #1976D2;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .day-tab.active .day-number {
+            background: rgba(255, 255, 255, 0.2);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Schedule Views */
+        .view-switcher {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .view-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .view-btn.active {
+            background: #1976D2;
+            color: white;
+        }
+
+        /* Schedule Content */
+        .schedule-content {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Day View */
+        .day-schedule {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .time-slot {
+            position: relative;
+            padding-left: 60px;
+            min-height: 60px;
+        }
+
+        .time-label {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            text-align: right;
+            padding-right: 15px;
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .time-line {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #E3F2FD;
+        }
+
+        .appointment {
+            background: white;
+            border-left: 4px solid #2196F3;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .appointment:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.15);
+        }
+
+        .appointment.urgent {
+            border-left-color: #F44336;
+            background: linear-gradient(to right, #FFEBEE, white);
+        }
+
+        .appointment.completed {
+            border-left-color: #4CAF50;
+            background: linear-gradient(to right, #E8F5E9, white);
+        }
+
+        .appointment.upcoming {
+            border-left-color: #FF9800;
+            background: linear-gradient(to right, #FFF3E0, white);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .appointment-time {
+            background: #E3F2FD;
+            color: #1976D2;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .appointment-status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .appointment-status.scheduled {
+            background: #FFF3E0;
+            color: #EF6C00;
+        }
+
+        .appointment-status.in-progress {
+            background: #E3F2FD;
+            color: #1565C0;
+        }
+
+        .appointment-status.completed {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .appointment-title {
+            font-size: 1.1rem;
+            color: #1565C0;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .appointment-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .appointment-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn.primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #2196F3;
+            border: 2px solid #E3F2FD;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Week View */
+        .week-view {
+            display: none;
+        }
+
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+        }
+
+        .week-day {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 300px;
+            min-width: 140px;
+        }
+
+        .week-day-header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E3F2FD;
+        }
+
+        .week-day-name {
+            font-weight: 700;
+            color: #1565C0;
+            margin-bottom: 5px;
+        }
+
+        .week-day-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .week-appointments {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .week-appointment {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            border-left: 3px solid #2196F3;
+        }
+
+        .week-appointment-time {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .week-appointment-title {
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* List View */
+        .list-view {
+            display: none;
+        }
+
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .job-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .job-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .job-info {
+            flex: 1;
+        }
+
+        .job-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-title {
+            font-size: 1.1rem;
+            color: #1565C0;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .job-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .job-action {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .job-action:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        /* Map View */
+        .map-view {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            min-height: 400px;
+            position: relative;
+        }
+
+        .map-placeholder {
+            background: #e9ecef;
+            border-radius: 12px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            color: #666;
+        }
+
+        .map-marker {
+            background: #1976D2;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+            cursor: pointer;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .quick-action-btn {
+            background: white;
+            border: 2px solid #E3F2FD;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quick-action-btn:hover {
+            border-color: #2196F3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.15);
+        }
+
+        .action-icon {
+            font-size: 1.8rem;
+            color: #1976D2;
+        }
+
+        .action-text {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            background: linear-gradient(135deg, #1565C0, #1976D2);
+            color: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .ai-icon {
+            font-size: 1.5rem;
+        }
+
+        .ai-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .ai-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #64B5F6;
+        }
+
+        .ai-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .ai-suggestion {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .ai-suggestion:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(33, 150, 243, 0.4);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: #BBDEFB;
+            margin-bottom: 20px;
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: transform 0.3s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: #4CAF50;
+        }
+
+        .toast.info {
+            background: #2196F3;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .date-navigation, .schedule-content, .ai-assistant {
+                padding: 20px;
+            }
+            
+            .week-grid {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 15px;
+            }
+            
+            .week-day {
+                min-width: 100%;
+            }
+            
+            .appointment-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .job-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .job-action {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ai-suggestions {
+                grid-template-columns: 1fr;
+            }
+            
+            .fab {
+                display: flex;
+            }
+            
+            /* Touch-friendly optimizations */
+            .day-tab, .action-btn, .quick-action-btn {
+                min-height: 44px;
+            }
+            
+            .appointment {
+                padding: 16px;
+            }
+            
+            .date-controls {
+                flex-wrap: wrap;
+            }
+            
+            .date-btn.today {
+                order: 3;
+                flex: 1;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 15px;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-tab {
+                min-width: 70px;
+                padding: 12px 8px;
+            }
+            
+            .appointment-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .appointment-time {
+                align-self: flex-start;
+            }
+            
+            .time-slot {
+                padding-left: 45px;
+            }
+            
+            .time-label {
+                width: 40px;
+                padding-right: 10px;
+                font-size: 0.8rem;
+            }
+            
+            .time-line {
+                left: 40px;
+            }
+        }
+
+        /* Drag and Drop */
+        .appointment.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .drop-zone {
+            background: rgba(33, 150, 243, 0.1);
+            border: 2px dashed #2196F3;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: #1976D2;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span>📅</span>
+                <span>Weekly Schedule</span>
+            </div>
+            <div class="nav-actions">
+                <a href="contractor-dashboard.html" class="nav-btn">← Dashboard</a>
+                <button class="nav-btn active">This Week</button>
+                <button class="nav-btn" onclick="switchToNextWeek()">Next Week</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Your PAT Testing Schedule</h1>
+            <p class="page-subtitle">Plan and manage your weekly testing appointments</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card highlight">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Jobs This Week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">25</div>
+                <div class="stat-label">Hours Booked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">£2,850</div>
+                <div class="stat-label">Estimated Revenue</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Urgent Jobs</div>
+            </div>
+        </div>
+
+        <!-- Date Navigation -->
+        <div class="date-navigation">
+            <div class="date-controls">
+                <button class="date-btn" onclick="previousWeek()">◀</button>
+                <div class="date-title" id="weekTitle">Week 43, 2024</div>
+                <button class="date-btn" onclick="nextWeek()">▶</button>
+                <button class="date-btn today" onclick="goToToday()">Today</button>
+            </div>
+
+            <div class="week-tabs" id="weekTabs">
+                <!-- Day tabs will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- View Switcher -->
+        <div class="view-switcher">
+            <button class="view-btn active" onclick="switchView('day')">
+                <span>📅</span> Day View
+            </button>
+            <button class="view-btn" onclick="switchView('week')">
+                <span>🗓️</span> Week View
+            </button>
+            <button class="view-btn" onclick="switchView('list')">
+                <span>📋</span> List View
+            </button>
+            <button class="view-btn" onclick="switchView('map')">
+                <span>🗺️</span> Map View
+            </button>
+        </div>
+
+        <!-- Day View -->
+        <div class="schedule-content" id="dayView">
+            <div class="day-schedule" id="daySchedule">
+                <!-- Appointments will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Week View -->
+        <div class="schedule-content week-view" id="weekView">
+            <div class="week-grid" id="weekGrid">
+                <!-- Week grid will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- List View -->
+        <div class="schedule-content list-view" id="listView">
+            <div class="job-list" id="jobList">
+                <!-- Job list will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Map View -->
+        <div class="map-view" id="mapView">
+            <div class="map-placeholder" id="mapPlaceholder">
+                <div style="font-size: 3rem;">🗺️</div>
+                <h3>Location Map View</h3>
+                <p>This would show your job locations on an interactive map</p>
+                <p style="font-size: 0.9rem; color: #999;">(Map integration would show here in production)</p>
+            </div>
+            <!-- Map markers would be added here -->
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="quick-action-btn" onclick="addNewJob()">
+                <div class="action-icon">➕</div>
+                <div class="action-text">Add New Job</div>
+            </div>
+            <div class="quick-action-btn" onclick="exportSchedule()">
+                <div class="action-icon">📤</div>
+                <div class="action-text">Export Schedule</div>
+            </div>
+            <div class="quick-action-btn" onclick="optimizeRoute()">
+                <div class="action-icon">📍</div>
+                <div class="action-text">Optimize Route</div>
+            </div>
+            <div class="quick-action-btn" onclick="syncCalendar()">
+                <div class="action-icon">🔄</div>
+                <div class="action-text">Sync Calendar</div>
+            </div>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="ai-assistant">
+            <div class="ai-header">
+                <div class="ai-icon">🤖</div>
+                <div class="ai-title">Schedule Assistant</div>
+            </div>
+            
+            <div class="ai-message">
+                <p><strong>AI Tip:</strong> I've detected 3 jobs in the same area on Tuesday. Consider grouping them to save travel time and increase efficiency by 30%.</p>
+            </div>
+
+            <div class="ai-suggestions">
+                <div class="ai-suggestion" onclick="aiSuggest('group')">
+                    🚗 Optimize Route
+                </div>
+                <div class="ai-suggestion" onclick="aiSuggest('buffer')">
+                    ⏰ Add Buffer Time
+                </div>
+                <div class="ai-suggestion" onclick="aiSuggest('reminder')">
+                    🔔 Set Reminders
+                </div>
+                <div class="ai-suggestion" onclick="aiSuggest('prepare')">
+                    📋 Prepare Equipment
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fab" onclick="addNewJob()">
+        ➕
+    </button>
+
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Loading schedule...</p>
+    </div>
+
+    <script>
+        // Global variables
+        let currentWeek = 43; // Current week number
+        let currentYear = 2024;
+        let currentView = 'day';
+        let currentDay = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
+        let scheduleData = {};
+        let dragStartElement = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeWeek();
+            loadScheduleData();
+            renderWeekTabs();
+            switchView('day');
+            updateFABVisibility();
+            
+            window.addEventListener('resize', updateFABVisibility);
+            showToast('Schedule loaded successfully! 📅', 'info');
+            
+            // Setup touch gestures
+            setupTouchGestures();
+        });
+
+        // Initialize week data
+        function initializeWeek() {
+            const now = new Date();
+            currentWeek = getWeekNumber(now);
+            currentYear = now.getFullYear();
+            currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1; // Convert to Monday-start week
+            
+            updateWeekTitle();
+        }
+
+        // Get week number
+        function getWeekNumber(date) {
+            const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+            const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+            return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+        }
+
+        // Get dates for current week
+        function getWeekDates() {
+            const dates = [];
+            const now = new Date();
+            const monday = new Date(now);
+            
+            // Get Monday of current week
+            monday.setDate(now.getDate() - (now.getDay() === 0 ? 6 : now.getDay() - 1));
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(monday);
+                date.setDate(monday.getDate() + i);
+                dates.push(date);
+            }
+            
+            return dates;
+        }
+
+        // Update week title
+        function updateWeekTitle() {
+            const weekTitle = `Week ${currentWeek}, ${currentYear}`;
+            document.getElementById('weekTitle').textContent = weekTitle;
+        }
+
+        // Render week tabs
+        function renderWeekTabs() {
+            const weekDates = getWeekDates();
+            const weekTabs = document.getElementById('weekTabs');
+            weekTabs.innerHTML = '';
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            weekDates.forEach((date, index) => {
+                const isToday = date.toDateString() === today.toDateString();
+                const isActive = index === currentDay;
+                
+                const dayTab = document.createElement('button');
+                dayTab.className = `day-tab ${isToday ? 'today' : ''} ${isActive ? 'active' : ''}`;
+                dayTab.innerHTML = `
+                    <div class="day-name">${getDayName(date.getDay())}</div>
+                    <div class="day-number">${date.getDate()}</div>
+                `;
+                dayTab.onclick = () => selectDay(index);
+                
+                weekTabs.appendChild(dayTab);
+            });
+            
+            // Scroll to current day
+            if (weekTabs.scrollWidth > weekTabs.clientWidth) {
+                const activeTab = weekTabs.querySelector('.day-tab.active');
+                if (activeTab) {
+                    activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            }
+        }
+
+        // Get day name
+        function getDayName(dayIndex) {
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            return days[dayIndex];
+        }
+
+        // Get full day name
+        function getFullDayName(dayIndex) {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            return days[dayIndex];
+        }
+
+        // Select day
+        function selectDay(dayIndex) {
+            currentDay = dayIndex;
+            renderWeekTabs();
+            renderDayView();
+            showToast(`Viewing ${getFullDayName(dayIndex)}'s schedule`, 'info');
+        }
+
+        // Load schedule data
+        function loadScheduleData() {
+            // Sample schedule data
+            scheduleData = {
+                monday: [
+                    {
+                        id: 'job_1',
+                        time: '09:00',
+                        title: 'TechCorp Ltd - Main Office',
+                        client: 'TechCorp Ltd',
+                        location: '123 Tech Street',
+                        equipment: '25 items',
+                        status: 'scheduled',
+                        type: 'urgent',
+                        duration: '2 hours',
+                        value: '£450'
+                    },
+                    {
+                        id: 'job_2',
+                        time: '13:30',
+                        title: 'Greenwood School',
+                        client: 'Greenwood School',
+                        location: 'Education Road',
+                        equipment: '18 items',
+                        status: 'in-progress',
+                        type: 'upcoming',
+                        duration: '3 hours',
+                        value: '£350'
+                    }
+                ],
+                tuesday: [
+                    {
+                        id: 'job_3',
+                        time: '08:30',
+                        title: 'MediCare Clinic',
+                        client: 'MediCare Clinic',
+                        location: 'Health Plaza',
+                        equipment: '32 items',
+                        status: 'scheduled',
+                        type: 'urgent',
+                        duration: '4 hours',
+                        value: '£650'
+                    },
+                    {
+                        id: 'job_4',
+                        time: '14:00',
+                        title: 'City Hotel Conference',
+                        client: 'City Hotel',
+                        location: 'Downtown',
+                        equipment: '45 items',
+                        status: 'scheduled',
+                        type: 'normal',
+                        duration: '3 hours',
+                        value: '£550'
+                    }
+                ],
+                wednesday: [
+                    {
+                        id: 'job_5',
+                        time: '10:00',
+                        title: 'FastFood Express',
+                        client: 'FastFood Express',
+                        location: 'Food Court',
+                        equipment: '15 items',
+                        status: 'completed',
+                        type: 'completed',
+                        duration: '2 hours',
+                        value: '£250'
+                    },
+                    {
+                        id: 'job_6',
+                        time: '15:30',
+                        title: 'Office Complex Renovation',
+                        client: 'Building Management',
+                        location: 'Business Park',
+                        equipment: '60 items',
+                        status: 'scheduled',
+                        type: 'normal',
+                        duration: '5 hours',
+                        value: '£850'
+                    }
+                ],
+                thursday: [
+                    {
+                        id: 'job_7',
+                        time: '11:00',
+                        title: 'University Labs',
+                        client: 'University',
+                        location: 'Science Campus',
+                        equipment: '40 items',
+                        status: 'scheduled',
+                        type: 'upcoming',
+                        duration: '4 hours',
+                        value: '£750'
+                    }
+                ],
+                friday: [
+                    {
+                        id: 'job_8',
+                        time: '09:30',
+                        title: 'Retail Store Chain',
+                        client: 'Retail Corp',
+                        location: 'Shopping Mall',
+                        equipment: '35 items',
+                        status: 'scheduled',
+                        type: 'urgent',
+                        duration: '3 hours',
+                        value: '£450'
+                    }
+                ],
+                saturday: [],
+                sunday: []
+            };
+        }
+
+        // Switch view
+        function switchView(view) {
+            currentView = view;
+            
+            // Update view buttons
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Hide all views
+            document.getElementById('dayView').style.display = 'none';
+            document.getElementById('weekView').style.display = 'none';
+            document.getElementById('listView').style.display = 'none';
+            document.getElementById('mapView').style.display = 'none';
+            
+            // Show selected view
+            switch(view) {
+                case 'day':
+                    document.getElementById('dayView').style.display = 'block';
+                    renderDayView();
+                    break;
+                case 'week':
+                    document.getElementById('weekView').style.display = 'block';
+                    renderWeekView();
+                    break;
+                case 'list':
+                    document.getElementById('listView').style.display = 'block';
+                    renderListView();
+                    break;
+                case 'map':
+                    document.getElementById('mapView').style.display = 'block';
+                    renderMapView();
+                    break;
+            }
+            
+            updateFABVisibility();
+        }
+
+        // Render day view
+        function renderDayView() {
+            const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const currentDayName = dayNames[currentDay];
+            const appointments = scheduleData[currentDayName] || [];
+            
+            const daySchedule = document.getElementById('daySchedule');
+            
+            if (appointments.length === 0) {
+                daySchedule.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📅</div>
+                        <h3>No appointments scheduled</h3>
+                        <p>You have a free day! Consider adding new jobs or catching up on paperwork.</p>
+                        <button class="action-btn primary" style="margin-top: 20px;" onclick="addNewJob()">
+                            ➕ Add New Job
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Group appointments by time
+            const timeSlots = {};
+            appointments.forEach(appointment => {
+                if (!timeSlots[appointment.time]) {
+                    timeSlots[appointment.time] = [];
+                }
+                timeSlots[appointment.time].push(appointment);
+            });
+            
+            // Create time slots
+            daySchedule.innerHTML = '';
+            
+            Object.keys(timeSlots).sort().forEach(time => {
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.innerHTML = `
+                    <div class="time-label">${time}</div>
+                    <div class="time-line"></div>
+                `;
+                
+                timeSlots[time].forEach(appointment => {
+                    const appointmentElement = document.createElement('div');
+                    appointmentElement.className = `appointment ${appointment.type}`;
+                    appointmentElement.draggable = true;
+                    appointmentElement.innerHTML = `
+                        <div class="appointment-header">
+                            <div class="appointment-time">${appointment.time} • ${appointment.duration}</div>
+                            <div class="appointment-status ${appointment.status}">${appointment.status.replace('-', ' ')}</div>
+                        </div>
+                        <div class="appointment-title">${appointment.title}</div>
+                        <div class="appointment-details">
+                            <div class="detail-item">
+                                <span>📍</span> ${appointment.location}
+                            </div>
+                            <div class="detail-item">
+                                <span>🔧</span> ${appointment.equipment}
+                            </div>
+                            <div class="detail-item">
+                                <span>💰</span> ${appointment.value}
+                            </div>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="action-btn primary" onclick="startJob('${appointment.id}')">
+                                <span>▶️</span> Start Job
+                            </button>
+                            <button class="action-btn secondary" onclick="viewJob('${appointment.id}')">
+                                <span>👁️</span> View Details
+                            </button>
+                            <button class="action-btn secondary" onclick="rescheduleJob('${appointment.id}')">
+                                <span>🔄</span> Reschedule
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Add drag and drop events
+                    appointmentElement.addEventListener('dragstart', handleDragStart);
+                    appointmentElement.addEventListener('dragover', handleDragOver);
+                    appointmentElement.addEventListener('drop', handleDrop);
+                    appointmentElement.addEventListener('dragend', handleDragEnd);
+                    
+                    slot.appendChild(appointmentElement);
+                });
+                
+                daySchedule.appendChild(slot);
+            });
+            
+            // Add drop zone for unscheduled time
+            const dropZone = document.createElement('div');
+            dropZone.className = 'drop-zone';
+            dropZone.innerHTML = 'Drag appointments here to unschedule';
+            dropZone.addEventListener('dragover', handleDragOver);
+            dropZone.addEventListener('drop', handleDropUnscheduled);
+            daySchedule.appendChild(dropZone);
+        }
+
+        // Render week view
+        function renderWeekView() {
+            const weekGrid = document.getElementById('weekGrid');
+            weekGrid.innerHTML = '';
+            
+            const weekDates = getWeekDates();
+            const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            
+            weekDates.forEach((date, index) => {
+                const dayName = dayNames[date.getDay()];
+                const appointments = scheduleData[dayName] || [];
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = 'week-day';
+                dayElement.innerHTML = `
+                    <div class="week-day-header">
+                        <div class="week-day-name">${getDayName(date.getDay())}</div>
+                        <div class="week-day-date">${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+                    </div>
+                    <div class="week-appointments" id="appointments-${dayName}">
+                        ${appointments.length === 0 ? 
+                            '<div style="text-align: center; color: #999; font-size: 0.9rem; padding: 20px;">No appointments</div>' : 
+                            appointments.map(app => `
+                                <div class="week-appointment" draggable="true">
+                                    <div class="week-appointment-time">${app.time}</div>
+                                    <div class="week-appointment-title">${app.title}</div>
+                                </div>
+                            `).join('')
+                        }
+                    </div>
+                `;
+                
+                weekGrid.appendChild(dayElement);
+            });
+        }
+
+        // Render list view
+        function renderListView() {
+            const jobList = document.getElementById('jobList');
+            jobList.innerHTML = '';
+            
+            const weekDates = getWeekDates();
+            const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            
+            let allJobs = [];
+            
+            weekDates.forEach((date, index) => {
+                const dayName = dayNames[date.getDay()];
+                const appointments = scheduleData[dayName] || [];
+                
+                appointments.forEach(appointment => {
+                    appointment.date = date;
+                    appointment.dayName = getFullDayName(date.getDay());
+                    allJobs.push(appointment);
+                });
+            });
+            
+            if (allJobs.length === 0) {
+                jobList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <h3>No jobs scheduled this week</h3>
+                        <p>Your schedule is clear. Add new jobs to get started!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by date and time
+            allJobs.sort((a, b) => {
+                const dateA = new Date(`${a.date.toDateString()} ${a.time}`);
+                const dateB = new Date(`${b.date.toDateString()} ${b.time}`);
+                return dateA - dateB;
+            });
+            
+            allJobs.forEach(job => {
+                const jobElement = document.createElement('div');
+                jobElement.className = 'job-item';
+                jobElement.innerHTML = `
+                    <div class="job-info">
+                        <div class="job-date">
+                            <span>📅</span> ${job.dayName}, ${job.date.toLocaleDateString()} at ${job.time}
+                        </div>
+                        <div class="job-title">${job.title}</div>
+                        <div class="job-details">
+                            <div class="detail-item">
+                                <span>📍</span> ${job.location}
+                            </div>
+                            <div class="detail-item">
+                                <span>🔧</span> ${job.equipment}
+                            </div>
+                            <div class="detail-item">
+                                <span>💰</span> ${job.value}
+                            </div>
+                            <div class="appointment-status ${job.status}">${job.status.replace('-', ' ')}</div>
+                        </div>
+                    </div>
+                    <button class="job-action" onclick="viewJob('${job.id}')">
+                        View Details
+                    </button>
+                `;
+                
+                jobList.appendChild(jobElement);
+            });
+        }
+
+        // Render map view
+        function renderMapView() {
+            // This would integrate with Google Maps in production
+            // For demo, we'll show markers for job locations
+            
+            const mapPlaceholder = document.getElementById('mapPlaceholder');
+            mapPlaceholder.innerHTML = `
+                <div style="font-size: 3rem;">🗺️</div>
+                <h3>Job Locations Map</h3>
+                <p>Your jobs would be displayed on an interactive map here</p>
+                <div style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px; text-align: left;">
+                    <h4 style="margin-bottom: 10px;">📍 This Week's Locations:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee;">• Tech Street - TechCorp Ltd</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee;">• Education Road - Greenwood School</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee;">• Health Plaza - MediCare Clinic</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee;">• Downtown - City Hotel</li>
+                        <li style="padding: 8px 0;">• Food Court - FastFood Express</li>
+                    </ul>
+                </div>
+                <button class="action-btn primary" style="margin-top: 20px;" onclick="optimizeRoute()">
+                    🚗 Optimize Route
+                </button>
+            `;
+        }
+
+        // Drag and drop handlers
+        function handleDragStart(e) {
+            dragStartElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', e.target.id);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            if (dragStartElement) {
+                const dropZone = e.target.closest('.time-slot') || e.target;
+                if (dropZone.classList.contains('time-slot')) {
+                    dropZone.appendChild(dragStartElement);
+                    showToast('Appointment rescheduled', 'success');
+                }
+            }
+        }
+
+        function handleDropUnscheduled(e) {
+            e.preventDefault();
+            if (dragStartElement) {
+                dragStartElement.remove();
+                showToast('Appointment removed from schedule', 'info');
+            }
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            dragStartElement = null;
+        }
+
+        // Setup touch gestures
+        function setupTouchGestures() {
+            let touchStartX = 0;
+            let touchStartY = 0;
+            
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            });
+            
+            document.addEventListener('touchend', e => {
+                const touchEndX = e.changedTouches[0].screenX;
+                const touchEndY = e.changedTouches[0].screenY;
+                
+                const diffX = touchStartX - touchEndX;
+                const diffY = touchStartY - touchEndY;
+                
+                // Horizontal swipe (for switching days in day view)
+                if (Math.abs(diffX) > 50 && Math.abs(diffY) < 30) {
+                    if (diffX > 0 && currentView === 'day') {
+                        // Swipe left - next day
+                        selectDay(Math.min(currentDay + 1, 6));
+                    } else if (diffX < 0 && currentView === 'day') {
+                        // Swipe right - previous day
+                        selectDay(Math.max(currentDay - 1, 0));
+                    }
+                }
+            });
+        }
+
+        // Navigation functions
+        function previousWeek() {
+            if (currentWeek > 1) {
+                currentWeek--;
+            } else {
+                currentWeek = 52;
+                currentYear--;
+            }
+            updateWeekTitle();
+            renderWeekTabs();
+            renderCurrentView();
+            showToast('Previous week loaded', 'info');
+        }
+
+        function nextWeek() {
+            if (currentWeek < 52) {
+                currentWeek++;
+            } else {
+                currentWeek = 1;
+                currentYear++;
+            }
+            updateWeekTitle();
+            renderWeekTabs();
+            renderCurrentView();
+            showToast('Next week loaded', 'info');
+        }
+
+        function switchToNextWeek() {
+            currentWeek = currentWeek < 52 ? currentWeek + 1 : 1;
+            if (currentWeek === 1) currentYear++;
+            updateWeekTitle();
+            renderWeekTabs();
+            selectDay(0); // Monday
+            showToast('Switched to next week', 'success');
+        }
+
+        function goToToday() {
+            initializeWeek();
+            renderWeekTabs();
+            selectDay(currentDay);
+            showToast('Returned to today', 'success');
+        }
+
+        function renderCurrentView() {
+            switch(currentView) {
+                case 'day': renderDayView(); break;
+                case 'week': renderWeekView(); break;
+                case 'list': renderListView(); break;
+                case 'map': renderMapView(); break;
+            }
+        }
+
+        // Action functions
+        function addNewJob() {
+            const today = new Date().toISOString().split('T')[0];
+            const currentTime = new Date().toTimeString().slice(0,5);
+            
+            const modalHTML = `
+                <div class="modal-overlay" id="newJobModal" onclick="if(event.target === this) closeNewJobModal()">
+                    <div class="modal-content" style="max-width: 500px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="color: #1565C0; margin: 0;">➕ Schedule New Job</h2>
+                            <button onclick="closeNewJobModal()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">&times;</button>
+                        </div>
+                        
+                        <form id="newJobForm" onsubmit="saveNewJob(event)" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #666; font-size: 0.9rem;">Client Name *</label>
+                                <input type="text" id="jobClient" required placeholder="e.g., Oxford Pharmagenesis" style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 1rem;">
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #666; font-size: 0.9rem;">Location *</label>
+                                <input type="text" id="jobLocation" required placeholder="e.g., Tubney Warren Barn" style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div>
+                                    <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #666; font-size: 0.9rem;">Date *</label>
+                                    <input type="date" id="jobDate" required value="${today}" min="${today}" style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 1rem;">
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #666; font-size: 0.9rem;">Time *</label>
+                                    <input type="time" id="jobTime" required value="${currentTime}" style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 1rem;">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #666; font-size: 0.9rem;">Equipment Count *</label>
+                                <input type="number" id="jobEquipment" required min="1" value="10" placeholder="Number of items to test" style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 1rem;">
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #666; font-size: 0.9rem;">Job Value (£) *</label>
+                                <input type="number" id="jobValue" required min="0" step="0.01" value="150.00" placeholder="0.00" style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 1rem;">
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #666; font-size: 0.9rem;">Notes</label>
+                                <textarea id="jobNotes" rows="3" placeholder="Special requirements, access codes, parking info..." style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 1rem; resize: vertical; font-family: inherit;"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="action-btn primary" style="width: 100%; padding: 15px; margin-top: 10px; background: linear-gradient(135deg, #1976D2, #2196F3); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer;">
+                                ✅ Schedule Job
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeNewJobModal() {
+            const modal = document.getElementById('newJobModal');
+            if (modal) modal.remove();
+        }
+
+        function saveNewJob(event) {
+            event.preventDefault();
+            
+            const client = document.getElementById('jobClient').value;
+            const location = document.getElementById('jobLocation').value;
+            const date = document.getElementById('jobDate').value;
+            const time = document.getElementById('jobTime').value;
+            const equipment = document.getElementById('jobEquipment').value;
+            const value = document.getElementById('jobValue').value;
+            const notes = document.getElementById('jobNotes').value;
+            
+            const newJob = {
+                id: 'JOB' + Date.now(),
+                client: client,
+                location: location,
+                date: date,
+                time: time,
+                equipment: equipment + ' items',
+                value: '£' + parseFloat(value).toFixed(2),
+                notes: notes,
+                status: 'scheduled'
+            };
+            
+            closeNewJobModal();
+            
+            // Format date for display
+            const dateObj = new Date(date);
+            const dateStr = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+            
+            showToast(`✅ Job scheduled: ${client} on ${dateStr} at ${time}`, 'success');
+            
+            // In production, this would save to database and refresh the schedule
+            console.log('New job created:', newJob);
+            
+            // Simulate adding to schedule (in production, would reload from server)
+            setTimeout(() => {
+                renderCurrentView();
+            }, 1000);
+        }
+
+        function startJob(jobId) {
+            const modalHTML = `
+                <div class="modal-overlay" id="startJobModal" onclick="if(event.target === this) closeStartJobModal()">
+                    <div class="modal-content" style="max-width: 500px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="color: #1565C0; margin: 0;">▶️ Start Job</h2>
+                            <button onclick="closeStartJobModal()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; padding: 0;">&times;</button>
+                        </div>
+                        
+                        <div style="background: #E3F2FD; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                            <h3 style="margin: 0 0 15px 0; color: #1565C0; font-size: 1.1rem;">Job Details</h3>
+                            <div style="display: grid; gap: 10px; font-size: 0.95rem;">
+                                <div><strong>ID:</strong> ${jobId}</div>
+                                <div><strong>Location:</strong> TechCorp Ltd</div>
+                                <div><strong>Equipment:</strong> 25 items</div>
+                                <div><strong>Value:</strong> £225.00</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="margin: 0 0 15px 0; color: #333; font-size: 1rem;">Pre-Start Checklist</h3>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="check1" style="width: 20px; height: 20px; cursor: pointer;">
+                                    <span>PAT testing equipment checked</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="check2" style="width: 20px; height: 20px; cursor: pointer;">
+                                    <span>Labels and documentation ready</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="check3" style="width: 20px; height: 20px; cursor: pointer;">
+                                    <span>Arrived at site location</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="check4" style="width: 20px; height: 20px; cursor: pointer;">
+                                    <span>Client contact confirmed</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button onclick="beginTesting('${jobId}')" class="action-btn primary" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #4CAF50, #66BB6A); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer;">
+                            ✅ Begin Testing
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeStartJobModal() {
+            const modal = document.getElementById('startJobModal');
+            if (modal) modal.remove();
+        }
+
+        function beginTesting(jobId) {
+            const checks = [
+                document.getElementById('check1').checked,
+                document.getElementById('check2').checked,
+                document.getElementById('check3').checked,
+                document.getElementById('check4').checked
+            ];
+            
+            const allChecked = checks.every(c => c);
+            
+            if (!allChecked) {
+                showToast('⚠️ Please complete all checklist items before starting', 'info');
+                return;
+            }
+            
+            closeStartJobModal();
+            showToast('✅ Testing started! AI assistant is ready to guide you.', 'success');
+            
+            // In production, this would navigate to the testing interface
+            setTimeout(() => {
+                window.location.href = 'contractor-dashboard.html';
+            }, 1500);
+        }
+
+        function viewJob(jobId) {
+            const modalHTML = `
+                <div class="modal-overlay" id="viewJobModal" onclick="if(event.target === this) closeViewJobModal()">
+                    <div class="modal-content" style="max-width: 600px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="color: #1565C0; margin: 0;">👁️ Job Details</h2>
+                            <button onclick="closeViewJobModal()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; padding: 0;">&times;</button>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #1976D2, #2196F3); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
+                                <div>
+                                    <div style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 5px;">Job ID</div>
+                                    <div style="font-size: 1.3rem; font-weight: 700;">${jobId}</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">
+                                    ✅ Scheduled
+                                </div>
+                            </div>
+                            <div style="font-size: 1.1rem; font-weight: 600;">TechCorp Ltd</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">123 Tech Street, Oxford</div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                                <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">📅 Date & Time</div>
+                                <div style="font-weight: 700; color: #333;">Mon, Jan 27</div>
+                                <div style="color: #666;">9:00 AM</div>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                                <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">💰 Job Value</div>
+                                <div style="font-weight: 700; color: #1976D2; font-size: 1.3rem;">£225.00</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="font-size: 1rem; color: #333; margin-bottom: 12px;">Equipment Details</h3>
+                            <div style="background: #E3F2FD; padding: 15px; border-radius: 10px;">
+                                <div style="display: grid; gap: 8px;">
+                                    <div><strong>Total Items:</strong> 25</div>
+                                    <div><strong>Estimated Duration:</strong> 2 hours</div>
+                                    <div><strong>Last Test:</strong> 6 months ago</div>
+                                    <div><strong>Test Type:</strong> Full visual + electrical</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="font-size: 1rem; color: #333; margin-bottom: 12px;">Contact Information</h3>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                                <div><strong>Contact:</strong> John Smith</div>
+                                <div><strong>Phone:</strong> +44 7700 900123</div>
+                                <div><strong>Email:</strong> j.smith@techcorp.com</div>
+                                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;">
+                                    <strong>Access:</strong> Reception - ask for facilities team
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="font-size: 1rem; color: #333; margin-bottom: 12px;">Notes</h3>
+                            <div style="background: #FFF3CD; padding: 15px; border-radius: 10px; border-left: 4px solid #FFC107;">
+                                Office equipment - computers, monitors, printers. Some items in server room require access card.
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <button onclick="rescheduleJob('${jobId}')" class="action-btn" style="padding: 12px; background: #E3F2FD; color: #1976D2; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                🔄 Reschedule
+                            </button>
+                            <button onclick="startJob('${jobId}')" class="action-btn primary" style="padding: 12px; background: linear-gradient(135deg, #1976D2, #2196F3); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                ▶️ Start Job
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeViewJobModal() {
+            const modal = document.getElementById('viewJobModal');
+            if (modal) modal.remove();
+        }
+
+        function rescheduleJob(jobId) {
+            // Close any open modals first
+            closeViewJobModal();
+            
+            const today = new Date().toISOString().split('T')[0];
+            const currentTime = '09:00';
+            
+            const modalHTML = `
+                <div class="modal-overlay" id="rescheduleModal" onclick="if(event.target === this) closeRescheduleModal()">
+                    <div class="modal-content" style="max-width: 450px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="color: #1565C0; margin: 0;">🔄 Reschedule Job</h2>
+                            <button onclick="closeRescheduleModal()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; padding: 0;">&times;</button>
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #1976D2;">
+                            <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">Current Appointment</div>
+                            <div style="font-weight: 700; color: #333;">Monday, Jan 27 at 9:00 AM</div>
+                            <div style="font-size: 0.9rem; color: #666;">TechCorp Ltd - ${jobId}</div>
+                        </div>
+                        
+                        <form id="rescheduleForm" onsubmit="confirmReschedule(event, '${jobId}')" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #666; font-size: 0.9rem;">Select New Date *</label>
+                                <input type="date" id="newDate" required value="${today}" min="${today}" style="width: 100%; padding: 14px; border: 2px solid #E3F2FD; border-radius: 10px; font-size: 1rem;">
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #666; font-size: 0.9rem;">Select New Time *</label>
+                                <select id="newTime" required style="width: 100%; padding: 14px; border: 2px solid #E3F2FD; border-radius: 10px; font-size: 1rem; cursor: pointer;">
+                                    <option value="08:00">8:00 AM</option>
+                                    <option value="09:00" selected>9:00 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                    <option value="13:00">1:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #666; font-size: 0.9rem;">Reason for Rescheduling</label>
+                                <textarea id="rescheduleReason" rows="3" placeholder="Optional: Client request, equipment unavailable, etc." style="width: 100%; padding: 12px; border: 2px solid #E3F2FD; border-radius: 10px; font-size: 0.95rem; resize: vertical; font-family: inherit;"></textarea>
+                            </div>
+                            
+                            <div style="background: #FFF3CD; padding: 12px; border-radius: 8px; font-size: 0.85rem; color: #856404; border-left: 4px solid #FFC107;">
+                                ⚠️ Client will be notified of the schedule change automatically.
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+                                <button type="button" onclick="closeRescheduleModal()" style="padding: 14px; background: #f8f9fa; color: #666; border: 2px solid #E3F2FD; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                    Cancel
+                                </button>
+                                <button type="submit" style="padding: 14px; background: linear-gradient(135deg, #1976D2, #2196F3); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                    ✅ Confirm
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeRescheduleModal() {
+            const modal = document.getElementById('rescheduleModal');
+            if (modal) modal.remove();
+        }
+
+        function confirmReschedule(event, jobId) {
+            event.preventDefault();
+            
+            const newDate = document.getElementById('newDate').value;
+            const newTime = document.getElementById('newTime').value;
+            const reason = document.getElementById('rescheduleReason').value;
+            
+            const dateObj = new Date(newDate);
+            const dateStr = dateObj.toLocaleDateString('en-GB', { 
+                weekday: 'short', 
+                day: 'numeric', 
+                month: 'short' 
+            });
+            
+            // Convert 24h time to 12h format
+            const timeObj = new Date(`2000-01-01T${newTime}`);
+            const timeStr = timeObj.toLocaleTimeString('en-GB', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            
+            closeRescheduleModal();
+            showToast(`✅ Job rescheduled to ${dateStr} at ${timeStr}`, 'success');
+            
+            // In production, this would update the database and send notifications
+            console.log('Job rescheduled:', { jobId, newDate, newTime, reason });
+            
+            setTimeout(() => {
+                renderCurrentView();
+            }, 1000);
+        }
+
+        function exportSchedule() {
+            const modalHTML = `
+                <div class="modal-overlay" id="exportModal" onclick="if(event.target === this) closeExportModal()">
+                    <div class="modal-content" style="max-width: 450px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="color: #1565C0; margin: 0;">📤 Export Schedule</h2>
+                            <button onclick="closeExportModal()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; padding: 0;">&times;</button>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 10px; color: #666;">Select Date Range</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div>
+                                    <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 5px;">From</label>
+                                    <input type="date" id="exportFrom" value="${new Date().toISOString().split('T')[0]}" style="width: 100%; padding: 10px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 0.95rem;">
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 5px;">To</label>
+                                    <input type="date" id="exportTo" value="${new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0]}" style="width: 100%; padding: 10px; border: 2px solid #E3F2FD; border-radius: 8px; font-size: 0.95rem;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 12px; color: #666;">Export Format</label>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <button onclick="doExport('pdf')" class="export-option" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border: 2px solid #E3F2FD; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; text-align: left;">
+                                    <div style="font-size: 2rem;">📄</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333; margin-bottom: 2px;">PDF Document</div>
+                                        <div style="font-size: 0.85rem; color: #666;">Professional printable schedule</div>
+                                    </div>
+                                </button>
+                                
+                                <button onclick="doExport('csv')" class="export-option" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border: 2px solid #E3F2FD; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; text-align: left;">
+                                    <div style="font-size: 2rem;">📊</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333; margin-bottom: 2px;">CSV Spreadsheet</div>
+                                        <div style="font-size: 0.85rem; color: #666;">Open in Excel or Google Sheets</div>
+                                    </div>
+                                </button>
+                                
+                                <button onclick="doExport('ical')" class="export-option" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border: 2px solid #E3F2FD; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; text-align: left;">
+                                    <div style="font-size: 2rem;">📅</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333; margin-bottom: 2px;">iCal/Google Calendar</div>
+                                        <div style="font-size: 0.85rem; color: #666;">Import to any calendar app</div>
+                                    </div>
+                                </button>
+                                
+                                <button onclick="doExport('json')" class="export-option" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border: 2px solid #E3F2FD; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; text-align: left;">
+                                    <div style="font-size: 2rem;">💾</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333; margin-bottom: 2px;">JSON Data</div>
+                                        <div style="font-size: 0.85rem; color: #666;">For developers/integrations</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <style>
+                            .export-option:hover {
+                                border-color: #2196F3 !important;
+                                background: #E3F2FD !important;
+                                transform: translateX(5px);
+                            }
+                        </style>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeExportModal() {
+            const modal = document.getElementById('exportModal');
+            if (modal) modal.remove();
+        }
+
+        function doExport(format) {
+            const fromDate = document.getElementById('exportFrom').value;
+            const toDate = document.getElementById('exportTo').value;
+            
+            const formats = {
+                pdf: { icon: '📄', name: 'PDF' },
+                csv: { icon: '📊', name: 'CSV' },
+                ical: { icon: '📅', name: 'Calendar' },
+                json: { icon: '💾', name: 'JSON' }
+            };
+            
+            const formatInfo = formats[format];
+            
+            closeExportModal();
+            showToast(`🔄 Preparing ${formatInfo.name} export...`, 'info');
+            
+            // Simulate export generation
+            setTimeout(() => {
+                showToast(`✅ ${formatInfo.icon} Schedule exported successfully!`, 'success');
+                
+                // In production, this would generate and download the actual file
+                console.log('Export:', { format, fromDate, toDate });
+            }, 1500);
+        }
+
+        function optimizeRoute() {
+            const modalHTML = `
+                <div class="modal-overlay" id="routeModal" onclick="if(event.target === this) closeRouteModal()">
+                    <div class="modal-content" style="max-width: 550px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="color: #1565C0; margin: 0;">🚗 Route Optimization</h2>
+                            <button onclick="closeRouteModal()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; padding: 0;">&times;</button>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #4CAF50, #66BB6A); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <div>
+                                    <div style="font-size: 0.85rem; opacity: 0.9;">Optimized Route Saves</div>
+                                    <div style="font-size: 2.5rem; font-weight: 800; line-height: 1;">47 min</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.85rem; opacity: 0.9;">Distance Reduced</div>
+                                    <div style="font-size: 1.8rem; font-weight: 700;">12.3 mi</div>
+                                </div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; font-size: 0.9rem;">
+                                ⛽ Estimated fuel savings: £8.40
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="font-size: 1rem; color: #333; margin-bottom: 12px;">Optimized Route (5 stops)</h3>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #E3F2FD; border-radius: 8px; border-left: 4px solid #2196F3;">
+                                    <div style="background: #2196F3; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">1</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333;">TechCorp Ltd</div>
+                                        <div style="font-size: 0.85rem; color: #666;">123 Tech Street • 9:00 AM</div>
+                                    </div>
+                                    <div style="color: #2196F3; font-weight: 600; font-size: 0.85rem;">0 mi</div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #90CAF9;">
+                                    <div style="background: #90CAF9; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333;">MediCare Clinic</div>
+                                        <div style="font-size: 0.85rem; color: #666;">45 Health Plaza • 10:30 AM</div>
+                                    </div>
+                                    <div style="color: #666; font-weight: 600; font-size: 0.85rem;">1.2 mi</div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #90CAF9;">
+                                    <div style="background: #90CAF9; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">3</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333;">City Hotel</div>
+                                        <div style="font-size: 0.85rem; color: #666;">789 Downtown • 12:00 PM</div>
+                                    </div>
+                                    <div style="color: #666; font-weight: 600; font-size: 0.85rem;">0.8 mi</div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #90CAF9;">
+                                    <div style="background: #90CAF9; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">4</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333;">FastFood Express</div>
+                                        <div style="font-size: 0.85rem; color: #666;">234 Food Court • 2:00 PM</div>
+                                    </div>
+                                    <div style="color: #666; font-weight: 600; font-size: 0.85rem;">1.5 mi</div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #90CAF9;">
+                                    <div style="background: #90CAF9; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">5</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 700; color: #333;">Greenwood School</div>
+                                        <div style="font-size: 0.85rem; color: #666;">56 Education Road • 3:30 PM</div>
+                                    </div>
+                                    <div style="color: #666; font-weight: 600; font-size: 0.85rem;">2.1 mi</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #FFF3CD; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #FFC107;">
+                            <div style="font-weight: 700; color: #856404; margin-bottom: 5px;">💡 Smart Routing</div>
+                            <div style="font-size: 0.9rem; color: #856404;">
+                                AI grouped nearby locations and factored in traffic patterns to minimize travel time.
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <button onclick="closeRouteModal()" style="padding: 14px; background: #f8f9fa; color: #666; border: 2px solid #E3F2FD; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                Cancel
+                            </button>
+                            <button onclick="applyOptimizedRoute()" style="padding: 14px; background: linear-gradient(135deg, #4CAF50, #66BB6A); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                ✅ Apply Route
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeRouteModal() {
+            const modal = document.getElementById('routeModal');
+            if (modal) modal.remove();
+        }
+
+        function applyOptimizedRoute() {
+            closeRouteModal();
+            showToast('✅ Optimized route applied! Jobs reordered for efficiency.', 'success');
+            
+            // In production, this would update the schedule order
+            setTimeout(() => {
+                renderCurrentView();
+            }, 1000);
+        }
+
+        function syncCalendar() {
+            showToast('🔄 Syncing with calendar...', 'info');
+            setTimeout(() => {
+                showToast('✅ Calendar synced successfully!', 'success');
+            }, 1500);
+        }
+
+        // AI suggestions
+        function aiSuggest(suggestion) {
+            const suggestions = {
+                group: '🚗 Route optimization activated! I\'ve grouped nearby jobs to save 45 minutes of travel time.',
+                buffer: '⏰ Buffer time added! Extra 15 minutes between appointments to handle unexpected delays.',
+                reminder: '🔔 Reminders set! You\'ll receive notifications 1 hour before each appointment.',
+                prepare: '📋 Equipment prepared! Checklist generated for tomorrow\'s jobs.'
+            };
+            
+            showToast(suggestions[suggestion], 'success');
+        }
+
+        // Toast notifications
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type) toast.classList.add(type);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // FAB visibility
+        function updateFABVisibility() {
+            const fab = document.getElementById('fab');
+            fab.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + N for new job
+            if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                e.preventDefault();
+                addNewJob();
+            }
+            
+            // Arrow keys for navigation
+            if (currentView === 'day') {
+                if (e.key === 'ArrowLeft') {
+                    selectDay(Math.max(currentDay - 1, 0));
+                } else if (e.key === 'ArrowRight') {
+                    selectDay(Math.min(currentDay + 1, 6));
+                }
+            }
+            
+            // Escape to close any modals
+            if (e.key === 'Escape') {
+                // Would close any open modals
+            }
+        });
+    </script>
+</body>
+</html>

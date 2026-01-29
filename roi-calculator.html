@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>PAT BuddAI 4U - ROI Calculator | Oxford Pharmagenesis</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --electric-blue: #0066FF;
+            --deep-navy: #001F3F;
+            --bright-cyan: #00E5FF;
+            --soft-white: #F8FAFC;
+            --warning-amber: #FFB800;
+            --success-green: #00D98B;
+            --danger-red: #FF4757;
+            --charcoal: #1A1F2E;
+            --steel: #475569;
+            --glass-white: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, #003366 50%, #004080 100%);
+            min-height: 100vh;
+            color: var(--soft-white);
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(10deg); opacity: 0.5; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--bright-cyan), var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--bright-cyan);
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--charcoal);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(0, 102, 255, 0.4);
+        }
+
+        .card-header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--deep-navy);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--bright-cyan));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--steel);
+            margin-bottom: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            transition: all 0.3s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+        }
+
+        /* Remove spinner arrows on mobile */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+        }
+
+        .input-suffix {
+            position: absolute;
+            right: 15px;
+            font-weight: 600;
+            color: var(--steel);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .slider-container {
+            margin-bottom: 25px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(to right, #E2E8F0 0%, var(--electric-blue) 100%);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            touch-action: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--electric-blue);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover,
+        .slider::-webkit-slider-thumb:active {
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.6);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--electric-blue);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.4);
+        }
+
+        .results-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--electric-blue), #0052CC);
+            color: white;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .result-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            opacity: 0.9;
+            font-family: 'IBM Plex Mono', monospace;
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-description {
+            font-size: 0.9rem;
+            margin-top: 8px;
+            opacity: 0.85;
+            font-weight: 500;
+        }
+
+        .savings-highlight {
+            grid-column: 1 / -1;
+            background: rgba(0, 217, 139, 0.2);
+            border: 2px solid var(--success-green);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .savings-highlight .result-value {
+            color: var(--success-green);
+            font-size: 3.5rem;
+        }
+
+        .breakdown-card {
+            grid-column: 1 / -1;
+            background: var(--glass-white);
+            padding: 40px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -10px;
+            padding: 0 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #E2E8F0;
+            border-radius: 4px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: var(--electric-blue);
+            border-radius: 4px;
+        }
+
+        .breakdown-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .breakdown-table th {
+            text-align: left;
+            padding: 15px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            color: var(--deep-navy);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .breakdown-table td {
+            padding: 18px 15px;
+            background: #F1F5F9;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .breakdown-table tr td:first-child {
+            border-radius: 10px 0 0 10px;
+            font-weight: 700;
+        }
+
+        .breakdown-table tr td:last-child {
+            border-radius: 0 10px 10px 0;
+            text-align: right;
+        }
+
+        .savings-row {
+            background: linear-gradient(135deg, rgba(0, 217, 139, 0.1), rgba(0, 217, 139, 0.2)) !important;
+            border-left: 4px solid var(--success-green);
+        }
+
+        .print-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--bright-cyan), var(--electric-blue));
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+            transition: all 0.3s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            z-index: 100;
+        }
+
+        .print-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.6);
+        }
+
+        .assumption-note {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 184, 0, 0.1);
+            border-left: 4px solid var(--warning-amber);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--steel);
+            font-style: italic;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .print-button {
+                display: none;
+            }
+            .card {
+                break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header {
+                margin-bottom: 30px;
+            }
+
+            .logo {
+                font-size: 2rem;
+                letter-spacing: -1px;
+            }
+
+            .subtitle {
+                font-size: 0.75rem;
+                letter-spacing: 1px;
+            }
+
+            .roi-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .card-header {
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+            }
+
+            .card-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+
+            input[type="number"], input[type="text"] {
+                padding: 12px 40px 12px 12px;
+                font-size: 1rem;
+            }
+
+            .input-label {
+                font-size: 0.8rem;
+            }
+
+            .input-suffix {
+                font-size: 0.85rem;
+            }
+
+            .results-card {
+                padding: 25px 15px;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .result-item {
+                padding: 20px;
+            }
+
+            .result-label {
+                font-size: 0.75rem;
+            }
+
+            .result-value {
+                font-size: 1.8rem;
+            }
+
+            .result-description {
+                font-size: 0.8rem;
+            }
+
+            .savings-highlight {
+                padding: 20px;
+            }
+
+            .savings-highlight .result-value {
+                font-size: 2.2rem;
+            }
+
+            .savings-highlight .result-description {
+                font-size: 0.9rem;
+            }
+
+            .breakdown-card {
+                padding: 20px 15px;
+            }
+
+            .table-wrapper {
+                margin: 0 -5px;
+                padding: 0 5px;
+            }
+
+            .breakdown-table {
+                font-size: 0.8rem;
+                min-width: 600px;
+            }
+
+            .breakdown-table th,
+            .breakdown-table td {
+                padding: 10px 8px;
+            }
+
+            .assumption-note {
+                font-size: 0.75rem;
+                padding: 12px;
+            }
+
+            .print-button {
+                bottom: 20px;
+                right: 20px;
+                padding: 14px 24px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.6rem;
+            }
+
+            .subtitle {
+                font-size: 0.65rem;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .card-header {
+                font-size: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .result-value {
+                font-size: 1.5rem;
+            }
+
+            .savings-highlight .result-value {
+                font-size: 1.8rem;
+            }
+
+            .breakdown-table {
+                font-size: 0.7rem;
+            }
+
+            .print-button {
+                width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">PAT BuddAI 4U</div>
+            <div class="subtitle">ROI Calculator — Oxford Pharmagenesis</div>
+        </header>
+
+        <div class="roi-grid">
+            <!-- Current State Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    Current Operations
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Equipment Count</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="equipmentCount" value="150" min="1" max="10000">
+                        <span class="input-suffix">items</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Tests Per Year (Per Item)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="testsPerYear" value="2" min="1" max="12" step="1">
+                        <span class="input-suffix">tests</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Contractor Rate</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="contractorRate" value="45" min="1" max="200" step="5">
+                        <span class="input-suffix">£/hr</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Time Per Test (Current)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="timePerTest" value="8" min="1" max="60" step="1">
+                        <span class="input-suffix">min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Overhead Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⏱️</div>
+                    Administrative Time
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Admin Hours (Certificate Processing)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="adminHours" value="4" min="0" max="40" step="0.5">
+                        <span class="input-suffix">hrs/month</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Admin Hourly Rate</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="adminRate" value="35" min="10" max="100" step="5">
+                        <span class="input-suffix">£/hr</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Compliance Audit Prep</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="auditPrepHours" value="8" min="0" max="100" step="1">
+                        <span class="input-suffix">hrs/year</span>
+                    </div>
+                </div>
+
+                <div class="assumption-note">
+                    📌 Includes chasing contractors, manual data entry, tracking schedules, and audit preparation
+                </div>
+            </div>
+
+            <!-- PAT BuddAI Improvements Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🚀</div>
+                    PAT BuddAI Impact
+                </div>
+
+                <div class="slider-container">
+                    <label class="input-label">Testing Time Reduction: <span id="timeReductionValue">40</span>%</label>
+                    <input type="range" class="slider" id="timeReduction" min="0" max="70" value="40" step="5">
+                </div>
+
+                <div class="slider-container">
+                    <label class="input-label">Admin Time Reduction: <span id="adminReductionValue">60</span>%</label>
+                    <input type="range" class="slider" id="adminReduction" min="0" max="90" value="60" step="5">
+                </div>
+
+                <div class="slider-container">
+                    <label class="input-label">Audit Prep Reduction: <span id="auditReductionValue">80</span>%</label>
+                    <input type="range" class="slider" id="auditReduction" min="0" max="95" value="80" step="5">
+                </div>
+
+                <div class="assumption-note">
+                    ✨ Conservative estimates based on: AI-guided testing, instant certificates, automated tracking, real-time compliance dashboards
+                </div>
+            </div>
+
+            <!-- Results Card -->
+            <div class="card results-card">
+                <div class="card-header" style="color: white; margin-bottom: 35px;">
+                    <div class="card-icon" style="background: rgba(255,255,255,0.2);">💰</div>
+                    Annual Cost Analysis
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">Current Annual Cost</div>
+                        <div class="result-value">£<span id="currentCost">0</span></div>
+                        <div class="result-description">Total yearly expenditure</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">With PAT BuddAI</div>
+                        <div class="result-value">£<span id="withBuddAI">0</span></div>
+                        <div class="result-description">Optimized yearly cost</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Time Saved Annually</div>
+                        <div class="result-value"><span id="timeSaved">0</span><span style="font-size: 1.5rem;">hrs</span></div>
+                        <div class="result-description">Contractor + admin time</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Payback Period</div>
+                        <div class="result-value"><span id="paybackPeriod">0</span><span style="font-size: 1.5rem;">mo</span></div>
+                        <div class="result-description">Break-even timeline</div>
+                    </div>
+
+                    <div class="savings-highlight">
+                        <div class="result-label">Total Annual Savings</div>
+                        <div class="result-value">£<span id="totalSavings">0</span></div>
+                        <div class="result-description" style="font-size: 1.1rem; margin-top: 15px;">
+                            <strong><span id="roi">0</span>% ROI</strong> • Efficiency gains + reduced overhead
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Breakdown Card -->
+            <div class="card breakdown-card">
+                <div class="card-header">
+                    <div class="card-icon">📋</div>
+                    Cost Breakdown — Year 1 Comparison
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th style="text-align: right;">Current System</th>
+                                <th style="text-align: right;">With PAT BuddAI</th>
+                                <th style="text-align: right;">Savings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Contractor Testing Costs</td>
+                                <td style="text-align: right;">£<span id="currentContractor">0</span></td>
+                                <td style="text-align: right;">£<span id="buddaiContractor">0</span></td>
+                                <td class="savings-row">£<span id="savingsContractor">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Admin & Processing Time</td>
+                                <td style="text-align: right;">£<span id="currentAdmin">0</span></td>
+                                <td style="text-align: right;">£<span id="buddaiAdmin">0</span></td>
+                                <td class="savings-row">£<span id="savingsAdmin">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Compliance Audit Prep</td>
+                                <td style="text-align: right;">£<span id="currentAudit">0</span></td>
+                                <td style="text-align: right;">£<span id="buddaiAudit">0</span></td>
+                                <td class="savings-row">£<span id="savingsAudit">0</span></td>
+                            </tr>
+                            <tr style="font-weight: 800; font-size: 1.1rem;">
+                                <td style="background: var(--deep-navy); color: white;">TOTAL ANNUAL</td>
+                                <td style="background: var(--deep-navy); color: white; text-align: right;">£<span id="totalCurrent">0</span></td>
+                                <td style="background: var(--deep-navy); color: white; text-align: right;">£<span id="totalBuddAI">0</span></td>
+                                <td style="background: var(--success-green); color: white; text-align: right;">£<span id="totalSavingsBreakdown">0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="assumption-note" style="margin-top: 25px;">
+                    💡 <strong>Additional Benefits Not Quantified:</strong> Reduced compliance risk, improved contractor satisfaction, real-time visibility, scalability across multiple sites, complete digital audit trail, potential to license platform to other organizations
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="print-button" onclick="window.print()">📄 Print / Save PDF</button>
+
+    <script>
+        // Get all input elements
+        const inputs = {
+            equipmentCount: document.getElementById('equipmentCount'),
+            testsPerYear: document.getElementById('testsPerYear'),
+            contractorRate: document.getElementById('contractorRate'),
+            timePerTest: document.getElementById('timePerTest'),
+            adminHours: document.getElementById('adminHours'),
+            adminRate: document.getElementById('adminRate'),
+            auditPrepHours: document.getElementById('auditPrepHours'),
+            timeReduction: document.getElementById('timeReduction'),
+            adminReduction: document.getElementById('adminReduction'),
+            auditReduction: document.getElementById('auditReduction')
+        };
+
+        // Update slider value displays
+        inputs.timeReduction.addEventListener('input', (e) => {
+            document.getElementById('timeReductionValue').textContent = e.target.value;
+            calculateROI();
+        });
+
+        inputs.adminReduction.addEventListener('input', (e) => {
+            document.getElementById('adminReductionValue').textContent = e.target.value;
+            calculateROI();
+        });
+
+        inputs.auditReduction.addEventListener('input', (e) => {
+            document.getElementById('auditReductionValue').textContent = e.target.value;
+            calculateROI();
+        });
+
+        // Add event listeners to all inputs
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', calculateROI);
+        });
+
+        function calculateROI() {
+            // Get values
+            const equipmentCount = parseFloat(inputs.equipmentCount.value) || 0;
+            const testsPerYear = parseFloat(inputs.testsPerYear.value) || 0;
+            const contractorRate = parseFloat(inputs.contractorRate.value) || 0;
+            const timePerTest = parseFloat(inputs.timePerTest.value) || 0;
+            const adminHours = parseFloat(inputs.adminHours.value) || 0;
+            const adminRate = parseFloat(inputs.adminRate.value) || 0;
+            const auditPrepHours = parseFloat(inputs.auditPrepHours.value) || 0;
+            const timeReduction = parseFloat(inputs.timeReduction.value) / 100;
+            const adminReduction = parseFloat(inputs.adminReduction.value) / 100;
+            const auditReduction = parseFloat(inputs.auditReduction.value) / 100;
+
+            // Calculate current costs
+            const totalTests = equipmentCount * testsPerYear;
+            const totalTestingMinutes = totalTests * timePerTest;
+            const totalTestingHours = totalTestingMinutes / 60;
+            const currentContractorCost = totalTestingHours * contractorRate;
+            
+            const annualAdminCost = adminHours * 12 * adminRate;
+            const annualAuditCost = auditPrepHours * adminRate;
+            
+            const currentTotalCost = currentContractorCost + annualAdminCost + annualAuditCost;
+
+            // Calculate costs with PAT BuddAI
+            const newTestingHours = totalTestingHours * (1 - timeReduction);
+            const buddaiContractorCost = newTestingHours * contractorRate;
+            
+            const buddaiAdminCost = annualAdminCost * (1 - adminReduction);
+            const buddaiAuditCost = annualAuditCost * (1 - auditReduction);
+            
+            const buddaiTotalCost = buddaiContractorCost + buddaiAdminCost + buddaiAuditCost;
+
+            // Calculate savings
+            const contractorSavings = currentContractorCost - buddaiContractorCost;
+            const adminSavings = annualAdminCost - buddaiAdminCost;
+            const auditSavings = annualAuditCost - buddaiAuditCost;
+            const totalSavings = currentTotalCost - buddaiTotalCost;
+            
+            const timeSaved = (totalTestingHours - newTestingHours) + (adminHours * 12 * adminReduction) + (auditPrepHours * auditReduction);
+            
+            // Estimate platform cost (conservative)
+            const platformCost = 2000; // Annual platform cost estimate
+            const netSavings = totalSavings - platformCost;
+            const roi = ((netSavings / platformCost) * 100);
+            const paybackMonths = platformCost / (totalSavings / 12);
+
+            // Update UI
+            document.getElementById('currentCost').textContent = Math.round(currentTotalCost).toLocaleString();
+            document.getElementById('withBuddAI').textContent = Math.round(buddaiTotalCost + platformCost).toLocaleString();
+            document.getElementById('totalSavings').textContent = Math.round(netSavings).toLocaleString();
+            document.getElementById('timeSaved').textContent = Math.round(timeSaved);
+            document.getElementById('roi').textContent = Math.round(roi);
+            document.getElementById('paybackPeriod').textContent = paybackMonths < 1 ? '<1' : Math.round(paybackMonths);
+
+            // Update breakdown table
+            document.getElementById('currentContractor').textContent = Math.round(currentContractorCost).toLocaleString();
+            document.getElementById('buddaiContractor').textContent = Math.round(buddaiContractorCost).toLocaleString();
+            document.getElementById('savingsContractor').textContent = Math.round(contractorSavings).toLocaleString();
+
+            document.getElementById('currentAdmin').textContent = Math.round(annualAdminCost).toLocaleString();
+            document.getElementById('buddaiAdmin').textContent = Math.round(buddaiAdminCost).toLocaleString();
+            document.getElementById('savingsAdmin').textContent = Math.round(adminSavings).toLocaleString();
+
+            document.getElementById('currentAudit').textContent = Math.round(annualAuditCost).toLocaleString();
+            document.getElementById('buddaiAudit').textContent = Math.round(buddaiAuditCost).toLocaleString();
+            document.getElementById('savingsAudit').textContent = Math.round(auditSavings).toLocaleString();
+
+            document.getElementById('totalCurrent').textContent = Math.round(currentTotalCost).toLocaleString();
+            document.getElementById('totalBuddAI').textContent = Math.round(buddaiTotalCost + platformCost).toLocaleString();
+            document.getElementById('totalSavingsBreakdown').textContent = Math.round(netSavings).toLocaleString();
+        }
+
+        // Initial calculation
+        calculateROI();
+    </script>
+</body>
+</html>

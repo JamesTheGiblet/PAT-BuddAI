@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IET Code of Practice Guide - PAT BuddAI 4U</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(33, 150, 243, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: #1565C0;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 70px;
+            z-index: 900;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #E3F2FD;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .search-btn {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-btn:hover {
+            background: #1565C0;
+        }
+
+        /* Quick Filters */
+        .quick-filters {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .quick-filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            background: #F5FAFF;
+            border: 2px solid #E3F2FD;
+            color: #1976D2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background: #1976D2;
+            color: white;
+            border-color: #1976D2;
+        }
+
+        /* Content Layout */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 160px;
+            align-self: start;
+            max-height: calc(100vh - 180px);
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            color: #1565C0;
+            margin-bottom: 20px;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E3F2FD;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: #F5FAFF;
+            color: #1976D2;
+        }
+
+        .nav-link.active {
+            background: #E3F2FD;
+            color: #1976D2;
+            border-left-color: #1976D2;
+            font-weight: 600;
+        }
+
+        .nav-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #E3F2FD;
+        }
+
+        .nav-section-title {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Guide Section */
+        .guide-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: none;
+        }
+
+        .guide-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #E3F2FD;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1565C0;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .section-version {
+            display: inline-block;
+            background: #E3F2FD;
+            color: #1976D2;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: #F8FBFF;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1976D2;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: #1565C0;
+            margin-bottom: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-content {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .card-content ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .card-content li {
+            margin-bottom: 8px;
+        }
+
+        .card-content p {
+            margin-bottom: 15px;
+        }
+
+        /* Important Notice */
+        .important-notice {
+            background: linear-gradient(135deg, #FFF3E0, #FFECB3);
+            border: 2px solid #FF9800;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .notice-title {
+            color: #EF6C00;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Compliance Table */
+        .compliance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .compliance-table th {
+            background: #E3F2FD;
+            color: #1565C0;
+            font-weight: 700;
+            padding: 15px;
+            text-align: left;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .compliance-table td {
+            padding: 15px;
+            border-bottom: 1px solid #E3F2FD;
+            color: #444;
+        }
+
+        .compliance-table tr:hover {
+            background: #F8FBFF;
+        }
+
+        .compliance-table .pass {
+            color: #4CAF50;
+            font-weight: 700;
+        }
+
+        .compliance-table .fail {
+            color: #F44336;
+            font-weight: 700;
+        }
+
+        /* Test Limits */
+        .limits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .limit-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #1976D2;
+        }
+
+        .limit-title {
+            font-size: 1rem;
+            color: #1565C0;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .limit-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .limit-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Quick Reference */
+        .quick-reference {
+            background: linear-gradient(135deg, #1565C0, #1976D2);
+            color: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 25px;
+        }
+
+        .reference-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .reference-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #64B5F6;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #2196F3;
+            border: 2px solid #E3F2FD;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 25px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .ai-icon {
+            font-size: 1.5rem;
+        }
+
+        .ai-title {
+            font-size: 1.3rem;
+            color: #1565C0;
+            font-weight: 700;
+        }
+
+        .ai-message {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ai-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #E3F2FD;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .ai-input button {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Download Cards */
+        .download-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .download-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid #E3F2FD;
+        }
+
+        .download-card:hover {
+            border-color: #2196F3;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+
+        .download-title {
+            font-size: 1.1rem;
+            color: #1565C0;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .download-btn {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* Mobile Navigation Toggle */
+        .mobile-nav-toggle {
+            display: none;
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(33, 150, 243, 0.4);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 2000;
+                background: white;
+                padding: 80px 20px 20px;
+                border-radius: 0;
+                max-height: none;
+            }
+            
+            .sidebar.active {
+                display: block;
+            }
+            
+            .mobile-nav-toggle {
+                display: flex;
+            }
+            
+            .search-container {
+                padding: 15px;
+                top: 70px;
+            }
+            
+            .guide-section {
+                padding: 20px;
+            }
+            
+            .limits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .reference-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .compliance-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .fab {
+                display: flex;
+            }
+            
+            /* Touch-friendly optimizations */
+            .nav-link, .filter-btn, .action-btn {
+                min-height: 44px;
+            }
+            
+            .search-input {
+                font-size: 16px; /* Prevents iOS zoom */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 15px;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .quick-filters {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .card-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar, .search-container, .action-buttons, .ai-assistant, .fab, .mobile-nav-toggle {
+                display: none !important;
+            }
+            
+            .container {
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .guide-section {
+                box-shadow: none;
+                padding: 20px 0;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: transform 0.3s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: #4CAF50;
+        }
+
+        .toast.info {
+            background: #2196F3;
+        }
+
+        /* Bookmark Button */
+        .bookmark-btn {
+            background: transparent;
+            border: 2px solid #E3F2FD;
+            color: #1976D2;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .bookmark-btn.bookmarked {
+            background: #FFEB3B;
+            border-color: #FFEB3B;
+            color: #333;
+        }
+
+        .bookmark-btn:hover {
+            background: #E3F2FD;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span>📚</span>
+                <span>IET Code of Practice Guide</span>
+            </div>
+            <div class="nav-actions">
+                <a href="contractor-dashboard.html" class="nav-btn">← Dashboard</a>
+                <button class="nav-btn" onclick="printGuide()">🖨️ Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">IET Code of Practice Guide</h1>
+            <p class="page-subtitle">5th Edition - Portable Appliance Testing Guidelines & Compliance</p>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search IET guidelines...">
+                <button class="search-btn" onclick="searchGuide()">
+                    <span>🔍</span> Search
+                </button>
+            </div>
+            
+            <div class="quick-filters">
+                <button class="filter-btn active" onclick="filterContent('all')">All Topics</button>
+                <button class="filter-btn" onclick="filterContent('testing')">Testing Procedures</button>
+                <button class="filter-btn" onclick="filterContent('compliance')">Compliance</button>
+                <button class="filter-btn" onclick="filterContent('limits')">Test Limits</button>
+                <button class="filter-btn" onclick="filterContent('safety')">Safety</button>
+                <button class="filter-btn" onclick="filterContent('documentation')">Documentation</button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" onclick="toggleSidebar()">
+            <span>📚</span> Guide Contents
+        </button>
+
+        <div class="content-layout">
+            <!-- Sidebar Navigation -->
+            <div class="sidebar" id="sidebar">
+                <h3 class="sidebar-title">Guide Contents</h3>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#introduction" class="nav-link active" onclick="showSection('introduction')">
+                            📖 Introduction
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#legal" class="nav-link" onclick="showSection('legal')">
+                            ⚖️ Legal Requirements
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#equipment" class="nav-link" onclick="showSection('equipment')">
+                            🔧 Equipment Classes
+                        </a>
+                    </li>
+                    
+                    <div class="nav-section">
+                        <div class="nav-section-title">Testing Procedures</div>
+                        <li class="nav-item">
+                            <a href="#visual" class="nav-link" onclick="showSection('visual')">
+                                👁️ Visual Inspection
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#earth" class="nav-link" onclick="showSection('earth')">
+                                ⚡ Earth Continuity
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#insulation" class="nav-link" onclick="showSection('insulation')">
+                                🛡️ Insulation Resistance
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#leakage" class="nav-link" onclick="showSection('leakage')">
+                                💧 Earth Leakage
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#load" class="nav-link" onclick="showSection('load')">
+                                🔌 Load & Flash Test
+                            </a>
+                        </li>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <div class="nav-section-title">Compliance</div>
+                        <li class="nav-item">
+                            <a href="#limits" class="nav-link" onclick="showSection('limits')">
+                                📊 Test Limits
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#frequency" class="nav-link" onclick="showSection('frequency')">
+                                ⏰ Testing Frequency
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#documentation" class="nav-link" onclick="showSection('documentation')">
+                                📄 Documentation
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#failures" class="nav-link" onclick="showSection('failures')">
+                                ❌ Failure Actions
+                            </a>
+                        </li>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <div class="nav-section-title">Resources</div>
+                        <li class="nav-item">
+                            <a href="#downloads" class="nav-link" onclick="showSection('downloads')">
+                                📥 Downloads
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#updates" class="nav-link" onclick="showSection('updates')">
+                                🔄 Latest Updates
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Introduction Section -->
+                <div class="guide-section active" id="introduction">
+                    <div class="section-header">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <h2 class="section-title">Introduction to IET Code of Practice</h2>
+                                <p class="section-subtitle">5th Edition - In-service Inspection and Testing of Electrical Equipment</p>
+                                <span class="section-version">Version 5.0 | Published: 2020</span>
+                            </div>
+                            <button class="bookmark-btn" onclick="toggleBookmark('introduction')">🔖</button>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">📖 Overview</h3>
+                        <div class="card-content">
+                            <p>The IET Code of Practice for <strong>In-service Inspection and Testing of Electrical Equipment</strong> provides essential guidance for the safety of electrical appliances used in workplaces, public spaces, and rented accommodation.</p>
+                            <p>This 5th Edition reflects changes in legislation, technology, and working practices since the previous edition.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">🎯 Purpose</h3>
+                        <div class="card-content">
+                            <p>The Code aims to:</p>
+                            <ul>
+                                <li>Ensure electrical equipment remains safe throughout its working life</li>
+                                <li>Provide a standardized approach to inspection and testing</li>
+                                <li>Help dutyholders comply with legal requirements</li>
+                                <li>Reduce electrical accidents in the workplace</li>
+                                <li>Promote best practice in electrical safety</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">👥 Who Should Use This Guide</h3>
+                        <div class="card-content">
+                            <p>This guide is essential for:</p>
+                            <ul>
+                                <li><strong>PAT Testers</strong> - Qualified personnel conducting tests</li>
+                                <li><strong>Contractors</strong> - Electrical contractors and maintenance staff</li>
+                                <li><strong>Facility Managers</strong> - Responsible for workplace safety</li>
+                                <li><strong>Landlords</strong> - For rental property compliance</li>
+                                <li><strong>Health & Safety Officers</strong> - Ensuring organizational compliance</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="important-notice">
+                        <h3 class="notice-title">⚠️ Important Notice</h3>
+                        <p>This guide provides guidance based on the IET Code of Practice. Always refer to the official IET publication for definitive requirements. Regulations may vary by location and specific circumstances.</p>
+                    </div>
+                </div>
+
+                <!-- Legal Requirements Section -->
+                <div class="guide-section" id="legal">
+                    <div class="section-header">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <h2 class="section-title">Legal Requirements & Regulations</h2>
+                                <p class="section-subtitle">UK Legal Framework for PAT Testing</p>
+                            </div>
+                            <button class="bookmark-btn" onclick="toggleBookmark('legal')">🔖</button>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">⚖️ Primary Legislation</h3>
+                        <div class="card-content">
+                            <p>PAT testing is required under several key pieces of legislation:</p>
+                            <ul>
+                                <li><strong>Health and Safety at Work Act 1974</strong> - General duty of care</li>
+                                <li><strong>Electricity at Work Regulations 1989</strong> - Main electrical safety regulations</li>
+                                <li><strong>Provision and Use of Work Equipment Regulations 1998 (PUWER)</strong></li>
+                                <li><strong>Management of Health and Safety at Work Regulations 1999</strong></li>
+                                <li><strong>Landlord and Tenant Act 1985</strong> (for rental properties)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">📋 Duty Holder Responsibilities</h3>
+                        <div class="card-content">
+                            <p>Under the Electricity at Work Regulations 1989:</p>
+                            <ul>
+                                <li>Electrical systems must be maintained to prevent danger</li>
+                                <li>All electrical equipment must be safe for use</li>
+                                <li>Adequate records of maintenance must be kept</li>
+                                <li>Regular inspections and testing must be conducted</li>
+                                <li>Competent persons must carry out the work</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <table class="compliance-table">
+                        <thead>
+                            <tr>
+                                <th>Regulation</th>
+                                <th>Requirement</th>
+                                <th>Compliance Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EAWR Reg. 4(2)</td>
+                                <td>Systems must be maintained</td>
+                                <td class="pass">Regular PAT testing</td>
+                            </tr>
+                            <tr>
+                                <td>PUWER Reg. 5</td>
+                                <td>Equipment must be maintained</td>
+                                <td class="pass">Visual inspections</td>
+                            </tr>
+                            <tr>
+                                <td>HSAWA Sec. 2</td>
+                                <td>Duty to ensure safety</td>
+                                <td class="pass">Risk assessments</td>
+                            </tr>
+                            <tr>
+                                <td>Landlord Act</td>
+                                <td>Electrical safety in rentals</td>
+                                <td class="pass">5-year testing cycle</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Equipment Classes Section -->
+                <div class="guide-section" id="equipment">
+                    <div class="section-header">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <h2 class="section-title">Equipment Classes & Types</h2>
+                                <p class="section-subtitle">Understanding Different Equipment Categories</p>
+                            </div>
+                            <button class="bookmark-btn" onclick="toggleBookmark('equipment')">🔖</button>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">🔌 Class I Equipment</h3>
+                        <div class="card-content">
+                            <p><strong>Definition:</strong> Equipment with basic insulation and earth connection</p>
+                            <p><strong>Examples:</strong> Kettles, toasters, irons, power tools, desktop computers</p>
+                            <p><strong>Required Tests:</strong></p>
+                            <ul>
+                                <li>Earth continuity test</li>
+                                <li>Insulation resistance test</li>
+                                <li>Visual inspection</li>
+                                <li>Earth leakage test (if applicable)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">🛡️ Class II Equipment</h3>
+                        <div class="card-content">
+                            <p><strong>Definition:</strong> Double-insulated equipment (no earth connection)</p>
+                            <p><strong>Examples:</strong> Hair dryers, power supplies, chargers, lamps</p>
+                            <p><strong>Required Tests:</strong></p>
+                            <ul>
+                                <li>Insulation resistance test</li>
+                                <li>Visual inspection</li>
+                                <li>Touch current test (if applicable)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">🔋 Class III Equipment</h3>
+                        <div class="card-content">
+                            <p><strong>Definition:</strong> Equipment supplied at Safety Extra Low Voltage (SELV)</p>
+                            <p><strong>Examples:</strong> Phone chargers, low voltage lamps, battery-powered tools</p>
+                            <p><strong>Required Tests:</strong></p>
+                            <ul>
+                                <li>Visual inspection only</li>
+                                <li>Check power supply unit if separate</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">🏷️ Equipment Types by Environment</h3>
+                        <div class="card-content">
+                            <table class="compliance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Environment</th>
+                                        <th>Risk Level</th>
+                                        <th>Testing Frequency</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Construction sites</td>
+                                        <td>High</td>
+                                        <td>3 months</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Industrial</td>
+                                        <td>High</td>
+                                        <td>6 months</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Schools/Education</td>
+                                        <td>Medium</td>
+                                        <td>12 months</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Offices</td>
+                                        <td>Low</td>
+                                        <td>24-48 months</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hotels</td>
+                                        <td>Medium</td>
+                                        <td>24 months</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Limits Section -->
+                <div class="guide-section" id="limits">
+                    <div class="section-header">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <h2 class="section-title">Test Limits & Requirements</h2>
+                                <p class="section-subtitle">Pass/Fail Criteria for PAT Testing</p>
+                            </div>
+                            <button class="bookmark-btn" onclick="toggleBookmark('limits')">🔖</button>
+                        </div>
+                    </div>
+
+                    <div class="limits-grid">
+                        <div class="limit-card">
+                            <h3 class="limit-title">Earth Continuity</h3>
+                            <div class="limit-value">≤ 0.1 Ω</div>
+                            <div class="limit-description">For Class I equipment up to 20A</div>
+                        </div>
+                        <div class="limit-card">
+                            <h3 class="limit-title">Insulation Resistance</h3>
+                            <div class="limit-value">≥ 1.0 MΩ</div>
+                            <div class="limit-description">At 500V DC for 1 minute</div>
+                        </div>
+                        <div class="limit-card">
+                            <h3 class="limit-title">Earth Leakage</h3>
+                            <div class="limit-value">≤ 0.75 mA</div>
+                            <div class="limit-description">For hand-held equipment</div>
+                        </div>
+                        <div class="limit-card">
+                            <h3 class="limit-title">Touch Current</h3>
+                            <div class="limit-value">≤ 0.25 mA</div>
+                            <div class="limit-description">For Class II equipment</div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3 class="card-title">📊 Detailed Test Requirements</h3>
+                        <div class="card-content">
+                            <table class="compliance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Test Type</th>
+                                        <th>Class I</th>
+                                        <th>Class II</th>
+                                        <th>Test Voltage</th>
+                                        <th>Pass Criteria</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Earth Continuity</td>
+                                        <td>✓ Required</td>
+                                        <td>✗ Not Required</td>
+                                        <td>12V DC</td>
+                                        <td>≤ 0.1 + R Ω</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Insulation Resistance</td>
+                                        <td>✓ Required</td>
+                                        <td>✓ Required</td>
+                                        <td>500V DC</td>
+                                        <td>≥ 1.0 MΩ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Earth Leakage</td>
+                                        <td>✓ If applicable</td>
+                                        <td>✓ If applicable</td>
+                                        <td>230V AC</td>
+                                        <td>≤ Specified limit</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Flash Test</td>
+                                        <td>Optional</td>
+                                        <td>Optional</td>
+                                        <td>1.5kV AC</td>
+                                        <td>No breakdown</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="quick-reference">
+                        <h3 class="reference-title">📋 Quick Reference</h3>
+                        <div class="reference-grid">
+                            <div class="reference-item">
+                                <h4>Class I Limits</h4>
+                                <p>Earth: ≤ 0.1Ω<br>Insulation: ≥ 1MΩ<br>Leakage: ≤ 0.75mA</p>
+                            </div>
+                            <div class="reference-item">
+                                <h4>Class II Limits</h4>
+                                <p>Insulation: ≥ 2MΩ<br>Touch Current: ≤ 0.25mA</p>
+                            </div>
+                            <div class="reference-item">
+                                <h4>Extension Leads</h4>
+                                <p>Earth: ≤ 0.1Ω<br>Polarity: Correct</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Downloads Section -->
+                <div class="guide-section" id="downloads">
+                    <div class="section-header">
+                        <h2 class="section-title">Downloads & Resources</h2>
+                        <p class="section-subtitle">Official Documents and Reference Materials</p>
+                    </div>
+
+                    <div class="download-cards">
+                        <div class="download-card">
+                            <div class="download-icon">📘</div>
+                            <h3 class="download-title">IET Code of Practice PDF</h3>
+                            <p>Official 5th Edition complete guide</p>
+                            <button class="download-btn" onclick="downloadResource('iet-guide')">Download (12MB)</button>
+                        </div>
+                        <div class="download-card">
+                            <div class="download-icon">📋</div>
+                            <h3 class="download-title">PAT Test Checklist</h3>
+                            <p>Comprehensive testing checklist</p>
+                            <button class="download-btn" onclick="downloadResource('checklist')">Download PDF</button>
+                        </div>
+                        <div class="download-card">
+                            <div class="download-icon">🏷️</div>
+                            <h3 class="download-title">Label Templates</h3>
+                            <p>PAT test labels and stickers</p>
+                            <button class="download-btn" onclick="downloadResource('labels')">Download Templates</button>
+                        </div>
+                        <div class="download-card">
+                            <div class="download-icon">📄</div>
+                            <h3 class="download-title">Certificate Template</h3>
+                            <p>IET compliant certificate template</p>
+                            <button class="download-btn" onclick="downloadResource('certificate')">Download DOC</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Assistant -->
+                <div class="ai-assistant">
+                    <div class="ai-header">
+                        <div class="ai-icon">🤖</div>
+                        <div class="ai-title">IET Code Assistant</div>
+                    </div>
+                    
+                    <div class="ai-message">
+                        <p><strong>Ask me anything about IET Code of Practice:</strong></p>
+                        <p>I can help you understand test requirements, compliance issues, or specific equipment testing procedures.</p>
+                    </div>
+
+                    <div class="ai-input">
+                        <input type="text" id="aiQuery" placeholder="e.g., What tests are required for Class I equipment?">
+                        <button onclick="askAssistant()">Ask</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="action-btn primary" onclick="printGuide()">
+                <span>🖨️</span> Print This Guide
+            </button>
+            <button class="action-btn secondary" onclick="saveForOffline()">
+                <span>💾</span> Save Offline Copy
+            </button>
+            <button class="action-btn secondary" onclick="shareGuide()">
+                <span>↗️</span> Share Guide
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fab" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Global variables
+        let currentSection = 'introduction';
+        let bookmarks = new Set(['introduction']);
+        let searchResults = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeNavigation();
+            updateFABVisibility();
+            
+            window.addEventListener('resize', updateFABVisibility);
+            showToast('IET Code Guide loaded successfully! 📚', 'info');
+            
+            // Setup keyboard shortcuts
+            setupKeyboardShortcuts();
+            
+            // Load bookmarks from localStorage
+            loadBookmarks();
+        });
+
+        // Initialize navigation
+        function initializeNavigation() {
+            // Set first section as active
+            showSection('introduction');
+            
+            // Setup navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                    
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 768) {
+                        toggleSidebar();
+                    }
+                });
+            });
+        }
+
+        // Show section
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.guide-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('active');
+                currentSection = sectionId;
+                
+                // Update active nav link
+                const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                if (navLink) {
+                    navLink.classList.add('active');
+                    
+                    // Scroll sidebar to active link
+                    if (navLink.offsetTop > 300) {
+                        document.querySelector('.sidebar').scrollTop = navLink.offsetTop - 100;
+                    }
+                }
+                
+                // Update FAB
+                updateFABVisibility();
+            }
+        }
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Search guide
+        function searchGuide() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (!query) {
+                showToast('Please enter a search term', 'info');
+                return;
+            }
+            
+            // Simple search implementation
+            const sections = document.querySelectorAll('.guide-section');
+            let found = false;
+            
+            sections.forEach(section => {
+                const content = section.textContent.toLowerCase();
+                if (content.includes(query)) {
+                    const sectionId = section.id;
+                    showSection(sectionId);
+                    found = true;
+                    
+                    // Highlight search term (simplified)
+                    showToast(`Found in: ${section.querySelector('.section-title').textContent}`, 'success');
+                }
+            });
+            
+            if (!found) {
+                showToast('No results found for: ' + query, 'info');
+            }
+        }
+
+        // Filter content
+        function filterContent(filter) {
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show relevant sections based on filter
+            const sections = {
+                'all': ['introduction', 'legal', 'equipment', 'limits', 'downloads'],
+                'testing': ['visual', 'earth', 'insulation', 'leakage', 'load'],
+                'compliance': ['legal', 'frequency', 'documentation'],
+                'limits': ['limits'],
+                'safety': ['legal', 'failures'],
+                'documentation': ['documentation', 'downloads']
+            };
+            
+            if (sections[filter]) {
+                showSection(sections[filter][0]);
+                showToast(`Showing ${filter} content`, 'info');
+            }
+        }
+
+        // Toggle bookmark
+        function toggleBookmark(sectionId) {
+            const button = event.target;
+            
+            if (bookmarks.has(sectionId)) {
+                bookmarks.delete(sectionId);
+                button.classList.remove('bookmarked');
+                button.textContent = '🔖';
+                showToast('Bookmark removed', 'info');
+            } else {
+                bookmarks.add(sectionId);
+                button.classList.add('bookmarked');
+                button.textContent = '⭐';
+                showToast('Section bookmarked!', 'success');
+            }
+            
+            // Save to localStorage
+            saveBookmarks();
+        }
+
+        // Save bookmarks
+        function saveBookmarks() {
+            localStorage.setItem('ietGuideBookmarks', JSON.stringify([...bookmarks]));
+        }
+
+        // Load bookmarks
+        function loadBookmarks() {
+            const saved = localStorage.getItem('ietGuideBookmarks');
+            if (saved) {
+                bookmarks = new Set(JSON.parse(saved));
+                
+                // Update bookmark buttons
+                bookmarks.forEach(sectionId => {
+                    const button = document.querySelector(`.bookmark-btn[onclick*="${sectionId}"]`);
+                    if (button) {
+                        button.classList.add('bookmarked');
+                        button.textContent = '⭐';
+                    }
+                });
+            }
+        }
+
+        // Print guide
+        function printGuide() {
+            window.print();
+        }
+
+        // Download resource
+        function downloadResource(type) {
+            const resources = {
+                'iet-guide': { name: 'IET-Code-of-Practice-5th-Edition.pdf', size: '12MB' },
+                'checklist': { name: 'PAT-Testing-Checklist.pdf', size: '1.2MB' },
+                'labels': { name: 'PAT-Label-Templates.zip', size: '4.5MB' },
+                'certificate': { name: 'PAT-Certificate-Template.docx', size: '0.5MB' }
+            };
+            
+            const resource = resources[type];
+            if (resource) {
+                showToast(`Downloading ${resource.name} (${resource.size})...`, 'info');
+                // In production, this would trigger actual file download
+            }
+        }
+
+        // Save for offline
+        function saveForOffline() {
+            showToast('📱 Saving guide for offline use...', 'info');
+            
+            // Simulate saving
+            setTimeout(() => {
+                showToast('✅ Guide saved for offline access!', 'success');
+                
+                // Save to localStorage
+                const guideData = {
+                    lastUpdated: new Date().toISOString(),
+                    sections: ['introduction', 'legal', 'equipment', 'limits']
+                };
+                
+                localStorage.setItem('ietGuideOffline', JSON.stringify(guideData));
+            }, 1500);
+        }
+
+        // Share guide
+        function shareGuide() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'IET Code of Practice Guide',
+                    text: 'Comprehensive PAT testing guidelines and compliance information',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers without Web Share API
+                navigator.clipboard.writeText(window.location.href);
+                showToast('🔗 Link copied to clipboard!', 'success');
+            }
+        }
+
+        // Ask AI assistant
+        function askAssistant() {
+            const query = document.getElementById('aiQuery').value.trim();
+            
+            if (!query) {
+                showToast('Please enter a question', 'info');
+                return;
+            }
+            
+            const responses = {
+                'class i': 'Class I equipment requires earth continuity test (≤0.1Ω), insulation resistance test (≥1MΩ), visual inspection, and earth leakage test if applicable.',
+                'test frequency': 'Testing frequency depends on equipment type and environment: Construction (3 months), Industrial (6 months), Offices (24-48 months), Schools (12 months).',
+                'earth continuity': 'Earth continuity test measures resistance between earth pin and exposed conductive parts. Pass limit is ≤0.1Ω plus cable resistance for equipment up to 20A.',
+                'insulation resistance': 'Insulation resistance test checks insulation between live parts and earth. Test at 500V DC for 1 minute. Pass limit is ≥1.0MΩ.',
+                'visual inspection': 'Visual inspection should check for damage, overheating, loose connections, correct fusing, cable condition, and plug condition.',
+                'documentation': 'Required documentation includes test records, certificates, labels, risk assessments, and equipment inventory.'
+            };
+            
+            let response = "I can help you understand IET Code requirements. For detailed information, refer to the specific sections in this guide.";
+            
+            // Check for keywords
+            const lowerQuery = query.toLowerCase();
+            for (const [keyword, answer] of Object.entries(responses)) {
+                if (lowerQuery.includes(keyword)) {
+                    response = answer;
+                    break;
+                }
+            }
+            
+            alert(`🤖 IET Assistant:\n\n${response}\n\nFor complete guidelines, please refer to the relevant sections in this guide.`);
+            
+            // Clear input
+            document.getElementById('aiQuery').value = '';
+        }
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Update FAB visibility
+        function updateFABVisibility() {
+            const fab = document.getElementById('fab');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Show FAB when scrolled down on mobile
+            if (window.innerWidth <= 768 && scrollTop > 300) {
+                fab.style.display = 'flex';
+                fab.innerHTML = '↑';
+                fab.onclick = scrollToTop;
+            } else if (window.innerWidth <= 768) {
+                fab.style.display = 'flex';
+                fab.innerHTML = '🔖';
+                fab.onclick = showBookmarks;
+            } else {
+                fab.style.display = 'none';
+            }
+        }
+
+        // Show bookmarks
+        function showBookmarks() {
+            if (bookmarks.size === 0) {
+                showToast('No bookmarks saved yet', 'info');
+                return;
+            }
+            
+            let message = '📚 Your Bookmarked Sections:\n\n';
+            bookmarks.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const title = section.querySelector('.section-title').textContent;
+                    message += `• ${title}\n`;
+                }
+            });
+            
+            message += '\nTap a section in the sidebar to view it.';
+            alert(message);
+        }
+
+        // Setup keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + F for search
+                if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+                
+                // Ctrl/Cmd + P for print
+                if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                    e.preventDefault();
+                    printGuide();
+                }
+                
+                // Escape to clear search
+                if (e.key === 'Escape') {
+                    document.getElementById('searchInput').value = '';
+                }
+            });
+        }
+
+        // Toast notifications
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type) toast.classList.add(type);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Update scroll event for FAB
+        window.addEventListener('scroll', updateFABVisibility);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Generate PAT Certificate - PAT BuddAI 4U</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        /* Navigation - Mobile Optimized */
+        .navbar {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(33, 150, 243, 0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .mobile-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .mobile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Container - Mobile First */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Tab Navigation for Mobile */
+        .tab-navigation {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 70px;
+            z-index: 900;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: #2196F3;
+            color: white;
+            box-shadow: 0 2px 6px rgba(33, 150, 243, 0.3);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #1565C0;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E3F2FD;
+        }
+
+        .ai-assistant {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+            font-size: 0.9rem;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            color: #1565C0;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .required:after {
+            content: " *";
+            color: #F44336;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E3F2FD;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        /* Test Results Grid */
+        .test-results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .test-input {
+            background: #f8fafc;
+            border: 2px solid #E3F2FD;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .test-input input {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-weight: 600;
+            color: #1976D2;
+        }
+
+        .test-input label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        /* Status Toggle */
+        .status-toggle {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .status-option {
+            flex: 1;
+            padding: 16px;
+            border: 2px solid #E3F2FD;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .status-option.pass.selected {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .status-option.fail.selected {
+            background: #F44336;
+            color: white;
+            border-color: #F44336;
+        }
+
+        /* Certificate Preview */
+        .certificate-wrapper {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .certificate {
+            border: 4px solid #1565C0;
+            padding: 25px;
+            background: white;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .cert-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #1565C0;
+        }
+
+        .cert-title {
+            font-size: 1.5rem;
+            color: #1565C0;
+            font-weight: 800;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .cert-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .cert-section {
+            margin: 16px 0;
+        }
+
+        .cert-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cert-label {
+            font-weight: 700;
+            color: #1565C0;
+            font-size: 0.9rem;
+            min-width: 45%;
+        }
+
+        .cert-value {
+            color: #333;
+            font-size: 0.9rem;
+            text-align: right;
+            word-break: break-word;
+            max-width: 55%;
+        }
+
+        .cert-status {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .cert-status.pass {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .cert-status.fail {
+            background: #F44336;
+            color: white;
+        }
+
+        .cert-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #1565C0;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .signature-line {
+            flex: 1;
+            text-align: center;
+        }
+
+        .signature-line-border {
+            border-top: 2px solid #333;
+            margin: 30px auto 8px;
+            width: 150px;
+        }
+
+        .cert-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #1565C0;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            max-width: 120px;
+            text-align: center;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .action-btn {
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #2196F3;
+            border: 2px solid #2196F3;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        /* Floating Action Button for Mobile */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(33, 150, 243, 0.4);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Swipe Indicators */
+        .swipe-hint {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .form-section {
+                padding: 16px;
+            }
+            
+            .certificate {
+                padding: 20px;
+                border-width: 3px;
+            }
+            
+            .cert-title {
+                font-size: 1.3rem;
+            }
+            
+            .cert-subtitle {
+                font-size: 0.85rem;
+            }
+            
+            .cert-number {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 15px;
+                max-width: 100%;
+            }
+            
+            .test-results-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .fab {
+                display: flex;
+            }
+            
+            /* Touch-friendly input sizes */
+            input, select, textarea {
+                font-size: 16px; /* Prevents iOS zoom on focus */
+            }
+            
+            /* Hide scrollbars but keep functionality */
+            .certificate-wrapper {
+                -webkit-overflow-scrolling: touch;
+                overflow-x: hidden;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 15px;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .mobile-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .certificate {
+                padding: 15px;
+            }
+            
+            .cert-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .cert-label, .cert-value {
+                min-width: 100%;
+                text-align: left;
+            }
+            
+            .cert-footer {
+                flex-direction: column;
+            }
+            
+            .signature-line-border {
+                width: 120px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .navbar, .tab-navigation, .action-buttons, .fab {
+                display: none !important;
+            }
+            
+            .container {
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .certificate-wrapper {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .certificate {
+                border: 4px solid #000;
+                page-break-inside: avoid;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="logo-container">
+            <div class="logo">
+                <span>🔌</span>
+                <span>PAT Certificate</span>
+            </div>
+            <div class="mobile-nav-actions">
+                <a href="contractor-dashboard.html" class="mobile-btn">← Dashboard</a>
+                <button class="mobile-btn" onclick="printCertificate()">🖨️ Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('details')">
+                📝 Details
+            </button>
+            <button class="tab-btn" onclick="switchTab('preview')">
+                👁️ Preview
+            </button>
+        </div>
+
+        <!-- Swipe Hint -->
+        <div class="swipe-hint" id="swipeHint">
+            <span>← Swipe between tabs →</span>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Generating certificate...</p>
+        </div>
+
+        <!-- Details Tab -->
+        <div class="tab-content active" id="detailsTab">
+            <div class="form-section">
+                <div class="ai-assistant">
+                    💡 <strong>AI Assistant:</strong> Fill in the equipment details below to generate a professional PAT test certificate.
+                </div>
+
+                <h2>Equipment Information</h2>
+                
+                <div class="form-group">
+                    <label class="required">Equipment Description</label>
+                    <input type="text" id="equipment" placeholder="e.g., Dell Monitor, Kettle, Power Tool" value="Dell Monitor 24-inch" maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Asset/Serial Number</label>
+                    <input type="text" id="assetNumber" placeholder="e.g., OXP-2024-0123" value="OXP-2024-0547" maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Location</label>
+                    <input type="text" id="location" placeholder="e.g., Office 3, Workshop, Kitchen" value="Tubney Warren Barn - Office 3" maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Equipment Type</label>
+                    <select id="equipmentType">
+                        <option value="Class I - Earthed">Class I - Earthed</option>
+                        <option value="Class II - Double Insulated">Class II - Double Insulated</option>
+                        <option value="Class III - Low Voltage">Class III - Low Voltage</option>
+                    </select>
+                </div>
+
+                <h2>Test Results</h2>
+
+                <div class="test-results-grid">
+                    <div class="test-input">
+                        <label>Earth Continuity (Ω)</label>
+                        <input type="text" id="earthContinuity" placeholder="< 0.1" value="0.08" pattern="[0-9.]*" inputmode="decimal">
+                    </div>
+
+                    <div class="test-input">
+                        <label>Insulation Resistance (MΩ)</label>
+                        <input type="text" id="insulationResistance" placeholder="> 1.0" value="2.5" pattern="[0-9.]*" inputmode="decimal">
+                    </div>
+
+                    <div class="test-input">
+                        <label>Earth Leakage (mA)</label>
+                        <input type="text" id="earthLeakage" placeholder="< 0.75" value="0.12" pattern="[0-9.]*" inputmode="decimal">
+                    </div>
+
+                    <div class="test-input">
+                        <label>Load Test</label>
+                        <input type="text" id="loadTest" placeholder="Result" value="Pass">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Test Result</label>
+                    <div class="status-toggle">
+                        <div class="status-option pass selected" onclick="setTestResult('pass')">
+                            <span>✓</span> PASS
+                        </div>
+                        <div class="status-option fail" onclick="setTestResult('fail')">
+                            <span>✗</span> FAIL
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Next Test Due</label>
+                    <input type="date" id="nextTestDate" value="2026-01-29" min="2024-01-01" max="2030-12-31">
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Tester Name</label>
+                    <input type="text" id="testerName" placeholder="Your Name" value="John Smith" maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Notes</label>
+                    <textarea id="notes" rows="3" placeholder="Any observations or recommendations" maxlength="500">Equipment in good condition. No visual defects noted.</textarea>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn primary" onclick="generateCertificate()">
+                        <span>📄</span> Generate Certificate
+                    </button>
+                    <button class="action-btn secondary" onclick="saveDraft()">
+                        <span>💾</span> Save Draft
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Tab -->
+        <div class="tab-content" id="previewTab">
+            <div class="certificate-wrapper">
+                <h2>Certificate Preview</h2>
+                
+                <div class="certificate" id="certificate">
+                    <div class="cert-number" id="certNumber">CERT-2026-0001</div>
+                    
+                    <div class="cert-header">
+                        <div class="cert-title">PORTABLE APPLIANCE TEST CERTIFICATE</div>
+                        <div class="cert-subtitle">In accordance with IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th Edition)</div>
+                    </div>
+
+                    <div class="cert-section">
+                        <div class="cert-row">
+                            <span class="cert-label">Test Date:</span>
+                            <span class="cert-value" id="cert-testDate">29 January 2026</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Certificate Number:</span>
+                            <span class="cert-value" id="cert-certNum">CERT-2026-0001</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-section">
+                        <div style="font-weight: 700; color: #1565C0; margin-bottom: 12px; font-size: 1rem;">EQUIPMENT DETAILS</div>
+                        <div class="cert-row">
+                            <span class="cert-label">Description:</span>
+                            <span class="cert-value" id="cert-equipment">Dell Monitor 24-inch</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Asset/Serial No:</span>
+                            <span class="cert-value" id="cert-assetNumber">OXP-2024-0547</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Location:</span>
+                            <span class="cert-value" id="cert-location">Tubney Warren Barn - Office 3</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Equipment Type:</span>
+                            <span class="cert-value" id="cert-equipmentType">Class I - Earthed</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-section">
+                        <div style="font-weight: 700; color: #1565C0; margin-bottom: 12px; font-size: 1rem;">TEST RESULTS</div>
+                        <div class="cert-row">
+                            <span class="cert-label">Earth Continuity:</span>
+                            <span class="cert-value" id="cert-earthContinuity">0.08 Ω</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Insulation Resistance:</span>
+                            <span class="cert-value" id="cert-insulationResistance">2.5 MΩ</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Earth Leakage:</span>
+                            <span class="cert-value" id="cert-earthLeakage">0.12 mA</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Load Test:</span>
+                            <span class="cert-value" id="cert-loadTest">Pass</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-status pass" id="cert-status">
+                        ✓ PASS - SAFE FOR USE
+                    </div>
+
+                    <div class="cert-section">
+                        <div class="cert-row">
+                            <span class="cert-label">Next Test Due:</span>
+                            <span class="cert-value" id="cert-nextTestDate">29 January 2027</span>
+                        </div>
+                        <div class="cert-row">
+                            <span class="cert-label">Notes:</span>
+                            <span class="cert-value" id="cert-notes">Equipment in good condition. No visual defects noted.</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-footer">
+                        <div class="signature-line">
+                            <div class="signature-line-border"></div>
+                            <div><strong id="cert-testerName">John Smith</strong></div>
+                            <div style="font-size: 0.85rem; color: #666;">Qualified PAT Tester</div>
+                        </div>
+                        <div class="signature-line">
+                            <div class="signature-line-border"></div>
+                            <div><strong>Oxford Pharmagenesis</strong></div>
+                            <div style="font-size: 0.85rem; color: #666;">Company</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px; text-align: center; font-size: 0.75rem; color: #999; line-height: 1.4;">
+                        Generated by PAT BuddAI 4U | Certificate digitally verified
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn primary" onclick="downloadPDF()">
+                        <span>📥</span> Download PDF
+                    </button>
+                    <button class="action-btn secondary" onclick="emailCertificate()">
+                        <span>📧</span> Email Certificate
+                    </button>
+                    <button class="action-btn secondary" onclick="shareCertificate()">
+                        <span>↗️</span> Share
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="fab" onclick="generateCertificate()">
+            📄
+        </button>
+    </div>
+
+    <script>
+        let testResult = 'pass';
+        let currentTab = 'details';
+
+        // Initialize touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Auto-generate certificate number
+        function generateCertNumber() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const random = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+            return `CERT-${year}-${random}`;
+        }
+
+        // Initialize certificate number
+        document.getElementById('certNumber').textContent = generateCertNumber();
+        document.getElementById('cert-certNum').textContent = document.getElementById('certNumber').textContent;
+
+        // Tab switching
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Hide FAB on preview tab
+            const fab = document.getElementById('fab');
+            if (tabName === 'preview') {
+                fab.style.display = 'none';
+            } else {
+                fab.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+            }
+            
+            // Update swipe hint
+            const swipeHint = document.getElementById('swipeHint');
+            swipeHint.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+        }
+
+        // Set test result
+        function setTestResult(result) {
+            testResult = result;
+            document.querySelectorAll('.status-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            updateCertificatePreview();
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-GB', options);
+        }
+
+        // Calculate next test date (1 year from now by default)
+        function calculateNextTestDate() {
+            const date = new Date();
+            date.setFullYear(date.getFullYear() + 1);
+            return date.toISOString().split('T')[0];
+        }
+
+        // Update certificate preview
+        function updateCertificatePreview() {
+            // Update all certificate fields
+            document.getElementById('cert-equipment').textContent = document.getElementById('equipment').value || '[Not specified]';
+            document.getElementById('cert-assetNumber').textContent = document.getElementById('assetNumber').value || '[Not specified]';
+            document.getElementById('cert-location').textContent = document.getElementById('location').value || '[Not specified]';
+            document.getElementById('cert-equipmentType').textContent = document.getElementById('equipmentType').value;
+            
+            document.getElementById('cert-earthContinuity').textContent = (document.getElementById('earthContinuity').value || 'N/A') + ' Ω';
+            document.getElementById('cert-insulationResistance').textContent = (document.getElementById('insulationResistance').value || 'N/A') + ' MΩ';
+            document.getElementById('cert-earthLeakage').textContent = (document.getElementById('earthLeakage').value || 'N/A') + ' mA';
+            document.getElementById('cert-loadTest').textContent = document.getElementById('loadTest').value || 'N/A';
+            
+            const nextTestDate = document.getElementById('nextTestDate').value;
+            if (nextTestDate) {
+                document.getElementById('cert-nextTestDate').textContent = formatDate(nextTestDate);
+            }
+            
+            document.getElementById('cert-testerName').textContent = document.getElementById('testerName').value || '[Not specified]';
+            document.getElementById('cert-notes').textContent = document.getElementById('notes').value || 'No notes provided.';
+            
+            // Update status
+            const statusElement = document.getElementById('cert-status');
+            statusElement.className = 'cert-status ' + testResult;
+            statusElement.innerHTML = testResult === 'pass' 
+                ? '✓ PASS - SAFE FOR USE' 
+                : '✗ FAIL - DO NOT USE';
+            
+            // Update test date to today
+            const today = new Date();
+            document.getElementById('cert-testDate').textContent = formatDate(today.toISOString().split('T')[0]);
+        }
+
+        // Validate form
+        function validateForm() {
+            const requiredFields = [
+                { id: 'equipment', name: 'Equipment Description' },
+                { id: 'assetNumber', name: 'Asset/Serial Number' },
+                { id: 'location', name: 'Location' },
+                { id: 'nextTestDate', name: 'Next Test Date' },
+                { id: 'testerName', name: 'Tester Name' }
+            ];
+            
+            let isValid = true;
+            let firstErrorField = null;
+            
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (!element.value.trim()) {
+                    element.style.borderColor = '#F44336';
+                    isValid = false;
+                    if (!firstErrorField) firstErrorField = element;
+                } else {
+                    element.style.borderColor = '#E3F2FD';
+                }
+            });
+            
+            if (!isValid && firstErrorField) {
+                // Scroll to first error
+                firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstErrorField.focus();
+            }
+            
+            return isValid;
+        }
+
+        // Show loading indicator
+        function showLoading() {
+            document.getElementById('loading').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('loading').classList.remove('active');
+            }, 1500);
+        }
+
+        // Generate certificate
+        function generateCertificate() {
+            if (!validateForm()) {
+                alert('⚠️ Please fill in all required fields marked with *');
+                return;
+            }
+            
+            showLoading();
+            
+            // Generate new certificate number
+            const newCertNum = generateCertNumber();
+            document.getElementById('certNumber').textContent = newCertNum;
+            document.getElementById('cert-certNum').textContent = newCertNum;
+            
+            updateCertificatePreview();
+            
+            // Switch to preview tab on mobile
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    switchTab('preview');
+                    // Show success message
+                    alert('✅ Certificate generated successfully!');
+                }, 1600);
+            } else {
+                setTimeout(() => {
+                    alert('✅ Certificate generated successfully!');
+                }, 1600);
+            }
+        }
+
+        // Save draft
+        function saveDraft() {
+            const draft = {
+                equipment: document.getElementById('equipment').value,
+                assetNumber: document.getElementById('assetNumber').value,
+                location: document.getElementById('location').value,
+                equipmentType: document.getElementById('equipmentType').value,
+                testResult: testResult,
+                nextTestDate: document.getElementById('nextTestDate').value,
+                testerName: document.getElementById('testerName').value,
+                notes: document.getElementById('notes').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('patCertificateDraft', JSON.stringify(draft));
+            alert('💾 Draft saved successfully!');
+        }
+
+        // Load draft
+        function loadDraft() {
+            const draft = JSON.parse(localStorage.getItem('patCertificateDraft'));
+            if (draft) {
+                document.getElementById('equipment').value = draft.equipment || '';
+                document.getElementById('assetNumber').value = draft.assetNumber || '';
+                document.getElementById('location').value = draft.location || '';
+                document.getElementById('equipmentType').value = draft.equipmentType || 'Class I - Earthed';
+                setTestResult(draft.testResult || 'pass');
+                document.getElementById('nextTestDate').value = draft.nextTestDate || calculateNextTestDate();
+                document.getElementById('testerName').value = draft.testerName || '';
+                document.getElementById('notes').value = draft.notes || '';
+                updateCertificatePreview();
+            }
+        }
+
+        // Download PDF
+        function downloadPDF() {
+            alert('📥 PDF Download\n\nIn production, this would generate and download a PDF version of the certificate.\n\nFor demo purposes, use Print → Save as PDF');
+        }
+
+        // Print certificate
+        function printCertificate() {
+            window.print();
+        }
+
+        // Email certificate
+        function emailCertificate() {
+            const email = prompt('Enter email address to send certificate:', 'client@example.com');
+            if (email) {
+                alert(`📧 Certificate sent to: ${email}\n\n(Note: In production, this would email the PDF certificate.)`);
+            }
+        }
+
+        // Share certificate
+        function shareCertificate() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'PAT Test Certificate',
+                    text: 'Portable Appliance Test Certificate',
+                    url: window.location.href
+                });
+            } else {
+                alert('📱 Share feature not supported in this browser.');
+            }
+        }
+
+        // Touch/swipe handling
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentTab === 'details') {
+                    // Swipe left on details tab
+                    switchTab('preview');
+                } else if (diff < 0 && currentTab === 'preview') {
+                    // Swipe right on preview tab
+                    switchTab('details');
+                }
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load any saved draft
+            loadDraft();
+            
+            // Auto-update preview as user types
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                element.addEventListener('input', updateCertificatePreview);
+            });
+            
+            // Set default next test date if not set
+            if (!document.getElementById('nextTestDate').value) {
+                document.getElementById('nextTestDate').value = calculateNextTestDate();
+            }
+            
+            // Initialize preview
+            updateCertificatePreview();
+            
+            // Show/hide FAB based on screen size
+            function updateFABVisibility() {
+                const fab = document.getElementById('fab');
+                fab.style.display = window.innerWidth <= 768 && currentTab === 'details' ? 'flex' : 'none';
+            }
+            
+            updateFABVisibility();
+            window.addEventListener('resize', updateFABVisibility);
+            
+            // Show swipe hint on mobile
+            const swipeHint = document.getElementById('swipeHint');
+            swipeHint.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+            
+            // Prevent zoom on input focus on iOS
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                    document.body.style.zoom = 0.99;
+                }
+            });
+            
+            document.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    document.body.style.zoom = 1;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

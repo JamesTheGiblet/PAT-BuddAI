@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Terms of Service - PAT BuddAI 4U</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(33, 150, 243, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #1565C0;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .page-header .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Agreement Banner */
+        .agreement-banner {
+            background: linear-gradient(135deg, #1565C0, #1976D2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .agreement-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .acceptance-btn {
+            background: white;
+            color: #1976D2;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .acceptance-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Legal Notice */
+        .legal-notice {
+            background: #FFEBEE;
+            border: 2px solid #F44336;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .legal-notice h3 {
+            color: #F44336;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Terms Content */
+        .terms-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .quick-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-pill {
+            background: #F8FBFF;
+            border: 2px solid #E3F2FD;
+            color: #1976D2;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-pill:hover {
+            border-color: #1976D2;
+            background: #E3F2FD;
+        }
+
+        .nav-pill.active {
+            background: #1976D2;
+            color: white;
+            border-color: #1976D2;
+        }
+
+        /* Terms Sections */
+        .terms-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #E3F2FD;
+        }
+
+        .terms-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            background: #1976D2;
+            color: white;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            color: #1565C0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .section-content {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul, .section-content ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Definitions List */
+        .definitions-list {
+            background: #F8FBFF;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .definition-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #E3F2FD;
+        }
+
+        .definition-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .term {
+            color: #1565C0;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #FFF3E0, #FFECB3);
+            border: 2px solid #FF9800;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box.warning {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border-color: #F44336;
+        }
+
+        .highlight-box.info {
+            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+            border-color: #2196F3;
+        }
+
+        .highlight-title {
+            color: #EF6C00;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight-box.warning .highlight-title {
+            color: #F44336;
+        }
+
+        .highlight-box.info .highlight-title {
+            color: #1565C0;
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-table th {
+            background: #E3F2FD;
+            color: #1565C0;
+            font-weight: 700;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .pricing-table td {
+            padding: 15px;
+            border-bottom: 1px solid #E3F2FD;
+            color: #444;
+        }
+
+        .pricing-table tr:hover {
+            background: #F8FBFF;
+        }
+
+        .price {
+            color: #1976D2;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #2196F3;
+            border: 2px solid #E3F2FD;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            color: #1565C0;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 2px solid #E3F2FD;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #1565C0;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #0D47A1;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .terms-content {
+                padding: 25px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .quick-nav {
+                margin-bottom: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .pricing-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .section-number {
+                align-self: flex-start;
+            }
+            
+            .agreement-banner {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 15px;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .terms-section {
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+            
+            .nav-pill {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar, .back-to-top, .action-buttons, .agreement-banner {
+                display: none !important;
+            }
+            
+            body {
+                background: white;
+            }
+            
+            .container {
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .terms-content {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+
+        /* Signature Section */
+        .signature-section {
+            background: #F8FBFF;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 2px dashed #1976D2;
+        }
+
+        .signature-line {
+            border-top: 2px solid #333;
+            margin: 40px 0 20px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .signature-field {
+            margin-top: 30px;
+        }
+
+        .signature-label {
+            font-weight: 600;
+            color: #1565C0;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .signature-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            border: 2px solid #E3F2FD;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* Checkbox Terms */
+        .terms-checkbox {
+            margin: 25px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .terms-checkbox input {
+            margin-top: 3px;
+        }
+
+        .terms-checkbox label {
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .terms-checkbox a {
+            color: #1976D2;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <span>⚖️</span>
+                    <span>Terms of Service</span>
+                </a>
+            </div>
+            <div class="nav-actions">
+                <a href="index.html" class="nav-btn">← Back to Home</a>
+                <a href="#" class="nav-btn" onclick="printPage()">🖨️ Print</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Terms of Service</h1>
+            <p class="subtitle">Legal agreement between you and PAT BuddAI 4U Ltd.</p>
+        </div>
+
+        <!-- Agreement Banner -->
+        <div class="agreement-banner">
+            <p class="agreement-text">By using our services, you agree to these Terms of Service</p>
+            <button class="acceptance-btn" onclick="showAcceptanceModal()">
+                <span>✓</span> I Accept These Terms
+            </button>
+        </div>
+
+        <!-- Legal Notice -->
+        <div class="legal-notice">
+            <h3>
+                <span>⚠️</span>
+                Important Legal Notice
+            </h3>
+            <p>These Terms constitute a legally binding agreement. Please read them carefully before using PAT BuddAI 4U services. If you do not agree with these Terms, you must not use our services.</p>
+        </div>
+
+        <!-- Terms Content -->
+        <div class="terms-content">
+            <!-- Quick Navigation -->
+            <div class="quick-nav">
+                <a href="#definitions" class="nav-pill" onclick="scrollToSection('definitions')">📖 Definitions</a>
+                <a href="#accounts" class="nav-pill" onclick="scrollToSection('accounts')">👤 Accounts</a>
+                <a href="#services" class="nav-pill" onclick="scrollToSection('services')">🔧 Services</a>
+                <a href="#payments" class="nav-pill" onclick="scrollToSection('payments')">💰 Payments</a>
+                <a href="#intellectual" class="nav-pill" onclick="scrollToSection('intellectual')">💡 Intellectual Property</a>
+                <a href="#liability" class="nav-pill" onclick="scrollToSection('liability')">⚖️ Liability</a>
+                <a href="#termination" class="nav-pill" onclick="scrollToSection('termination')">🚪 Termination</a>
+                <a href="#governing" class="nav-pill" onclick="scrollToSection('governing')">🌍 Governing Law</a>
+            </div>
+
+            <!-- Definitions Section -->
+            <div class="terms-section" id="definitions">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <h2 class="section-title">Definitions & Interpretation</h2>
+                </div>
+                <div class="section-content">
+                    <p>In these Terms, the following definitions apply:</p>
+                    
+                    <div class="definitions-list">
+                        <div class="definition-item">
+                            <div class="term">"Service" or "Services"</div>
+                            <div class="meaning">The PAT BuddAI 4U platform, including all features, tools, and applications accessible via our website, mobile applications, and APIs.</div>
+                        </div>
+                        
+                        <div class="definition-item">
+                            <div class="term">"User", "You", "Your"</div>
+                            <div class="meaning">Any individual or entity that accesses or uses the Service, whether as a contractor, business client, or visitor.</div>
+                        </div>
+                        
+                        <div class="definition-item">
+                            <div class="term">"Account"</div>
+                            <div class="meaning">A registered user profile on the Service with unique login credentials.</div>
+                        </div>
+                        
+                        <div class="definition-item">
+                            <div class="term">"Content"</div>
+                            <div class="meaning">All data, information, text, images, certificates, test results, and other materials uploaded to or generated by the Service.</div>
+                        </div>
+                        
+                        <div class="definition-item">
+                            <div class="term">"Subscription"</div>
+                            <div class="meaning">A paid access plan to the Service with specified features and limitations.</div>
+                        </div>
+                        
+                        <div class="definition-item">
+                            <div class="term">"Effective Date"</div>
+                            <div class="meaning">The date when these Terms become binding, typically when you first use the Service.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accounts Section -->
+            <div class="terms-section" id="accounts">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <h2 class="section-title">Account Registration & Security</h2>
+                </div>
+                <div class="section-content">
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">2.1 Eligibility</h3>
+                    <p>To use the Service, you must:</p>
+                    <ul>
+                        <li>Be at least 18 years of age</li>
+                        <li>Have the legal capacity to enter into binding contracts</li>
+                        <li>Provide accurate and complete registration information</li>
+                        <li>Maintain the security of your account credentials</li>
+                        <li>Notify us immediately of any unauthorized account use</li>
+                    </ul>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">2.2 Account Types</h3>
+                    <p>We offer different account types with varying permissions:</p>
+                    
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th>Account Type</th>
+                                <th>Permissions</th>
+                                <th>User Limit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Contractor</strong></td>
+                                <td>Full testing capabilities, certificate generation, scheduling</td>
+                                <td>Single user</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Business Basic</strong></td>
+                                <td>Monitoring, reporting, 5 contractor seats</td>
+                                <td>5 users</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Business Pro</strong></td>
+                                <td>Full oversight, unlimited contractors, API access</td>
+                                <td>Unlimited</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Enterprise</strong></td>
+                                <td>Custom features, dedicated support, on-premise option</td>
+                                <td>Custom</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="highlight-box warning">
+                        <div class="highlight-title">
+                            <span>🔒</span>
+                            Security Responsibility
+                        </div>
+                        <p>You are solely responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. We are not liable for any loss or damage arising from your failure to protect your account information.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="terms-section" id="services">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <h2 class="section-title">Services & Acceptable Use</h2>
+                </div>
+                <div class="section-content">
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">3.1 Service Description</h3>
+                    <p>PAT BuddAI 4U provides:</p>
+                    <ul>
+                        <li>AI-guided PAT testing procedures</li>
+                        <li>Certificate generation and management</li>
+                        <li>Compliance tracking and reporting</li>
+                        <li>Equipment asset management</li>
+                        <li>Scheduling and route optimization</li>
+                        <li>Document storage and retrieval</li>
+                        <li>Mobile testing applications</li>
+                    </ul>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">3.2 Acceptable Use</h3>
+                    <p>You agree not to use the Service to:</p>
+                    <ul>
+                        <li>Violate any applicable laws or regulations</li>
+                        <li>Infringe upon intellectual property rights</li>
+                        <li>Upload malicious software or viruses</li>
+                        <li>Attempt to gain unauthorized access to systems</li>
+                        <li>Engage in fraudulent or deceptive practices</li>
+                        <li>Generate false or misleading test certificates</li>
+                        <li>Harass, abuse, or harm others</li>
+                        <li>Transmit spam or unauthorized advertising</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <span>📝</span>
+                            Compliance Responsibility
+                        </div>
+                        <p>While PAT BuddAI 4U assists with PAT testing procedures, ultimate responsibility for compliance with IET Code of Practice and other regulations remains with you, the user. We provide tools, not professional advice.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payments Section -->
+            <div class="terms-section" id="payments">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <h2 class="section-title">Fees & Payments</h2>
+                </div>
+                <div class="section-content">
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">4.1 Subscription Fees</h3>
+                    <p>Our current pricing structure:</p>
+                    
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th>Plan</th>
+                                <th>Monthly</th>
+                                <th>Annual (Save 20%)</th>
+                                <th>Features</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Contractor</strong></td>
+                                <td class="price">£49/month</td>
+                                <td class="price">£470/year</td>
+                                <td>All testing tools</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Business Basic</strong></td>
+                                <td class="price">£149/month</td>
+                                <td class="price">£1,429/year</td>
+                                <td>5 contractor seats</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Business Pro</strong></td>
+                                <td class="price">£299/month</td>
+                                <td class="price">£2,870/year</td>
+                                <td>Unlimited seats</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Enterprise</strong></td>
+                                <td colspan="2" style="text-align: center;">Custom Pricing</td>
+                                <td>Custom features</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">4.2 Payment Terms</h3>
+                    <ul>
+                        <li>All fees are exclusive of VAT unless stated otherwise</li>
+                        <li>Payment is due at the beginning of each billing cycle</li>
+                        <li>Automatic renewal unless cancelled 30 days before renewal</li>
+                        <li>Late payments may result in service suspension</li>
+                        <li>Refunds are issued at our discretion, typically within 30 days</li>
+                    </ul>
+                    
+                    <div class="highlight-box info">
+                        <div class="highlight-title">
+                            <span>💰</span>
+                            Price Changes
+                        </div>
+                        <p>We reserve the right to change pricing with 30 days' notice. Current subscribers will be notified of any changes to their subscription fees at least 30 days before the change takes effect.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liability Section -->
+            <div class="terms-section" id="liability">
+                <div class="section-header">
+                    <div class="section-number">6</div>
+                    <h2 class="section-title">Limitation of Liability</h2>
+                </div>
+                <div class="section-content">
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">6.1 No Warranty</h3>
+                    <p>The Service is provided "as is" and "as available" without any warranties of any kind, either express or implied. We do not warrant that:</p>
+                    <ul>
+                        <li>The Service will meet your specific requirements</li>
+                        <li>The Service will be uninterrupted, timely, or error-free</li>
+                        <li>Results obtained from using the Service will be accurate or reliable</li>
+                        <li>Any errors in the Service will be corrected</li>
+                    </ul>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">6.2 Limitation of Damages</h3>
+                    <p>To the maximum extent permitted by law, PAT BuddAI 4U Ltd shall not be liable for any:</p>
+                    <ul>
+                        <li>Indirect, incidental, special, consequential, or punitive damages</li>
+                        <li>Loss of profits, revenue, data, or use</li>
+                        <li>Business interruption or loss of business opportunity</li>
+                        <li>Damages related to unauthorized access or alteration of your data</li>
+                    </ul>
+                    
+                    <div class="highlight-box warning">
+                        <div class="highlight-title">
+                            <span>⚖️</span>
+                            Maximum Liability
+                        </div>
+                        <p>In no event shall our total liability to you for all damages exceed the amount paid by you to us for the Service in the six (6) months preceding the claim. Some jurisdictions do not allow limitations of liability, so these limitations may not apply to you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Governing Law Section -->
+            <div class="terms-section" id="governing">
+                <div class="section-header">
+                    <div class="section-number">8</div>
+                    <h2 class="section-title">Governing Law & Dispute Resolution</h2>
+                </div>
+                <div class="section-content">
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">8.1 Governing Law</h3>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of England and Wales, without regard to its conflict of law provisions.</p>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">8.2 Dispute Resolution</h3>
+                    <p>Any disputes arising under or in connection with these Terms shall be resolved as follows:</p>
+                    <ol>
+                        <li><strong>Negotiation:</strong> Parties shall attempt to resolve disputes through good faith negotiation for 30 days</li>
+                        <li><strong>Mediation:</strong> If negotiation fails, parties shall attempt mediation through a mutually agreed mediator</li>
+                        <li><strong>Arbitration:</strong> If mediation fails, disputes shall be resolved by binding arbitration under LCIA Rules</li>
+                        <li><strong>Litigation:</strong> Either party may seek injunctive relief in the courts of England and Wales</li>
+                    </ol>
+                    
+                    <div class="highlight-box info">
+                        <div class="highlight-title">
+                            <span>🇬🇧</span>
+                            Jurisdiction
+                        </div>
+                        <p>You agree that any legal action or proceeding shall be brought exclusively in the courts located in London, England, and you hereby consent to the personal jurisdiction of such courts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acceptance Section -->
+            <div class="signature-section">
+                <h3 style="color: #1565C0; margin-bottom: 20px;">Acceptance of Terms</h3>
+                
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="acceptTerms">
+                    <label for="acceptTerms">
+                        I have read, understood, and agree to be bound by these Terms of Service. I acknowledge that this agreement constitutes a legally binding contract between me and PAT BuddAI 4U Ltd.
+                    </label>
+                </div>
+                
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="acceptPrivacy">
+                    <label for="acceptPrivacy">
+                        I have read and agree to the <a href="privacy-policy.html" target="_blank">Privacy Policy</a> and consent to the collection, use, and disclosure of my personal information as described therein.
+                    </label>
+                </div>
+                
+                <div class="signature-field">
+                    <label class="signature-label">Full Name:</label>
+                    <input type="text" class="signature-input" id="fullName" placeholder="Enter your full name">
+                </div>
+                
+                <div class="signature-field">
+                    <label class="signature-label">Date:</label>
+                    <input type="date" class="signature-input" id="acceptanceDate">
+                </div>
+                
+                <div class="signature-line"></div>
+                
+                <button class="action-btn primary" onclick="submitAcceptance()" style="margin-top: 20px;">
+                    <span>✓</span> Sign & Accept Terms
+                </button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="index.html" class="action-btn primary">
+                    <span>←</span> Back to Home
+                </a>
+                <button class="action-btn secondary" onclick="printPage()">
+                    <span>🖨️</span> Print Terms
+                </button>
+                <button class="action-btn secondary" onclick="downloadPDF()">
+                    <span>📥</span> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 PAT BuddAI 4U Ltd. All rights reserved.</p>
+        <p>Registered in England & Wales: 12345678 | VAT: GB 123 4567 89</p>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.8;">
+            <a href="index.html">Home</a> | 
+            <a href="privacy-policy.html">Privacy Policy</a> | 
+            <a href="cookie-policy.html">Cookie Policy</a> | 
+            <a href="data-processing-agreement.html">DPA</a>
+        </p>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <!-- Acceptance Modal -->
+    <div id="acceptanceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 15px; padding: 30px; max-width: 500px; width: 90%; text-align: center;">
+            <h3 style="color: #1565C0; margin-bottom: 20px;">🎉 Terms Accepted!</h3>
+            <p style="margin-bottom: 20px;">Thank you for accepting our Terms of Service. You can now proceed to use PAT BuddAI 4U.</p>
+            <button onclick="closeAcceptanceModal()" style="background: #1976D2; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                Continue to Service
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Back to top functionality
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 80;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Print page
+        function printPage() {
+            window.print();
+        }
+
+        // Download PDF
+        function downloadPDF() {
+            alert('📥 Downloading Terms of Service PDF\n\n(Note: In production, this would generate and download a PDF version of the terms.)');
+        }
+
+        // Acceptance modal
+        function showAcceptanceModal() {
+            document.getElementById('acceptanceModal').style.display = 'flex';
+        }
+
+        function closeAcceptanceModal() {
+            document.getElementById('acceptanceModal').style.display = 'none';
+            // In production, this would redirect to registration or service
+            window.location.href = 'index.html?termsAccepted=true';
+        }
+
+        // Submit acceptance
+        function submitAcceptance() {
+            const fullName = document.getElementById('fullName').value;
+            const acceptanceDate = document.getElementById('acceptanceDate').value;
+            const acceptTerms = document.getElementById('acceptTerms').checked;
+            const acceptPrivacy = document.getElementById('acceptPrivacy').checked;
+            
+            if (!acceptTerms || !acceptPrivacy) {
+                alert('Please check both agreement boxes to accept the Terms of Service and Privacy Policy.');
+                return;
+            }
+            
+            if (!fullName.trim()) {
+                alert('Please enter your full name.');
+                return;
+            }
+            
+            if (!acceptanceDate) {
+                alert('Please enter the acceptance date.');
+                return;
+            }
+            
+            // Show acceptance confirmation
+            document.getElementById('acceptanceModal').style.display = 'flex';
+            
+            // In production, this would send acceptance to server
+            console.log(`Terms accepted by: ${fullName} on ${acceptanceDate}`);
+            
+            // Store acceptance in localStorage for demo
+            localStorage.setItem('termsAccepted', JSON.stringify({
+                name: fullName,
+                date: acceptanceDate,
+                timestamp: new Date().toISOString()
+            }));
+        }
+
+        // Set today's date as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('acceptanceDate').value = today;
+            
+            // Check URL hash
+            if (window.location.hash) {
+                setTimeout(() => {
+                    scrollToSection(window.location.hash.substring(1));
+                }, 500);
+            }
+            
+            // Update copyright year
+            const yearElement = document.querySelector('footer p');
+            if (yearElement) {
+                const currentYear = new Date().getFullYear();
+                yearElement.innerHTML = yearElement.innerHTML.replace('2024', currentYear);
+            }
+            
+            // Check if terms already accepted
+            const accepted = localStorage.getItem('termsAccepted');
+            if (accepted) {
+                const data = JSON.parse(accepted);
+                document.getElementById('fullName').value = data.name;
+                document.getElementById('acceptanceDate').value = data.date.split('T')[0];
+                document.getElementById('acceptTerms').checked = true;
+                document.getElementById('acceptPrivacy').checked = true;
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + P for print
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printPage();
+            }
+            
+            // Escape to close modal
+            if (e.key === 'Escape' && document.getElementById('acceptanceModal').style.display === 'flex') {
+                closeAcceptanceModal();
+            }
+        });
+    </script>
+</body>
+</html>

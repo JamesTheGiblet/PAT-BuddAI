@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAT BuddAI 4U - Your Intelligent PAT Testing Companion</title>
+    <meta name="description" content="PAT BuddAI 4U - AI-powered PAT testing platform for businesses and contractors. Streamline compliance, testing, and documentation.">
+    <meta name="keywords" content="PAT testing, electrical safety, compliance, testing software, contractor software">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .security-banner {
+            background: #0D47A1;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(13, 71, 161, 0.2);
+        }
+
+        .security-banner a {
+            color: #64B5F6;
+            text-decoration: underline;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .security-banner a:hover {
+            color: white;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .logo {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 800;
+            color: #1565C0;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .slogan {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            color: #0D47A1;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .modals-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .modal {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(21, 101, 192, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(144, 202, 249, 0.5);
+            flex: 1;
+            min-width: 280px;
+            max-width: 500px;
+            animation: floatIn 1s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .modal:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(21, 101, 192, 0.4);
+        }
+
+        .modal.business {
+            border-top: 5px solid #1976D2;
+        }
+
+        .modal.contractor {
+            border-top: 5px solid #42A5F5;
+        }
+
+        .modal h2 {
+            color: #1565C0;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            margin-bottom: 20px;
+            border-bottom: 3px solid #64B5F6;
+            padding-bottom: 10px;
+        }
+
+        .modal p {
+            color: #0D47A1;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        }
+
+        .modal ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal li {
+            color: #1976D2;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+        }
+
+        .modal li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #42A5F5;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+            position: relative;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
+        }
+
+        .cta-button:focus {
+            outline: 3px solid #0D47A1;
+            outline-offset: 2px;
+        }
+
+        .cta-button.loading {
+            color: transparent;
+        }
+
+        .cta-button.loading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .modals-container {
+                flex-direction: column;
+            }
+            
+            .modal {
+                max-width: 100%;
+            }
+            
+            .demo-modal {
+                margin: 20px 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion) {
+            .modal, .hero {
+                animation: none;
+            }
+            
+            .cta-button:hover {
+                transform: none;
+            }
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #42A5F5 0%, #64B5F6 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 15px 0;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(66, 165, 245, 0.3);
+        }
+
+        .badge:before {
+            content: '✨';
+        }
+
+        .role-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1565C0;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .demo-modal {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(21, 101, 192, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(144, 202, 249, 0.5);
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+            animation: floatIn 1s ease-out 0.5s both;
+        }
+
+        .demo-placeholder {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1565C0, #42A5F5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .demo-placeholder:hover {
+            transform: scale(1.02);
+        }
+
+        .demo-placeholder span {
+            color: white;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .roi-cta {
+            background: linear-gradient(135deg, #0D47A1 0%, #1565C0 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 40px auto;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(13, 71, 161, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            animation: floatIn 1s ease-out 0.3s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roi-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .roi-cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .roi-cta h2 {
+            color: white;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .roi-cta p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .roi-cta-button {
+            background: white;
+            color: #0D47A1;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .roi-cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #64B5F6;
+            color: white;
+        }
+
+        .roi-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .roi-stat {
+            text-align: center;
+        }
+
+        .roi-stat-value {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: #64B5F6;
+            display: block;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .roi-stat-label {
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #1565C0;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #1565C0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 8px;
+        }
+
+        footer a:hover {
+            color: #0D47A1;
+            text-decoration: underline;
+        }
+
+        /* Login Modal Styles */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 71, 161, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .login-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .login-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .login-header h3 {
+            color: #1565C0;
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #1565C0;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #BBDEFB;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .login-form button {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+        }
+
+        .login-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .login-links a {
+            color: #1976D2;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="security-banner">
+        🔒 Secure & GDPR Compliant | All data encrypted in transit and at rest
+        <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+
+    <div class="hero">
+        <div class="logo">PAT BuddAI 4U</div>
+        <div class="slogan">Your Intelligent PAT Testing Companion</div>
+    </div>
+
+    <div class="modals-container">
+        <div class="modal business">
+            <span class="role-label">🏢 Business Portal</span>
+            <h2>Manage & Monitor</h2>
+            <p>Complete visibility and control over your PAT testing compliance across all sites and contractors.</p>
+            <ul>
+                <li>Real-time dashboard & reporting</li>
+                <li>Equipment asset tracking</li>
+                <li>Contractor performance metrics</li>
+                <li>Compliance deadline alerts</li>
+                <li>Certificate archive & retrieval</li>
+                <li>Multi-site management</li>
+            </ul>
+            <span class="badge">Full Oversight</span>
+            <button class="cta-button" onclick="showLoginModal('business')">Business Login</button>
+        </div>
+
+        <div class="modal contractor">
+            <span class="role-label">🔧 Contractor Portal</span>
+            <h2>Test & Document</h2>
+            <p>AI-guided testing that walks you through every step, ensuring accuracy and generating instant certificates.</p>
+            <ul>
+                <li>Conversational AI guidance</li>
+                <li>Step-by-step test procedures</li>
+                <li>Automatic certificate generation</li>
+                <li>Photo documentation upload</li>
+                <li>Offline mode capability</li>
+                <li>Job scheduling & routing</li>
+            </ul>
+            <span class="badge">60% Faster</span>
+            <button class="cta-button" onclick="showLoginModal('contractor')">Contractor Login</button>
+        </div>
+    </div>
+
+    <!-- ROI Calculator CTA -->
+    <div class="roi-cta">
+        <div class="roi-cta-content">
+            <h2>💰 Calculate Your Savings</h2>
+            <p>See exactly how much time and money PAT BuddAI 4U will save your organization. Adjust for your specific equipment count and testing frequency.</p>
+            <button class="roi-cta-button" onclick="window.location.href='roi-calculator.html'">
+                <span>📊</span> Launch ROI Calculator
+            </button>
+            <div class="roi-stats">
+                <div class="roi-stat">
+                    <span class="roi-stat-value">60%</span>
+                    <span class="roi-stat-label">Admin Time Saved</span>
+                </div>
+                <div class="roi-stat">
+                    <span class="roi-stat-value">40%</span>
+                    <span class="roi-stat-label">Faster Testing</span>
+                </div>
+                <div class="roi-stat">
+                    <span class="roi-stat-value">&lt;2mo</span>
+                    <span class="roi-stat-label">Payback Period</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-modal">
+        <h2>See PAT BuddAI in Action</h2>
+        <p>Watch how PAT BuddAI streamlines the testing process in under 2 minutes</p>
+        <div class="demo-placeholder" onclick="playDemo()">
+            <span>▶️ Demo Video</span>
+        </div>
+        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Click to play demonstration</p>
+    </div>
+
+    <footer>
+        <p>© 2026 PAT BuddAI 4U | Compliant with IET Code of Practice</p>
+        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.8;">
+            <a href="#" onclick="showSupport()">Contact Support</a> • 
+            <a href="privacy-policy.html">Privacy Policy</a> • 
+            <a href="terms-of-service.html">Terms of Service</a>
+        </p>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <div class="login-header">
+                <h3 id="loginTitle">Portal Login</h3>
+                <button class="close-btn" onclick="closeLoginModal()">×</button>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" id="loginBtn">Sign In</button>
+            </form>
+            <div class="login-links">
+                <a href="#" onclick="forgotPassword()">Forgot Password?</a>
+                <a href="#" onclick="requestAccess()">Request Access</a>
+                <a href="#" onclick="demoLogin()">Try Demo Account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPortal = '';
+
+        function showLoginModal(portal) {
+            currentPortal = portal;
+            const portalName = portal === 'business' ? 'Business' : 'Contractor';
+            document.getElementById('loginTitle').textContent = `${portalName} Portal Login`;
+            document.getElementById('loginModal').classList.add('active');
+            
+            // Clear form
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // Show loading state
+            loginBtn.classList.add('loading');
+            loginBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                loginBtn.classList.remove('loading');
+                loginBtn.disabled = false;
+                
+                // For demo purposes - accept any non-empty credentials
+                if (email && password) {
+                    alert(`Successfully logged into ${currentPortal === 'business' ? 'Business' : 'Contractor'} Portal!\n\nEmail: ${email}\n\n(Note: This is a demo. In production, this would connect to your authentication system.)`);
+                    closeLoginModal();
+                } else {
+                    alert('Please enter both email and password.');
+                }
+            }, 1500);
+        }
+
+        function playDemo() {
+            alert('🎬 Playing demo video\n\n(Note: In production, this would embed a video player or link to a demo video.)');
+        }
+
+        function showPrivacyNotice() {
+            // Redirect to privacy policy page
+            window.location.href = 'privacy-policy.html';
+        }
+
+        function showSupport() {
+            alert('📞 Contact Support\n\nEmail: support@patbudai4u.com\nPhone: +44 (0)800 123 4567\nHours: Mon-Fri 8am-6pm');
+        }
+
+        function showTerms() {
+            // Redirect to terms of service page
+            window.location.href = 'terms-of-service.html';
+        }
+
+        function forgotPassword() {
+            const email = prompt('Enter your email address to reset your password:');
+            if (email) {
+                alert(`Password reset link sent to: ${email}\n\n(Note: In production, this would trigger a password reset email.)`);
+            }
+        }
+
+        function requestAccess() {
+            alert('🔒 Request Access\n\nPlease contact your system administrator or email sales@patbudai4u.com to request access to PAT BuddAI 4U.');
+        }
+
+        function demoLogin() {
+            document.getElementById('email').value = 'demo@patbudai4u.com';
+            document.getElementById('password').value = 'demo123';
+    
+            // Auto-submit after a short delay for demo purposes
+            setTimeout(() => {
+                if (currentPortal === 'contractor') {
+                    // Redirect to contractor dashboard for contractor demo
+                    window.location.href = 'contractor-dashboard.html';
+                } else if (currentPortal === 'business') {
+                    // Redirect to business dashboard for business demo
+                    window.location.href = 'business-dashboard.html';
+                }
+            }, 500);
+    
+            alert('Demo credentials filled! Redirecting to dashboard...');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('loginModal').classList.contains('active')) {
+                closeLoginModal();
+            }
+            
+            if (e.key === 'Enter' && !document.getElementById('loginModal').classList.contains('active')) {
+                const focused = document.activeElement;
+                if (focused.classList.contains('cta-button')) {
+                    focused.click();
+                }
+            }
+        });
+
+        // Focus management for accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && document.getElementById('loginModal').classList.contains('active')) {
+                const focusableElements = document.querySelectorAll('.login-content button, .login-content input');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                if (e.shiftKey && document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                } else if (!e.shiftKey && document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        });
+
+        // Update copyright year dynamically
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.querySelector('footer p');
+            if (yearElement) {
+                const currentYear = new Date().getFullYear();
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', currentYear);
+            }
+        });
+    </script>
+</body>
+</html>

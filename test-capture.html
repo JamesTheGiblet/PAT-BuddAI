@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Upload Test Photos - PAT BuddAI 4U</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(33, 150, 243, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: #1565C0;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Job Selector */
+        .job-selector {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .selector-label {
+            display: block;
+            color: #1565C0;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .job-select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #E3F2FD;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231976D2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+            padding-right: 50px;
+        }
+
+        /* Upload Area */
+        .upload-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .upload-area {
+            border: 3px dashed #BBDEFB;
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            background: #F8FBFF;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-area.active {
+            border-color: #2196F3;
+            background: #E3F2FD;
+        }
+
+        .upload-content {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #64B5F6;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            color: #1565C0;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .upload-subtext {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        /* Camera Controls */
+        .camera-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .camera-btn {
+            background: white;
+            border: 2px solid #E3F2FD;
+            color: #1976D2;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 200px;
+            justify-content: center;
+        }
+
+        .camera-btn:hover {
+            border-color: #2196F3;
+            background: #F5FAFF;
+        }
+
+        .camera-btn.primary {
+            background: #1976D2;
+            color: white;
+            border-color: #1976D2;
+        }
+
+        .camera-btn.primary:hover {
+            background: #1565C0;
+        }
+
+        /* Photo Grid */
+        .photos-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #1565C0;
+            font-weight: 700;
+        }
+
+        .photo-count {
+            background: #E3F2FD;
+            color: #1565C0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f9fa;
+            aspect-ratio: 1;
+            transition: all 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-card:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .photo-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .photo-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            background: linear-gradient(135deg, #1565C0, #1976D2);
+            color: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .ai-icon {
+            font-size: 1.5rem;
+        }
+
+        .ai-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .ai-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #64B5F6;
+        }
+
+        .ai-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .ai-suggestion {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ai-suggestion:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Photo Info */
+        .photo-info {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            color: #1565C0;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E3F2FD;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #2196F3;
+            border: 2px solid #2196F3;
+        }
+
+        .action-btn.success {
+            background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(33, 150, 243, 0.4);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: #BBDEFB;
+            margin-bottom: 20px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E3F2FD;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1976D2, #2196F3);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        /* Camera Preview */
+        .camera-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .camera-view {
+            flex: 1;
+            background: #000;
+            position: relative;
+        }
+
+        .camera-feed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-controls-bar {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .camera-control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .camera-control-btn.capture {
+            background: white;
+            color: #1976D2;
+            width: 70px;
+            height: 70px;
+        }
+
+        .camera-control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .upload-section, .photos-section, .ai-assistant, .photo-info {
+                padding: 20px;
+            }
+            
+            .photos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 12px;
+            }
+            
+            .camera-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .camera-btn {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .fab {
+                display: flex;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Touch-friendly optimizations */
+            button, .photo-card, .camera-btn {
+                min-height: 44px;
+            }
+            
+            input, select, textarea {
+                font-size: 16px; /* Prevents iOS zoom */
+            }
+            
+            .upload-area {
+                min-height: 150px;
+                padding: 30px 15px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 15px;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .upload-icon {
+                font-size: 2.5rem;
+            }
+            
+            .photos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ai-suggestions {
+                grid-template-columns: 1fr;
+            }
+            
+            .camera-control-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .camera-control-btn.capture {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Photo Modal */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: transform 0.3s ease;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: #4CAF50;
+        }
+
+        .toast.error {
+            background: #F44336;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span>📷</span>
+                <span>Upload Test Photos</span>
+            </div>
+            <div class="nav-actions">
+                <a href="contractor-dashboard.html" class="nav-btn">← Dashboard</a>
+                <button class="nav-btn" onclick="syncPhotos()">🔄 Sync</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Upload Test Photos</h1>
+            <p class="page-subtitle">Document your PAT testing with photos for compliance records</p>
+        </div>
+
+        <!-- Job Selector -->
+        <div class="job-selector">
+            <label class="selector-label">Select Job to Upload Photos For:</label>
+            <select class="job-select" id="jobSelect" onchange="loadJobPhotos()">
+                <option value="">-- Select a job --</option>
+                <option value="techcorp" selected>TechCorp Ltd - Main Office (Today)</option>
+                <option value="greenwood">Greenwood School - Science Block</option>
+                <option value="medicare">MediCare Clinic - Reception Area</option>
+                <option value="cityhotel">City Hotel - Conference Rooms</option>
+                <option value="fastfood">FastFood Express - Kitchen Area</option>
+            </select>
+        </div>
+
+        <!-- Upload Area -->
+        <div class="upload-section">
+            <h2 class="section-title">Upload Photos</h2>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Drag & drop photos here</div>
+                    <div class="upload-subtext">or click to browse</div>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                        <span>📁</span> Choose Photos
+                    </button>
+                </div>
+            </div>
+
+            <div class="camera-controls">
+                <button class="camera-btn" onclick="openCamera()">
+                    <span>📸</span> Take Photo
+                </button>
+                <button class="camera-btn primary" onclick="scanBarcode()">
+                    <span>🔍</span> Scan Equipment QR
+                </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Uploading...</div>
+            </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="photos-section">
+            <div class="section-header">
+                <h2 class="section-title">Uploaded Photos</h2>
+                <div class="photo-count" id="photoCount">0 photos</div>
+            </div>
+
+            <div class="photos-grid" id="photosGrid">
+                <!-- Photos will be dynamically added here -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">📸</div>
+                    <h3>No photos uploaded yet</h3>
+                    <p>Upload photos to document your PAT testing</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="ai-assistant">
+            <div class="ai-header">
+                <div class="ai-icon">🤖</div>
+                <div class="ai-title">PAT Photo Assistant</div>
+            </div>
+            
+            <div class="ai-message">
+                <p><strong>AI Tip:</strong> For compliance, remember to photograph:</p>
+                <ol style="margin-top: 10px; padding-left: 20px;">
+                    <li>Equipment labels with serial numbers</li>
+                    <li>Visual inspection points (cables, plugs, casings)</li>
+                    <li>Test results on PAT tester screen</li>
+                    <li>Equipment location for documentation</li>
+                </ol>
+            </div>
+
+            <div class="ai-suggestions">
+                <div class="ai-suggestion" onclick="suggestPhoto('label')">
+                    📋 Equipment Label
+                </div>
+                <div class="ai-suggestion" onclick="suggestPhoto('test_result')">
+                    ⚡ Test Results
+                </div>
+                <div class="ai-suggestion" onclick="suggestPhoto('location')">
+                    📍 Location
+                </div>
+                <div class="ai-suggestion" onclick="suggestPhoto('defect')">
+                    ⚠️ Any Defects
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Information -->
+        <div class="photo-info">
+            <h2 class="section-title">Photo Information</h2>
+            
+            <div class="info-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Equipment Description</label>
+                        <input type="text" class="form-input" id="photoEquipment" placeholder="Enter equipment details">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Asset/Serial Number</label>
+                        <input type="text" class="form-input" id="photoAssetNumber" placeholder="Enter serial number">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Location in Building</label>
+                        <input type="text" class="form-input" id="photoLocation" placeholder="e.g., Room 3, Desk 2">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Test Result</label>
+                        <select class="form-input" id="photoTestResult">
+                            <option value="">Select result</option>
+                            <option value="pass">PASS</option>
+                            <option value="fail">FAIL</option>
+                            <option value="retest">RETEST REQUIRED</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Notes/Comments</label>
+                    <textarea class="form-input" id="photoNotes" rows="3" placeholder="Add any observations or comments"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="action-btn success" onclick="completeUpload()">
+                <span>✅</span> Complete & Save
+            </button>
+            <button class="action-btn primary" onclick="uploadToCloud()">
+                <span>☁️</span> Upload to Cloud
+            </button>
+            <button class="action-btn secondary" onclick="generateReport()">
+                <span>📊</span> Generate Photo Report
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fab" onclick="openCamera()">
+        📸
+    </button>
+
+    <!-- Camera Preview -->
+    <div class="camera-preview" id="cameraPreview">
+        <div class="camera-view">
+            <video class="camera-feed" id="cameraFeed" autoplay playsinline></video>
+        </div>
+        <div class="camera-controls-bar">
+            <button class="camera-control-btn" onclick="closeCamera()">✕</button>
+            <button class="camera-control-btn capture" onclick="capturePhoto()">
+                📸
+            </button>
+            <button class="camera-control-btn" onclick="switchCamera()">🔄</button>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <img class="modal-image" id="modalImage" src="" alt="Photo Preview">
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Processing photos...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Global variables
+        let uploadedPhotos = [];
+        let currentJob = 'techcorp';
+        let mediaStream = null;
+        let facingMode = 'environment';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePhotoCount();
+            setupDragAndDrop();
+            loadSamplePhotos();
+            showToast('Welcome to PAT Photo Upload! 📸', 'success');
+            
+            // Update FAB visibility
+            updateFABVisibility();
+            window.addEventListener('resize', updateFABVisibility);
+            
+            // Prevent zoom on input focus on iOS
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                    document.body.style.zoom = 0.99;
+                }
+            });
+            
+            document.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    document.body.style.zoom = 1;
+                }, 100);
+            });
+        });
+
+        // Setup drag and drop
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('active');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('active');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('active');
+                
+                const files = e.dataTransfer.files;
+                handleFiles(files);
+            });
+        }
+
+        // Handle file selection
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            handleFiles(files);
+        }
+
+        // Handle files
+        function handleFiles(files) {
+            if (files.length === 0) return;
+
+            showLoading();
+            
+            // Simulate upload process
+            let uploaded = 0;
+            const total = files.length;
+            
+            Array.from(files).forEach((file, index) => {
+                if (!file.type.startsWith('image/')) {
+                    showToast(`Skipped ${file.name}: Not an image`, 'error');
+                    return;
+                }
+
+                // Simulate upload delay
+                setTimeout(() => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        addPhoto(e.target.result, file.name, file.size);
+                        uploaded++;
+                        
+                        // Update progress
+                        const progress = (uploaded / total) * 100;
+                        document.getElementById('progressFill').style.width = progress + '%';
+                        document.getElementById('progressText').textContent = `Uploading ${uploaded}/${total} photos`;
+                        
+                        if (uploaded === total) {
+                            setTimeout(() => {
+                                hideLoading();
+                                document.getElementById('progressContainer').style.display = 'none';
+                                showToast(`✅ ${uploaded} photos uploaded successfully!`, 'success');
+                            }, 500);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }, index * 500); // Stagger uploads
+            });
+
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('progressText').textContent = `Uploading 0/${total} photos`;
+        }
+
+        // Add photo to gallery
+        function addPhoto(dataUrl, filename, size) {
+            const photoId = 'photo_' + Date.now() + Math.random().toString(36).substr(2, 9);
+            
+            const photo = {
+                id: photoId,
+                dataUrl: dataUrl,
+                filename: filename,
+                size: size,
+                timestamp: new Date().toISOString(),
+                job: currentJob,
+                equipment: document.getElementById('photoEquipment').value,
+                assetNumber: document.getElementById('photoAssetNumber').value,
+                location: document.getElementById('photoLocation').value,
+                testResult: document.getElementById('photoTestResult').value,
+                notes: document.getElementById('photoNotes').value
+            };
+
+            uploadedPhotos.push(photo);
+
+            // Create photo card
+            const photoCard = document.createElement('div');
+            photoCard.className = 'photo-card';
+            photoCard.innerHTML = `
+                <img src="${dataUrl}" alt="PAT Test Photo" class="photo-image">
+                <div class="photo-overlay">
+                    <div class="photo-actions">
+                        <button class="photo-btn" onclick="viewPhoto('${photoId}')" title="View">
+                            👁️
+                        </button>
+                        <button class="photo-btn" onclick="deletePhoto('${photoId}')" title="Delete">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Remove empty state if present
+            const emptyState = document.getElementById('emptyState');
+            if (emptyState) {
+                emptyState.style.display = 'none';
+            }
+
+            document.getElementById('photosGrid').appendChild(photoCard);
+            updatePhotoCount();
+        }
+
+        // Update photo count
+        function updatePhotoCount() {
+            const count = uploadedPhotos.length;
+            document.getElementById('photoCount').textContent = `${count} photo${count !== 1 ? 's' : ''}`;
+            
+            // Show/hide empty state
+            const emptyState = document.getElementById('emptyState');
+            if (emptyState) {
+                emptyState.style.display = count === 0 ? 'block' : 'none';
+            }
+        }
+
+        // View photo in modal
+        function viewPhoto(photoId) {
+            const photo = uploadedPhotos.find(p => p.id === photoId);
+            if (photo) {
+                document.getElementById('modalImage').src = photo.dataUrl;
+                document.getElementById('photoModal').style.display = 'flex';
+            }
+        }
+
+        // Delete photo
+        function deletePhoto(photoId) {
+            if (confirm('Delete this photo?')) {
+                uploadedPhotos = uploadedPhotos.filter(p => p.id !== photoId);
+                
+                // Remove from DOM
+                const photoCard = document.querySelector(`[onclick*="${photoId}"]`)?.closest('.photo-card');
+                if (photoCard) {
+                    photoCard.remove();
+                }
+                
+                updatePhotoCount();
+                showToast('Photo deleted', 'error');
+            }
+        }
+
+        // Camera functions
+        async function openCamera() {
+            try {
+                const constraints = {
+                    video: { 
+                        facingMode: facingMode,
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 }
+                    }
+                };
+
+                mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+                const cameraFeed = document.getElementById('cameraFeed');
+                cameraFeed.srcObject = mediaStream;
+                document.getElementById('cameraPreview').style.display = 'flex';
+                
+                // Hide FAB when camera is open
+                document.getElementById('fab').style.display = 'none';
+            } catch (err) {
+                showToast('Camera access denied: ' + err.message, 'error');
+            }
+        }
+
+        function closeCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+            document.getElementById('cameraPreview').style.display = 'none';
+            
+            // Show FAB again
+            updateFABVisibility();
+        }
+
+        function switchCamera() {
+            facingMode = facingMode === 'environment' ? 'user' : 'environment';
+            closeCamera();
+            setTimeout(openCamera, 100);
+        }
+
+        function capturePhoto() {
+            const canvas = document.createElement('canvas');
+            const video = document.getElementById('cameraFeed');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            addPhoto(dataUrl, `pat_photo_${timestamp}.jpg`, canvas.width * canvas.height * 0.75);
+            
+            // Flash effect
+            document.getElementById('cameraPreview').style.backgroundColor = 'white';
+            setTimeout(() => {
+                document.getElementById('cameraPreview').style.backgroundColor = 'black';
+                showToast('Photo captured! 📸', 'success');
+            }, 100);
+        }
+
+        // Barcode scanner simulation
+        function scanBarcode() {
+            // In a real app, this would use the camera to scan QR codes
+            const mockCodes = [
+                { code: 'ASSET-2024-1234', equipment: 'Dell Monitor 24"', serial: 'DL-MON-789012' },
+                { code: 'ASSET-2024-5678', equipment: 'HP Laptop EliteBook', serial: 'HP-ELB-345678' },
+                { code: 'ASSET-2024-9012', equipment: 'Makita Power Drill', serial: 'MAK-DRL-901234' }
+            ];
+
+            const randomCode = mockCodes[Math.floor(Math.random() * mockCodes.length)];
+            
+            // Auto-fill form with scanned data
+            document.getElementById('photoEquipment').value = randomCode.equipment;
+            document.getElementById('photoAssetNumber').value = randomCode.serial;
+            
+            showToast(`Scanned: ${randomCode.equipment}`, 'success');
+            
+            // Open camera for photo after scan
+            openCamera();
+        }
+
+        // AI suggestions
+        function suggestPhoto(type) {
+            const suggestions = {
+                label: "Take a clear photo of the equipment label showing model and serial number",
+                test_result: "Photograph the PAT tester screen showing all test results",
+                location: "Take a wide shot showing the equipment's location in the room",
+                defect: "Focus on any visible defects - ensure good lighting"
+            };
+
+            const message = `🤖 AI Suggestion: ${suggestions[type]}`;
+            showToast(message, 'success');
+            
+            // Auto-focus on relevant field
+            if (type === 'label') {
+                document.getElementById('photoAssetNumber').focus();
+            }
+            
+            // Open camera after suggestion
+            setTimeout(openCamera, 1000);
+        }
+
+        // Complete upload
+        function completeUpload() {
+            if (uploadedPhotos.length === 0) {
+                showToast('No photos to save. Please upload some photos first.', 'error');
+                return;
+            }
+
+            showLoading();
+            
+            // Simulate save process
+            setTimeout(() => {
+                hideLoading();
+                
+                // Create summary
+                const summary = {
+                    job: document.getElementById('jobSelect').value,
+                    totalPhotos: uploadedPhotos.length,
+                    timestamp: new Date().toISOString(),
+                    photos: uploadedPhotos
+                };
+                
+                // Save to localStorage (simulated)
+                localStorage.setItem('patPhotos_' + currentJob, JSON.stringify(summary));
+                
+                showToast(`✅ ${uploadedPhotos.length} photos saved successfully!`, 'success');
+                
+                // Auto-fill form for next photo
+                document.getElementById('photoEquipment').value = '';
+                document.getElementById('photoAssetNumber').value = '';
+                document.getElementById('photoNotes').value = '';
+                
+                // Show success animation
+                document.querySelectorAll('.photo-card').forEach(card => {
+                    card.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        card.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            }, 1500);
+        }
+
+        // Upload to cloud
+        function uploadToCloud() {
+            if (uploadedPhotos.length === 0) {
+                showToast('No photos to upload', 'error');
+                return;
+            }
+
+            showLoading();
+            
+            // Simulate cloud upload
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.getElementById('progressText').textContent = `Uploading to cloud: ${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        hideLoading();
+                        document.getElementById('progressContainer').style.display = 'none';
+                        showToast('✅ Photos uploaded to cloud successfully!', 'success');
+                    }, 500);
+                }
+            }, 200);
+
+            document.getElementById('progressContainer').style.display = 'block';
+        }
+
+        // Generate report
+        function generateReport() {
+            if (uploadedPhotos.length === 0) {
+                showToast('No photos for report', 'error');
+                return;
+            }
+
+            alert(`📊 Generating Photo Report\n\nJob: ${currentJob}\nPhotos: ${uploadedPhotos.length}\n\nThis would generate a PDF report with all photos and test documentation.`);
+        }
+
+        // Sync photos
+        function syncPhotos() {
+            showLoading();
+            
+            // Simulate sync
+            setTimeout(() => {
+                hideLoading();
+                showToast('🔄 Photos synced with dashboard', 'success');
+                
+                // Update dashboard
+                const event = new CustomEvent('photosSynced', {
+                    detail: { count: uploadedPhotos.length, job: currentJob }
+                });
+                window.dispatchEvent(event);
+            }, 1000);
+        }
+
+        // Load sample photos for demo
+        function loadSamplePhotos() {
+            // Add 3 sample photos for demo
+            const samplePhotos = [
+                {
+                    id: 'sample_1',
+                    dataUrl: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23e3f2fd"/%3E%3Ctext x="50%25" y="40%25" font-family="Arial" font-size="24" text-anchor="middle" fill="%231965c0"%3EPAT Tester Screen%3C/text%3E%3Ctext x="50%25" y="55%25" font-family="Arial" font-size="16" text-anchor="middle" fill="%23666"%3EPass: 0.08Ω Earth%3C/text%3E%3Ctext x="50%25" y="65%25" font-family="Arial" font-size="16" text-anchor="middle" fill="%23666"%3EPass: 2.5MΩ Insulation%3C/text%3E%3C/svg%3E',
+                    filename: 'tester_screen.jpg',
+                    size: 2048
+                },
+                {
+                    id: 'sample_2',
+                    dataUrl: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23e8f5e9"/%3E%3Ctext x="50%25" y="40%25" font-family="Arial" font-size="24" text-anchor="middle" fill="%232e7d32"%3EEquipment Label%3C/text%3E%3Ctext x="50%25" y="55%25" font-family="Arial" font-size="16" text-anchor="middle" fill="%23666"%3EDell Monitor 24" LCD%3C/text%3E%3Ctext x="50%25" y="65%25" font-family="Arial" font-size="16" text-anchor="middle" fill="%23666"%3ES/N: DL-MON-789012%3C/text%3E%3C/svg%3E',
+                    filename: 'equipment_label.jpg',
+                    size: 3072
+                },
+                {
+                    id: 'sample_3',
+                    dataUrl: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23fff3e0"/%3E%3Ctext x="50%25" y="40%25" font-family="Arial" font-size="24" text-anchor="middle" fill="%23ef6c00"%3ELocation Photo%3C/text%3E%3Ctext x="50%25" y="55%25" font-family="Arial" font-size="16" text-anchor="middle" fill="%23666"%3EOffice 3, Desk Setup%3C/text%3E%3Ctext x="50%25" y="65%25" font-family="Arial" font-size="16" text-anchor="middle" fill="%23666"%3EDate: Today%3C/text%3E%3C/svg%3E',
+                    filename: 'location_photo.jpg',
+                    size: 4096
+                }
+            ];
+
+            // Clear existing photos
+            uploadedPhotos = [];
+            document.getElementById('photosGrid').innerHTML = '<div class="empty-state" id="emptyState"><div class="empty-icon">📸</div><h3>No photos uploaded yet</h3><p>Upload photos to document your PAT testing</p></div>';
+
+            // Add sample photos
+            setTimeout(() => {
+                samplePhotos.forEach(photo => {
+                    addPhoto(photo.dataUrl, photo.filename, photo.size);
+                });
+            }, 500);
+        }
+
+        // Load job photos
+        function loadJobPhotos() {
+            const jobSelect = document.getElementById('jobSelect');
+            currentJob = jobSelect.value;
+            
+            showToast(`Loading photos for ${jobSelect.options[jobSelect.selectedIndex].text}`, 'success');
+            
+            // In a real app, this would load photos from server
+            // For demo, just show sample photos
+            loadSamplePhotos();
+        }
+
+        // Modal functions
+        function closeModal() {
+            document.getElementById('photoModal').style.display = 'none';
+        }
+
+        // Loading functions
+        function showLoading() {
+            document.getElementById('loading').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('active');
+        }
+
+        // Toast notifications
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type) toast.classList.add(type);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // FAB visibility
+        function updateFABVisibility() {
+            const fab = document.getElementById('fab');
+            fab.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + U for upload
+            if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+                e.preventDefault();
+                document.getElementById('fileInput').click();
+            }
+            
+            // Escape to close modal/camera
+            if (e.key === 'Escape') {
+                closeModal();
+                closeCamera();
+            }
+        });
+    </script>
+</body>
+</html>

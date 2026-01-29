@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy - PAT BuddAI 4U</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(33, 150, 243, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #1565C0;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .page-header .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Last Updated */
+        .last-updated {
+            background: #E3F2FD;
+            color: #1565C0;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin: 20px 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .last-updated strong {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .version-badge {
+            background: #1976D2;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Policy Content */
+        .policy-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        /* Table of Contents */
+        .toc-container {
+            background: #F8FBFF;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 4px solid #1976D2;
+        }
+
+        .toc-title {
+            color: #1565C0;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .toc-list {
+            list-style: none;
+            columns: 2;
+            column-gap: 30px;
+        }
+
+        .toc-item {
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+
+        .toc-link {
+            color: #1976D2;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .toc-link:hover {
+            background: #E3F2FD;
+            transform: translateX(5px);
+        }
+
+        .toc-number {
+            background: #1976D2;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Policy Sections */
+        .policy-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #E3F2FD;
+        }
+
+        .policy-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            background: #1976D2;
+            color: white;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            color: #1565C0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .section-content {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul, .section-content ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #FFF3E0, #FFECB3);
+            border: 2px solid #FF9800;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box.warning {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border-color: #F44336;
+        }
+
+        .highlight-box.info {
+            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+            border-color: #2196F3;
+        }
+
+        .highlight-title {
+            color: #EF6C00;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight-box.warning .highlight-title {
+            color: #F44336;
+        }
+
+        .highlight-box.info .highlight-title {
+            color: #1565C0;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table th {
+            background: #E3F2FD;
+            color: #1565C0;
+            font-weight: 700;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #E3F2FD;
+            color: #444;
+        }
+
+        .data-table tr:hover {
+            background: #F8FBFF;
+        }
+
+        /* Contact Cards */
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .contact-card {
+            background: #F8FBFF;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #E3F2FD;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: #2196F3;
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+
+        .contact-title {
+            font-size: 1.1rem;
+            color: #1565C0;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .contact-info {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .contact-info a {
+            color: #1976D2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #2196F3;
+            border: 2px solid #E3F2FD;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            color: #1565C0;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 2px solid #E3F2FD;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #1565C0;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #0D47A1;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .policy-content {
+                padding: 25px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .toc-list {
+                columns: 1;
+            }
+            
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .data-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .section-number {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 15px;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .last-updated {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .policy-section {
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar, .back-to-top, .action-buttons {
+                display: none !important;
+            }
+            
+            body {
+                background: white;
+            }
+            
+            .container {
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .policy-content {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .toc-container {
+                page-break-after: always;
+            }
+            
+            .policy-section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Scroll Animation */
+        .policy-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .policy-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <span>🔒</span>
+                    <span>Privacy Policy</span>
+                </a>
+            </div>
+            <div class="nav-actions">
+                <a href="index.html" class="nav-btn">← Back to Home</a>
+                <a href="#" class="nav-btn" onclick="printPage()">🖨️ Print</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Privacy Policy</h1>
+            <p class="subtitle">How PAT BuddAI 4U protects your data and respects your privacy</p>
+        </div>
+
+        <!-- Last Updated -->
+        <div class="last-updated">
+            <strong>
+                <span>📅</span>
+                Last Updated: January 29, 2024
+            </strong>
+            <span class="version-badge">Version 2.0</span>
+        </div>
+
+        <!-- Policy Content -->
+        <div class="policy-content">
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3 class="toc-title">📋 Table of Contents</h3>
+                <ul class="toc-list">
+                    <li class="toc-item">
+                        <a href="#introduction" class="toc-link" onclick="scrollToSection('introduction')">
+                            <span class="toc-number">1</span>
+                            <span>Introduction</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#data-collection" class="toc-link" onclick="scrollToSection('data-collection')">
+                            <span class="toc-number">2</span>
+                            <span>Data We Collect</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#data-use" class="toc-link" onclick="scrollToSection('data-use')">
+                            <span class="toc-number">3</span>
+                            <span>How We Use Data</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#data-protection" class="toc-link" onclick="scrollToSection('data-protection')">
+                            <span class="toc-number">4</span>
+                            <span>Data Protection</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#data-sharing" class="toc-link" onclick="scrollToSection('data-sharing')">
+                            <span class="toc-number">5</span>
+                            <span>Data Sharing</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#your-rights" class="toc-link" onclick="scrollToSection('your-rights')">
+                            <span class="toc-number">6</span>
+                            <span>Your Rights</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#cookies" class="toc-link" onclick="scrollToSection('cookies')">
+                            <span class="toc-number">7</span>
+                            <span>Cookies & Tracking</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#international" class="toc-link" onclick="scrollToSection('international')">
+                            <span class="toc-number">8</span>
+                            <span>International Transfers</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#changes" class="toc-link" onclick="scrollToSection('changes')">
+                            <span class="toc-number">9</span>
+                            <span>Policy Changes</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#contact" class="toc-link" onclick="scrollToSection('contact')">
+                            <span class="toc-number">10</span>
+                            <span>Contact Us</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Introduction Section -->
+            <div class="policy-section" id="introduction">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <h2 class="section-title">Introduction</h2>
+                </div>
+                <div class="section-content">
+                    <p>PAT BuddAI 4U ("we", "us", or "our") is committed to protecting your privacy and handling your data in an open and transparent manner. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our PAT testing platform and services.</p>
+                    
+                    <div class="highlight-box info">
+                        <div class="highlight-title">
+                            <span>ℹ️</span>
+                            About Our Commitment
+                        </div>
+                        <p>We are fully compliant with the UK General Data Protection Regulation (UK GDPR), Data Protection Act 2018, and other applicable data protection laws. We implement industry-leading security measures to protect your data.</p>
+                    </div>
+                    
+                    <p>By using PAT BuddAI 4U, you agree to the collection and use of information in accordance with this policy. We process personal data as a Data Controller under UK data protection laws.</p>
+                </div>
+            </div>
+
+            <!-- Data We Collect Section -->
+            <div class="policy-section" id="data-collection">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <h2 class="section-title">Data We Collect</h2>
+                </div>
+                <div class="section-content">
+                    <p>We collect several types of information for various purposes to provide and improve our service to you.</p>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Personal Data</h3>
+                    <p>While using our service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you:</p>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data Category</th>
+                                <th>Examples</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Account Information</td>
+                                <td>Name, email, phone number, company details</td>
+                                <td>Account creation and management</td>
+                            </tr>
+                            <tr>
+                                <td>Professional Data</td>
+                                <td>Qualifications, certifications, PAT tester ID</td>
+                                <td>Compliance verification</td>
+                            </tr>
+                            <tr>
+                                <td>Client Data</td>
+                                <td>Client contact details, business addresses</td>
+                                <td>Service delivery and invoicing</td>
+                            </tr>
+                            <tr>
+                                <td>Testing Data</td>
+                                <td>Equipment details, test results, photos</td>
+                                <td>Compliance documentation</td>
+                            </tr>
+                            <tr>
+                                <td>Financial Data</td>
+                                <td>Billing addresses, payment information</td>
+                                <td>Payment processing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Usage Data</h3>
+                    <p>We may also collect information on how the service is accessed and used:</p>
+                    <ul>
+                        <li>IP address and browser type</li>
+                        <li>Device information and operating system</li>
+                        <li>Pages visited and time spent on pages</li>
+                        <li>Unique device identifiers</li>
+                        <li>Crash reports and performance data</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <span>🔒</span>
+                            Sensitive Data
+                        </div>
+                        <p>We do not collect or process sensitive personal data (special category data) unless absolutely necessary for service delivery. Any such data is protected with enhanced security measures.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How We Use Data Section -->
+            <div class="policy-section" id="data-use">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <h2 class="section-title">How We Use Your Data</h2>
+                </div>
+                <div class="section-content">
+                    <p>We use the collected data for various purposes:</p>
+                    
+                    <ul>
+                        <li><strong>To provide and maintain our service</strong> - Ensuring proper functionality and availability</li>
+                        <li><strong>To notify you about changes</strong> - Service updates, maintenance, or policy changes</li>
+                        <li><strong>To allow participation in interactive features</strong> - When you choose to use them</li>
+                        <li><strong>To provide customer support</strong> - Responding to your requests and inquiries</li>
+                        <li><strong>To gather analysis or valuable information</strong> - For service improvement</li>
+                        <li><strong>To monitor service usage</strong> - Detecting and preventing technical issues</li>
+                        <li><strong>To detect, prevent, and address technical issues</strong> - Security and reliability</li>
+                        <li><strong>To provide compliance documentation</strong> - Generating certificates and reports</li>
+                        <li><strong>To fulfill legal obligations</strong> - Regulatory requirements and compliance</li>
+                    </ul>
+                    
+                    <div class="highlight-box info">
+                        <div class="highlight-title">
+                            <span>⚖️</span>
+                            Legal Basis for Processing
+                        </div>
+                        <p>We process your personal data under the following legal bases:</p>
+                        <ul>
+                            <li><strong>Contractual necessity</strong> - To provide the services you request</li>
+                            <li><strong>Legal obligation</strong> - To comply with regulatory requirements</li>
+                            <li><strong>Legitimate interests</strong> - For service improvement and security</li>
+                            <li><strong>Consent</strong> - Where you have given clear consent</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Protection Section -->
+            <div class="policy-section" id="data-protection">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <h2 class="section-title">Data Protection & Security</h2>
+                </div>
+                <div class="section-content">
+                    <p>The security of your data is important to us. We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage.</p>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Security Measures</h3>
+                    <ul>
+                        <li><strong>Encryption:</strong> All data is encrypted in transit (TLS 1.3) and at rest (AES-256)</li>
+                        <li><strong>Access Controls:</strong> Role-based access control and multi-factor authentication</li>
+                        <li><strong>Network Security:</strong> Firewalls, intrusion detection, and DDoS protection</li>
+                        <li><strong>Physical Security:</strong> Secure data centers with 24/7 monitoring</li>
+                        <li><strong>Regular Audits:</strong> Security assessments and penetration testing</li>
+                        <li><strong>Employee Training:</strong> Regular data protection training for all staff</li>
+                        <li><strong>Backup & Recovery:</strong> Regular backups and disaster recovery plans</li>
+                    </ul>
+                    
+                    <div class="highlight-box warning">
+                        <div class="highlight-title">
+                            <span>⚠️</span>
+                            Data Retention
+                        </div>
+                        <p>We retain personal data only for as long as necessary to fulfill the purposes for which it was collected, including compliance with legal, accounting, or reporting requirements. Typical retention periods:</p>
+                        <ul>
+                            <li>Account data: 7 years after account closure</li>
+                            <li>Testing records: 7 years (compliance requirement)</li>
+                            <li>Financial records: 7 years (legal requirement)</li>
+                            <li>Inactive accounts: 2 years before deletion</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Sharing Section -->
+            <div class="policy-section" id="data-sharing">
+                <div class="section-header">
+                    <div class="section-number">5</div>
+                    <h2 class="section-title">Data Sharing & Third Parties</h2>
+                </div>
+                <div class="section-content">
+                    <p>We do not sell, trade, or rent your personal data to third parties. We may share your data in the following limited circumstances:</p>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Service Providers</h3>
+                    <p>We may employ third-party companies and individuals to facilitate our service, provide the service on our behalf, or assist us in analyzing how our service is used. These third parties have access to your personal data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Legal Requirements</h3>
+                    <p>We may disclose your personal data if required to do so by law or in response to valid requests by public authorities (e.g., a court or a government agency).</p>
+                    
+                    <h3 style="color: #1565C0; margin: 20px 0 10px;">Business Transfers</h3>
+                    <p>In the event of a merger, acquisition, or asset sale, your personal data may be transferred. We will provide notice before your personal data is transferred and becomes subject to a different Privacy Policy.</p>
+                    
+                    <div class="highlight-box info">
+                        <div class="highlight-title">
+                            <span>🤝</span>
+                            Data Processing Agreements
+                        </div>
+                        <p>All third-party service providers sign Data Processing Agreements (DPAs) that comply with UK GDPR requirements. We regularly audit our vendors to ensure compliance with data protection standards.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Your Rights Section -->
+            <div class="policy-section" id="your-rights">
+                <div class="section-header">
+                    <div class="section-number">6</div>
+                    <h2 class="section-title">Your Data Protection Rights</h2>
+                </div>
+                <div class="section-content">
+                    <p>Under UK data protection laws, you have the following rights regarding your personal data:</p>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Right</th>
+                                <th>Description</th>
+                                <th>How to Exercise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Right to Access</td>
+                                <td>Receive a copy of your personal data</td>
+                                <td>Submit a Subject Access Request</td>
+                            </tr>
+                            <tr>
+                                <td>Right to Rectification</td>
+                                <td>Correct inaccurate or incomplete data</td>
+                                <td>Update in account or contact us</td>
+                            </tr>
+                            <tr>
+                                <td>Right to Erasure</td>
+                                <td>Request deletion of your data</td>
+                                <td>Submit a deletion request</td>
+                            </tr>
+                            <tr>
+                                <td>Right to Restrict Processing</td>
+                                <td>Limit how we use your data</td>
+                                <td>Contact our Data Protection Officer</td>
+                            </tr>
+                            <tr>
+                                <td>Right to Data Portability</td>
+                                <td>Receive your data in a usable format</td>
+                                <td>Request portable format</td>
+                            </tr>
+                            <tr>
+                                <td>Right to Object</td>
+                                <td>Object to certain processing</td>
+                                <td>Opt-out in settings or contact us</td>
+                            </tr>
+                            <tr>
+                                <td>Right to Withdraw Consent</td>
+                                <td>Withdraw consent at any time</td>
+                                <td>Update preferences or contact us</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <span>⏱️</span>
+                            Response Times
+                        </div>
+                        <p>We will respond to all legitimate requests within one month. If your request is particularly complex or you have made multiple requests, we may extend this period by a further two months. We will notify you of any extension within one month of receiving your request.</p>
+                    </div>
+                    
+                    <p>To exercise any of these rights, please contact our Data Protection Officer using the contact details at the end of this policy.</p>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="policy-section" id="contact">
+                <div class="section-header">
+                    <div class="section-number">10</div>
+                    <h2 class="section-title">Contact Us</h2>
+                </div>
+                <div class="section-content">
+                    <p>If you have any questions about this Privacy Policy, please contact us:</p>
+                    
+                    <div class="contact-cards">
+                        <div class="contact-card">
+                            <div class="contact-icon">📧</div>
+                            <h3 class="contact-title">General Inquiries</h3>
+                            <div class="contact-info">
+                                <a href="mailto:privacy@patbudai4u.com">privacy@patbudai4u.com</a>
+                                <p style="margin-top: 8px;">For general privacy questions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">👨‍💼</div>
+                            <h3 class="contact-title">Data Protection Officer</h3>
+                            <div class="contact-info">
+                                <a href="mailto:dpo@patbudai4u.com">dpo@patbudai4u.com</a>
+                                <p style="margin-top: 8px;">For data protection requests</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">📞</div>
+                            <h3 class="contact-title">Telephone</h3>
+                            <div class="contact-info">
+                                +44 (0)800 123 4567
+                                <p style="margin-top: 8px;">Mon-Fri 9am-5pm GMT</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">📮</div>
+                            <h3 class="contact-title">Postal Address</h3>
+                            <div class="contact-info">
+                                Data Protection Officer<br>
+                                PAT BuddAI 4U Ltd<br>
+                                123 Safety Street<br>
+                                London EC1A 1BB<br>
+                                United Kingdom
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box info" style="margin-top: 30px;">
+                        <div class="highlight-title">
+                            <span>⚖️</span>
+                            Regulatory Authority
+                        </div>
+                        <p>You have the right to lodge a complaint with the Information Commissioner's Office (ICO), the UK supervisory authority for data protection issues. Contact details:</p>
+                        <p><strong>ICO Helpline:</strong> 0303 123 1113</p>
+                        <p><strong>ICO Website:</strong> <a href="https://ico.org.uk" target="_blank">ico.org.uk</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="index.html" class="action-btn primary">
+                    <span>←</span> Back to Home
+                </a>
+                <button class="action-btn secondary" onclick="printPage()">
+                    <span>🖨️</span> Print Policy
+                </button>
+                <button class="action-btn secondary" onclick="downloadPDF()">
+                    <span>📥</span> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 PAT BuddAI 4U Ltd. All rights reserved.</p>
+        <p>Registered in England & Wales: 12345678 | VAT: GB 123 4567 89</p>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.8;">
+            <a href="index.html">Home</a> | 
+            <a href="terms-of-service.html">Terms of Service</a> | 
+            <a href="cookie-policy.html">Cookie Policy</a> | 
+            <a href="data-processing-agreement.html">DPA</a>
+        </p>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Back to top functionality
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 80;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Print page
+        function printPage() {
+            window.print();
+        }
+
+        // Download PDF
+        function downloadPDF() {
+            alert('📥 Downloading Privacy Policy PDF\n\n(Note: In production, this would generate and download a PDF version of the policy.)');
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all policy sections
+        document.querySelectorAll('.policy-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Initialize sections as visible on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add visible class to first section immediately
+            const firstSection = document.querySelector('.policy-section');
+            if (firstSection) {
+                firstSection.classList.add('visible');
+            }
+            
+            // Check URL hash
+            if (window.location.hash) {
+                setTimeout(() => {
+                    scrollToSection(window.location.hash.substring(1));
+                }, 500);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + P for print
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printPage();
+            }
+            
+            // Escape to go back
+            if (e.key === 'Escape') {
+                window.history.back();
+            }
+        });
+
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.querySelector('footer p');
+            if (yearElement) {
+                const currentYear = new Date().getFullYear();
+                yearElement.innerHTML = yearElement.innerHTML.replace('2024', currentYear);
+            }
+        });
+    </script>
+</body>
+</html>
