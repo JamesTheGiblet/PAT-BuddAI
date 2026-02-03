@@ -551,17 +551,6 @@ For licensing inquiries, contact: james@gibletscreations.com
 - Modern SaaS platforms
 - The "Buddy 2.0" vertical platform strategy
 
----
-
-## 🎉 Success Stories
-
-### Oxford Pharmagenesis (Pilot)
-- **Site**: Tubney Warren Barn
-- **Equipment**: 150 items
-- **Savings**: £1,344/year
-- **Payback**: <2 months
-- **Status**: Pilot approved January 2026
-
 *More case studies coming as platform deploys...*
 
 ---
